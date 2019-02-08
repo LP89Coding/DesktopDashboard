@@ -14,6 +14,7 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,6 +35,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Images\Icon\YouTube.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AngleSharp, Version=0.9.9.0, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea, processorArchitecture=MSIL">
       <HintPath>..\packages\AngleSharp.0.9.11\lib\net45\AngleSharp.dll</HintPath>
@@ -42,6 +46,7 @@
       <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="ReachFramework" />
+    <Reference Include="Syncfusion.SfBusyIndicator.WPF, Version=16.4460.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.SfInput.WPF, Version=16.4460.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.SfShared.Wpf, Version=16.4460.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.SfSkinManager.WPF, Version=16.4460.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
@@ -74,7 +79,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DropDownMenuCollection.cs" />
+    <Compile Include="DropDownMenuItem.cs" />
     <Compile Include="Enums.cs" />
+    <Compile Include="Progress.cs" />
     <Compile Include="ResourceImage128.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -154,6 +162,30 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\32x32\Download.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\256x256\Cancel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\16x16\Cancel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\32x32\Cancel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\128x128\Cancel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\32x32\RightArrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\16x16\RightArrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\128x128\RightArrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\256x256\RightArrow.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
