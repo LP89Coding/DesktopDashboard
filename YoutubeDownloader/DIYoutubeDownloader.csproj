@@ -79,19 +79,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="DropDownMenuCollection.cs" />
-    <Compile Include="DropDownMenuItem.cs" />
-    <Compile Include="Enums.cs" />
-    <Compile Include="Progress.cs" />
+    <Compile Include="Models\DownloadMenuCollection.cs" />
+    <Compile Include="Models\DownloadMenuItem.cs" />
     <Compile Include="ResourceImage128.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ResourceImage128.resx</DependentUpon>
     </Compile>
-    <Compile Include="Utils.cs" />
-    <Compile Include="YoutubeDownloader.cs" />
-    <Compile Include="YoutubeMedia.cs" />
-    <Compile Include="YoutubeMediaType.cs" />
+    <Compile Include="Internals\Utils.cs" />
+    <Compile Include="Downloader.cs" />
+    <Compile Include="Models\Media.cs" />
+    <Compile Include="Models\MediaType.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

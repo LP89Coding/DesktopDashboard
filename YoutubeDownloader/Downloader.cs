@@ -14,25 +14,35 @@ using YoutubeExplode.Models.MediaStreams;
 
 namespace DIYoutubeDownloader
 {
-    public class YoutubeDownloader : IDisposable, IProgress<double>
+    public class Downloader : IDisposable, IProgress<double>
     {
         /*
          * https://github.com/Tyrrrz/YoutubeExplode
         */
+        public enum ThumbnailQuality
+        {
+            Unkown = 0,
+            Low = 1,
+            Standard = 2,
+            Medium = 3,
+            High = 4,
+            Max = 5
+        }
+
         private const int VideoInfoLoadTimeout = 30000;
         private const int MediaStreamLoadTimeout = 30000;
 
         private IYoutubeClient youtubeClient { get; set; }
 
-        private Task youtubeOperationTask { get; set; }
-
         private CancellationTokenSource CancelOperation { get; set; }
-        
+
+        public bool IsDownloading { get; private set; }
+
         public delegate void Progress(double progress);
         public delegate void BeginDownload();
         public delegate void EndDownload();
         public delegate void BeginLoadMediaInfo();
-        public delegate void EndLoadMediaInfo(YoutubeMedia mediaInfo);
+        public delegate void EndLoadMediaInfo(Media mediaInfo);
 
         public event Progress OnProgress;
         public event BeginDownload OnBeginDownload;
@@ -40,11 +50,9 @@ namespace DIYoutubeDownloader
         public event BeginLoadMediaInfo OnBeginLoadMediaInfo;
         public event EndLoadMediaInfo OnEndLoadMediaInfo;
 
-        public bool IsDownloading { get; private set; }
-
         #region Ctor
 
-        public YoutubeDownloader()
+        public Downloader()
         {
             this.youtubeClient = new YoutubeClient();
             this.IsDownloading = false;
@@ -56,21 +64,26 @@ namespace DIYoutubeDownloader
 
         private Video GetVideoInfo(string url)
         {
+            Task<Video> videoInfoLoader = null;
             try
             {
                 this.CancelOperation = new CancellationTokenSource();
                 string videoId = YoutubeClient.ParseVideoId(url);
-                Task<Video> videoInfoLoader = this.youtubeClient.GetVideoAsync(videoId);
+                videoInfoLoader = this.youtubeClient.GetVideoAsync(videoId);
                 videoInfoLoader.Wait(VideoInfoLoadTimeout, CancelOperation.Token);
-                return videoInfoLoader.Result as Video;
+                Video result = videoInfoLoader.Result as Video;
+                return result;
             }
             catch (Exception ex)
             {
+                //TODO Log
                 throw ex;
             }
             finally
             {
                 this.CancelOperation?.Dispose();
+                this.CancelOperation = null;
+                videoInfoLoader?.Dispose();
             }
         }
 
@@ -79,12 +92,14 @@ namespace DIYoutubeDownloader
 
         private MediaStreamInfoSet GetMediaStreamInfo(string mediaId)
         {
+            Task<MediaStreamInfoSet> streamInfoSetLoader = null;
             try
             {
                 this.CancelOperation = new CancellationTokenSource();
-                Task<MediaStreamInfoSet> streamInfoSetLoader = this.youtubeClient.GetVideoMediaStreamInfosAsync(mediaId);
+                streamInfoSetLoader = this.youtubeClient.GetVideoMediaStreamInfosAsync(mediaId);
                 streamInfoSetLoader.Wait(MediaStreamLoadTimeout, this.CancelOperation.Token);
-                return streamInfoSetLoader.Result as MediaStreamInfoSet;
+                MediaStreamInfoSet result = streamInfoSetLoader.Result as MediaStreamInfoSet;
+                return result;
             }
             catch (Exception ex)
             {
@@ -93,6 +108,8 @@ namespace DIYoutubeDownloader
             finally
             {
                 this.CancelOperation?.Dispose();
+                this.CancelOperation = null;
+                streamInfoSetLoader?.Dispose();
             }
         }
 
@@ -100,9 +117,9 @@ namespace DIYoutubeDownloader
 
         #region GetMediaInfo
 
-        public YoutubeMedia GetMediaInfo(string url)
+        public Media GetMediaInfo(string url)
         {
-            YoutubeMedia ymItem = null;
+            Media ymItem = null;
             try
             {
                 if (this.OnBeginLoadMediaInfo != null)
@@ -111,7 +128,7 @@ namespace DIYoutubeDownloader
                 {
                     Video videoInfo = this.GetVideoInfo(url);
 
-                    ymItem = new YoutubeMedia(videoInfo.Id, url)
+                    ymItem = new Media(videoInfo.Id, url)
                     {
                         Author = videoInfo.Author,
                         Description = videoInfo.Description,
@@ -137,6 +154,7 @@ namespace DIYoutubeDownloader
                 if (this.OnEndLoadMediaInfo != null)
                     OnEndLoadMediaInfo(ymItem);
                 this.CancelOperation?.Dispose();
+                this.CancelOperation = null;
             }
             return ymItem;
         }
@@ -144,9 +162,9 @@ namespace DIYoutubeDownloader
         #endregion
         #region GetMediaTypeInfo
 
-        private List<YoutubeMediaType> GetMediaTypeInfo(string mediaId)
+        private List<MediaType> GetMediaTypeInfo(string mediaId)
         {
-            List<YoutubeMediaType> result = new List<YoutubeMediaType>();
+            List<MediaType> result = new List<MediaType>();
             try
             {
                 if (!String.IsNullOrWhiteSpace(mediaId))
@@ -158,7 +176,7 @@ namespace DIYoutubeDownloader
                         AudioStreamInfo asiItem = streamInfoSet.Audio.FirstOrDefault(s => s.Container.GetFileExtension().ToLower().Equals("mp4"));
                         if (asiItem != null)
                         {
-                            result.Add(new YoutubeMediaType(Enums.MediaType.MP3, null, asiItem.Size));
+                            result.Add(new MediaType(MediaType.ExtensionType.MP3, null, asiItem.Size));
                         }
                     }
                     //Nie uzywamy Video, bo obsługuje tylko obraz, aby go połączyć z dźwiękiem potrzeba dodatkowo Youtube.Converter + FFMPEG
@@ -166,7 +184,7 @@ namespace DIYoutubeDownloader
                     {
                         foreach (MuxedStreamInfo vsiItem in streamInfoSet.Muxed.Where(s => s.Container.GetFileExtension().ToLower().Equals("mp4")))
                         {
-                            result.Add(new YoutubeMediaType(Enums.MediaType.MP4, vsiItem.VideoQualityLabel, vsiItem.Size));
+                            result.Add(new MediaType(MediaType.ExtensionType.MP4, vsiItem.VideoQualityLabel, vsiItem.Size));
                         }
                     }
                 }
@@ -178,6 +196,7 @@ namespace DIYoutubeDownloader
             finally
             {
                 this.CancelOperation?.Dispose();
+                this.CancelOperation = null;
             }
             return result;
         }
@@ -186,31 +205,31 @@ namespace DIYoutubeDownloader
 
         #region GetThumbnailUrl
 
-        public string GetThumbnailUrl(string url, Enums.ThumbnailQuality quality = Enums.ThumbnailQuality.Standard)
+        public string GetThumbnailUrl(string url, ThumbnailQuality quality = ThumbnailQuality.Standard)
         {
             return this.GetThumbnailUrl(this.GetVideoInfo(url), quality: quality);
         }
 
-        private string GetThumbnailUrl(Video videoInfo, Enums.ThumbnailQuality quality = Enums.ThumbnailQuality.Standard)
+        private string GetThumbnailUrl(Video videoInfo, ThumbnailQuality quality = ThumbnailQuality.Standard)
         {
             string url = null;
             if (videoInfo != null)
             {
                 switch (quality)
                 {
-                    case Enums.ThumbnailQuality.Low:
+                    case ThumbnailQuality.Low:
                         url = videoInfo.Thumbnails.LowResUrl;
                         break;
-                    case Enums.ThumbnailQuality.Standard:
+                    case ThumbnailQuality.Standard:
                         url = videoInfo.Thumbnails.StandardResUrl;
                         break;
-                    case Enums.ThumbnailQuality.Medium:
+                    case ThumbnailQuality.Medium:
                         url = videoInfo.Thumbnails.MediumResUrl;
                         break;
-                    case Enums.ThumbnailQuality.High:
+                    case ThumbnailQuality.High:
                         url = videoInfo.Thumbnails.HighResUrl;
                         break;
-                    case Enums.ThumbnailQuality.Max:
+                    case ThumbnailQuality.Max:
                         url = videoInfo.Thumbnails.MaxResUrl;
                         break;
                     default:
@@ -224,12 +243,12 @@ namespace DIYoutubeDownloader
         #endregion
         #region GetThumbnail
 
-        private Bitmap GetThumbnail(string url, Enums.ThumbnailQuality quality = Enums.ThumbnailQuality.Standard)
+        private Bitmap GetThumbnail(string url, ThumbnailQuality quality = ThumbnailQuality.Standard)
         {
             return this.GetThumbnail(this.GetVideoInfo(url), quality: quality);
         }
 
-        private Bitmap GetThumbnail(Video videoInfo, Enums.ThumbnailQuality quality = Enums.ThumbnailQuality.Standard)
+        private Bitmap GetThumbnail(Video videoInfo, ThumbnailQuality quality = ThumbnailQuality.Standard)
         {
             Bitmap result = null;
             string url = GetThumbnailUrl(videoInfo, quality: quality);
@@ -259,15 +278,16 @@ namespace DIYoutubeDownloader
 
         #region Download
 
-        public MemoryStream Download(string mediaId, YoutubeMediaType mediaType)
+        public MemoryStream Download(string mediaId, MediaType mediaType)
         {
             MemoryStream downlaodStream = null;
+            Task videoDownloader = null;
             try
             {
                 this.IsDownloading = true;
                 if (this.OnBeginDownload != null)
                     this.OnBeginDownload();
-                if (mediaType == null || mediaType.MediaType == Enums.MediaType.Unknown)
+                if (mediaType == null || mediaType.Extension == MediaType.ExtensionType.Unknown)
                     throw new Exception("Media type not given");
                 if (String.IsNullOrWhiteSpace(mediaId))
                     throw new Exception("Media ID not given");
@@ -275,18 +295,18 @@ namespace DIYoutubeDownloader
                 MediaStreamInfoSet mediaStreamInfoSet = this.GetMediaStreamInfo(mediaId);
                 MediaStreamInfo mediaStreamInfo = null;
 
-                if (mediaType.MediaType == Enums.MediaType.MP3)
+                if (mediaType.Extension == MediaType.ExtensionType.MP3)
                 {
                     mediaStreamInfo = mediaStreamInfoSet?.Audio?.FirstOrDefault(s => s.Container.GetFileExtension().ToLower().Equals("mp4"));
                 }
-                else if (mediaType.MediaType == Enums.MediaType.MP4)
+                else if (mediaType.Extension == MediaType.ExtensionType.MP4)
                 {
                     mediaStreamInfo = mediaStreamInfoSet?.Muxed?.FirstOrDefault(s => s.Container.GetFileExtension().ToLower().Equals("mp4") &&
                                                                                      s.VideoQualityLabel.Equals(mediaType.Quality) &&
                                                                                      s.Size == mediaType.Size);
                 }
                 else
-                    throw new Exception($"Unsupported media type: {mediaType.MediaType.ToString()}");
+                    throw new Exception($"Unsupported media type: {mediaType.Extension.ToString()}");
                 if (mediaStreamInfo == null)
                     throw new Exception("Media stream not found");
 
@@ -294,7 +314,7 @@ namespace DIYoutubeDownloader
                 this.CancelOperation = new CancellationTokenSource();
 
                 downlaodStream = new MemoryStream();
-                Task videoDownloader = this.youtubeClient.DownloadMediaStreamAsync(mediaStreamInfo, downlaodStream, 
+                videoDownloader = this.youtubeClient.DownloadMediaStreamAsync(mediaStreamInfo, downlaodStream, 
                                                                                    progress: this,
                                                                                    cancellationToken: this.CancelOperation.Token);
                 videoDownloader.Wait();
@@ -304,6 +324,8 @@ namespace DIYoutubeDownloader
             catch (Exception ex)
             {
                 //TODO Log
+                downlaodStream?.Close();
+                downlaodStream?.Dispose();
                 downlaodStream = null;
             }
             finally
@@ -312,6 +334,8 @@ namespace DIYoutubeDownloader
                 if (this.OnEndDownload != null)
                     this.OnEndDownload();
                 this.CancelOperation?.Dispose();
+                this.CancelOperation = null;
+                videoDownloader?.Dispose();
             }
             return downlaodStream;
         }
@@ -333,6 +357,11 @@ namespace DIYoutubeDownloader
             {
                 //TODO Log
             }
+            finally
+            {
+                this.CancelOperation?.Dispose();
+                this.CancelOperation = null;
+            }
         }
 
         #endregion
@@ -344,6 +373,8 @@ namespace DIYoutubeDownloader
             try
             {
                 this.CancelOperation?.Dispose();
+                this.CancelOperation = null;
+                this.youtubeClient = null;
             }
             catch(Exception ex)
             {

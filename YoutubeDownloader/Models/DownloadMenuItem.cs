@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace DIYoutubeDownloader
 {
-    class DropDownMenuItem
+    class DownloadMenuItem
     {
         public string Name { get; private set; }
         public string Image { get; private set; }
 
         public object Source { get; private set; }
 
-        public DropDownMenuItem(string name, string image, object source)
+        public DownloadMenuItem(string name, string image, object source)
         {
             this.Name = name;
             this.Image = image;

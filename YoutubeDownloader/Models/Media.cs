@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DIYoutubeDownloader
 {
-    public class YoutubeMedia : IDisposable
+    public class Media : IDisposable
     {
         public string MediaId { get; private set; }
         public string Url { get; private set; }
@@ -24,15 +24,15 @@ namespace DIYoutubeDownloader
         public double AverageRatings { get; set; }
 
         public Bitmap Thumbnail { get; set; }
-        public List<YoutubeMediaType> MediaTypes { get; private set; }
+        public List<MediaType> MediaTypes { get; private set; }
 
         #region Ctor
 
-        public YoutubeMedia(string mediaId, string url)
+        public Media(string mediaId, string url)
         {
             this.MediaId = mediaId;
             this.Url = url;
-            this.MediaTypes = new List<YoutubeMediaType>();
+            this.MediaTypes = new List<MediaType>();
         }
 
         #endregion

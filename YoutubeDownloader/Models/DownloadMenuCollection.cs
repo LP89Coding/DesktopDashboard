@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace DIYoutubeDownloader
 {
-    class DropDownMenuCollection
+    class DownloadMenuCollection
     { 
-        private List<DropDownMenuItem> dropDownItems;
-        public List<DropDownMenuItem> DropDownItems
+        private List<DownloadMenuItem> dropDownItems;
+        public List<DownloadMenuItem> DropDownItems
         {
             get
             {
@@ -20,11 +20,11 @@ namespace DIYoutubeDownloader
                 dropDownItems = value;
             }
         }
-        public DropDownMenuCollection(List<DropDownMenuItem> dropDownItems)
+        public DownloadMenuCollection(List<DownloadMenuItem> dropDownItems)
         {
             this.DropDownItems = dropDownItems;
             if (this.DropDownItems == null)
-                this.DropDownItems = new List<DropDownMenuItem>();
+                this.DropDownItems = new List<DownloadMenuItem>();
         }
 }
 }

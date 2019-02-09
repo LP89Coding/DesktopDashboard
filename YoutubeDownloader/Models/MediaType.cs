@@ -6,8 +6,14 @@ using System.Threading.Tasks;
 
 namespace DIYoutubeDownloader
 {
-    public class YoutubeMediaType
+    public class MediaType
     {
+        public enum ExtensionType
+        {
+            Unknown = 0,
+            MP3 = 1,
+            MP4 = 2
+        }
         public enum SizeUnit
         {
             Unknown = 0,
@@ -16,15 +22,15 @@ namespace DIYoutubeDownloader
             GB = 3
         }
 
-        public Enums.MediaType MediaType { get; private set; }
+        public ExtensionType Extension { get; private set; }
         public string Quality { get; private set; }
         public long Size { get; private set; }
 
         #region Ctor
 
-        public YoutubeMediaType(Enums.MediaType mediaType, string quality, long size)
+        public MediaType(ExtensionType extension, string quality, long size)
         {
-            this.MediaType = mediaType;
+            this.Extension = extension;
             this.Quality = quality;
             this.Size = size;
         }
@@ -50,7 +56,7 @@ namespace DIYoutubeDownloader
 
         public override string ToString()
         {
-            return $"{this.MediaType.ToString().ToLower()} {this.Quality} ({Math.Round(this.GetSize(SizeUnit.MB),2)} MB)";
+            return $"{this.Extension.ToString().ToLower()} {this.Quality} ({Math.Round(this.GetSize(SizeUnit.MB),2)} MB)";
         }
 
         #endregion

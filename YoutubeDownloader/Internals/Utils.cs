@@ -6,30 +6,30 @@ using System.Drawing.Imaging;
 using System.Windows.Media.Imaging;
 using System.IO;
 
-namespace DIYoutubeDownloader
+namespace DIYoutubeDownloader.Internal
 {
-    public class Utils
+    internal class Utils
     {
         public static BitmapImage ToBitmapImage(System.Drawing.Bitmap bitmap)
         {
             if (bitmap == null)
                 return null;
+            BitmapImage bitmapImage = new BitmapImage();
             using (System.IO.MemoryStream memory = new System.IO.MemoryStream())
             {
                 bitmap.Save(memory, ImageFormat.Png);
                 memory.Position = 0;
 
-                BitmapImage bitmapImage = new BitmapImage();
                 bitmapImage.BeginInit();
                 bitmapImage.StreamSource = memory;
                 bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
                 bitmapImage.EndInit();
-                bitmapImage.Freeze();
 
                 memory.Close();
-
-                return bitmapImage;
+                memory.Dispose();
             }
+            bitmapImage.Freeze();
+            return bitmapImage;
         }
 
         public static string GetDownloadFolderPath()
