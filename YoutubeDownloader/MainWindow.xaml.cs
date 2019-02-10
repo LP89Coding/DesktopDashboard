@@ -10,6 +10,7 @@ using Microsoft.Win32;
 using Syncfusion.SfSkinManager;
 
 using DIYoutubeDownloader.Internal;
+using EventID = DIYoutubeDownloader.Internal.EventID.DIYoutubeDowbloader;
 
 namespace DIYoutubeDownloader
 {
@@ -26,8 +27,9 @@ namespace DIYoutubeDownloader
         public MainWindow()
         {
             InitializeComponent();
-            this.InitializeControls();
+
             this.downloader = new Downloader();
+            this.InitializeControls();
             this.SetEvents();
         }
 
@@ -179,17 +181,80 @@ namespace DIYoutubeDownloader
         #endregion
 
         #endregion
+        #region Application
+
+        #region UnhandledException_Raised
+
+        private void UnhandledException_Raised(Exception exception, string source)
+        {
+            string message = null;
+            try
+            {
+                message = $"Unhandled exception in {source}, exception: {exception?.ToString()}.";
+                message += $"Exception in {Utils.GetAssemblyName()} v{Utils.GetAssemblyVersion()}";
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(EventID.Application.UnhandledExceptionException, ex);
+            }
+            finally
+            {
+                Logger.Log(EventID.Application.UnhandledException, message);
+            }
+        }
 
         #endregion
+        #region WDIYoutubeDonwloader_Closing
+
+        private void WDIYoutubeDonwloader_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            try
+            {
+                Logger.Log(EventID.Application.End);
+                try { Logger.Close(); } catch (Exception ex) { Console.WriteLine(ex.ToString()); Logger.Log(EventID.Application.Exception, ex); }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
+
+        #endregion
+
+        #endregion
+
+#endregion
 
         #region Methods
 
         #region InitializeControls
         private void InitializeControls()
         {
-            //TODO Create Own style
-            SfSkinManager.ApplyStylesOnApplication = true;
-            SfSkinManager.SetVisualStyle(this, VisualStyles.Office2013DarkGray);
+            try
+            {
+                Logger.Initialize();
+                Logger.Log(EventID.Application.Start);
+                //TODO Create Own style
+                SfSkinManager.ApplyStylesOnApplication = true;
+                SfSkinManager.SetVisualStyle(this, VisualStyles.Office2013DarkGray);
+
+                #region GlobalUnhandledExceptionEvents
+
+                AppDomain.CurrentDomain.UnhandledException += (s, e) =>
+                    UnhandledException_Raised((Exception)e.ExceptionObject, "AppDomain.CurrentDomain.UnhandledException");
+
+                Application.Current.DispatcherUnhandledException += (s, e) =>
+                    UnhandledException_Raised(e.Exception, "Application.Current.DispatcherUnhandledException");
+
+                TaskScheduler.UnobservedTaskException += (s, e) =>
+                    UnhandledException_Raised(e.Exception, "TaskScheduler.UnobservedTaskException");
+
+                #endregion
+            }
+            catch(Exception ex)
+            {
+                Logger.Log(EventID.Application.Exception, ex);
+            }
         }
         #endregion
         #region SetEvents
@@ -291,5 +356,6 @@ namespace DIYoutubeDownloader
         #endregion
 
         #endregion
+
     }
 }

@@ -10,6 +10,8 @@ namespace DIYoutubeDownloader.Internal
 {
     internal class Utils
     {
+        #region ToBitmapImage
+
         public static BitmapImage ToBitmapImage(System.Drawing.Bitmap bitmap)
         {
             if (bitmap == null)
@@ -32,9 +34,30 @@ namespace DIYoutubeDownloader.Internal
             return bitmapImage;
         }
 
+        #endregion
+        #region GetDownloadFolderPath
+
         public static string GetDownloadFolderPath()
         {
             return Path.Combine(Environment.GetEnvironmentVariable("USERPROFILE"), "Downloads");
         }
+
+        #endregion
+        #region GetAssemblyName
+
+        public static string GetAssemblyName()
+        {
+            return System.Reflection.Assembly.GetExecutingAssembly()?.GetName()?.Name;
+        }
+
+        #endregion
+        #region GetAssemblyVersion
+
+        public static Version GetAssemblyVersion()
+        {
+            return System.Reflection.Assembly.GetExecutingAssembly()?.GetName()?.Version;
+        }
+
+        #endregion
     }
 }

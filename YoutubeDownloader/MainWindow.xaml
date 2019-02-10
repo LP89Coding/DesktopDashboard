@@ -9,7 +9,7 @@
         Title="Youtube Downloader" 
         Height="226.856" Width="284.186" MaxHeight="226.856" MinHeight="226.856" MinWidth="480.147" MaxWidth="480.147" 
         ResizeMode="CanMinimize" 
-        Icon="Images/Icon/YouTube.ico" HorizontalContentAlignment="Center">
+        Icon="Images/Icon/YouTube.ico" HorizontalContentAlignment="Center" Closing="WDIYoutubeDonwloader_Closing">
     <Window.TaskbarItemInfo>
         <TaskbarItemInfo ProgressValue="1" ProgressState="None"></TaskbarItemInfo>
     </Window.TaskbarItemInfo>

@@ -205,9 +205,14 @@ namespace DIYoutubeDownloader
 
         #region GetThumbnailUrl
 
-        public string GetThumbnailUrl(string url, ThumbnailQuality quality = ThumbnailQuality.Standard)
+        public string GetThumbnailUrl(string mediaUrl)
         {
-            return this.GetThumbnailUrl(this.GetVideoInfo(url), quality: quality);
+            return this.GetThumbnailUrl(mediaUrl, ThumbnailQuality.Standard);
+        }
+
+        public string GetThumbnailUrl(string mediaUrl, ThumbnailQuality quality = ThumbnailQuality.Standard)
+        {
+            return this.GetThumbnailUrl(this.GetVideoInfo(mediaUrl), quality: quality);
         }
 
         private string GetThumbnailUrl(Video videoInfo, ThumbnailQuality quality = ThumbnailQuality.Standard)
@@ -243,9 +248,14 @@ namespace DIYoutubeDownloader
         #endregion
         #region GetThumbnail
 
-        private Bitmap GetThumbnail(string url, ThumbnailQuality quality = ThumbnailQuality.Standard)
+        public Bitmap GetThumbnail(string mediaUrl)
         {
-            return this.GetThumbnail(this.GetVideoInfo(url), quality: quality);
+            return this.GetThumbnail(mediaUrl, ThumbnailQuality.Standard);
+        }
+
+        public Bitmap GetThumbnail(string mediaUrl, ThumbnailQuality quality = ThumbnailQuality.Standard)
+        {
+            return this.GetThumbnail(this.GetVideoInfo(mediaUrl), quality: quality);
         }
 
         private Bitmap GetThumbnail(Video videoInfo, ThumbnailQuality quality = ThumbnailQuality.Standard)
