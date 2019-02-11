@@ -8,6 +8,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using DIYoutubeDownloader.Internal;
 using YoutubeExplode;
 using YoutubeExplode.Models;
 using YoutubeExplode.Models.MediaStreams;
@@ -140,7 +141,7 @@ namespace DIYoutubeDownloader
             }
             catch (Exception ex)
             {
-                //TODO Log
+                Utils.Logger.Log(EventID.DIYoutubeDowbloader.Downloader.GetMediaInfoException, ex);
                 ymItem = null;
             }
             finally
@@ -261,7 +262,7 @@ namespace DIYoutubeDownloader
                 }
                 catch (Exception ex)
                 {
-                    //TODO Log
+                    Utils.Logger.Log(EventID.DIYoutubeDowbloader.Downloader.GetThumbnailException, ex);
                 }
             }
 
@@ -343,7 +344,7 @@ namespace DIYoutubeDownloader
             }
             catch (Exception ex)
             {
-                //TODO Log
+                Utils.Logger.Log(EventID.DIYoutubeDowbloader.Downloader.DownloadException, ex);
                 downlaodStream?.Close();
                 downlaodStream?.Dispose();
                 downlaodStream = null;
@@ -374,7 +375,7 @@ namespace DIYoutubeDownloader
             }
             catch (Exception ex)
             {
-                //TODO Log
+                Utils.Logger.Log(EventID.DIYoutubeDowbloader.Downloader.CancelException, ex);
             }
             finally
             {
@@ -398,7 +399,7 @@ namespace DIYoutubeDownloader
             }
             catch(Exception ex)
             {
-                //TODO log
+                Utils.Logger.Log(EventID.DIYoutubeDowbloader.Downloader.DisposeException, ex);
             }
         }
 

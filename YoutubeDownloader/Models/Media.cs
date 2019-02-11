@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DIYoutubeDownloader.Internal;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -57,7 +58,7 @@ namespace DIYoutubeDownloader
             }
             catch(Exception ex)
             {
-                //TODO Log
+                Utils.Logger.Log(EventID.DIYoutubeDowbloader.Media.DisposeException, ex);
             }
         }
 

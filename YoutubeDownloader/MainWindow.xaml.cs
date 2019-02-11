@@ -24,6 +24,7 @@ namespace DIYoutubeDownloader
         private IDownloader downloader { get; }
         private Media downloadingMedia { get; set; }
 
+        #region Ctor
         public MainWindow()
         {
             InitializeComponent();
@@ -32,6 +33,7 @@ namespace DIYoutubeDownloader
             this.InitializeControls();
             this.SetEvents();
         }
+        #endregion
 
         #region Events
 
@@ -51,7 +53,7 @@ namespace DIYoutubeDownloader
             }
             catch(Exception ex)
             {
-                //TODO Log
+                Utils.Logger.Log(EventID.OnBeginLoadMediaInfo.Exception, ex);
             }
         }
         #endregion
@@ -70,7 +72,7 @@ namespace DIYoutubeDownloader
             }
             catch (TaskCanceledException ex)
             {
-                //TODO Log
+                Utils.Logger.Log(EventID.OnEndLoadMediaInfo.Exception, ex);
                 Downloader_OnEndLoadMediaInfo(null);
             }
         }
@@ -92,7 +94,7 @@ namespace DIYoutubeDownloader
             }
             catch (Exception ex)
             {
-                //TODO Log
+                Utils.Logger.Log(EventID.OnBeginDownload.Exception, ex);
             }
         }
         #endregion
@@ -114,7 +116,7 @@ namespace DIYoutubeDownloader
             }
             catch (TaskCanceledException ex)
             {
-                //TODO Log
+                Utils.Logger.Log(EventID.OnEndDownload.Exception, ex);
             }
         }
         #endregion
@@ -131,7 +133,7 @@ namespace DIYoutubeDownloader
             }
             catch (TaskCanceledException ex)
             {
-                //TODO Log
+                Utils.Logger.Log(EventID.OnProgress.Exception, ex);
             }
         }
         #endregion
@@ -148,7 +150,7 @@ namespace DIYoutubeDownloader
             }
             catch (Exception ex)
             {
-                //TODO Log
+                Utils.Logger.Log(EventID.FindMediaClick.Exception, ex);
                 Downloader_OnEndLoadMediaInfo(null);
                 this.downloadingMedia = null;
             }
@@ -168,7 +170,7 @@ namespace DIYoutubeDownloader
             }
             catch (Exception ex)
             {
-                //TODO Log
+                Utils.Logger.Log(EventID.DownloadMediaClick.Exception, ex);
                 Downloader_OnEndDownload();
             }
         }
@@ -210,6 +212,8 @@ namespace DIYoutubeDownloader
         {
             try
             {
+                this.downloader?.Dispose();
+                this.downloadingMedia?.Dispose();
                 Utils.Logger.Log(EventID.Application.End);
                 try { Utils.Logger.Close(); } catch (Exception ex) { Console.WriteLine(ex.ToString()); Utils.Logger.Log(EventID.Application.Exception, ex); }
             }
@@ -348,7 +352,7 @@ namespace DIYoutubeDownloader
                 }
                 catch (Exception ex)
                 {
-                    //TODO Log
+                    Utils.Logger.Log(EventID.DownloadMediaAsync.Exception, ex);
                     Downloader_OnEndDownload();
                 }
             }
