@@ -10,6 +10,8 @@ namespace DIYoutubeDownloader.Internal
 {
     internal class Utils
     {
+        public static ILogger Logger { get; private set; } = new Logger();
+
         #region ToBitmapImage
 
         public static BitmapImage ToBitmapImage(System.Drawing.Bitmap bitmap)

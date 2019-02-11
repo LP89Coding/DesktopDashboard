@@ -21,13 +21,13 @@ namespace DIYoutubeDownloader
     {
         private const string MainWindowTitle = "Youtube downloader"; 
 
-        private Downloader downloader { get; }
+        private IDownloader downloader { get; }
         private Media downloadingMedia { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
-
+            
             this.downloader = new Downloader();
             this.InitializeControls();
             this.SetEvents();
@@ -195,11 +195,11 @@ namespace DIYoutubeDownloader
             }
             catch (Exception ex)
             {
-                Logger.Log(EventID.Application.UnhandledExceptionException, ex);
+                Utils.Logger.Log(EventID.Application.UnhandledExceptionException, ex);
             }
             finally
             {
-                Logger.Log(EventID.Application.UnhandledException, message);
+                Utils.Logger.Log(EventID.Application.UnhandledException, message);
             }
         }
 
@@ -210,8 +210,8 @@ namespace DIYoutubeDownloader
         {
             try
             {
-                Logger.Log(EventID.Application.End);
-                try { Logger.Close(); } catch (Exception ex) { Console.WriteLine(ex.ToString()); Logger.Log(EventID.Application.Exception, ex); }
+                Utils.Logger.Log(EventID.Application.End);
+                try { Utils.Logger.Close(); } catch (Exception ex) { Console.WriteLine(ex.ToString()); Utils.Logger.Log(EventID.Application.Exception, ex); }
             }
             catch(Exception ex)
             {
@@ -223,7 +223,7 @@ namespace DIYoutubeDownloader
 
         #endregion
 
-#endregion
+        #endregion
 
         #region Methods
 
@@ -232,8 +232,8 @@ namespace DIYoutubeDownloader
         {
             try
             {
-                Logger.Initialize();
-                Logger.Log(EventID.Application.Start);
+                Utils.Logger.Initialize();
+                Utils.Logger.Log(EventID.Application.Start);
                 //TODO Create Own style
                 SfSkinManager.ApplyStylesOnApplication = true;
                 SfSkinManager.SetVisualStyle(this, VisualStyles.Office2013DarkGray);
@@ -253,7 +253,7 @@ namespace DIYoutubeDownloader
             }
             catch(Exception ex)
             {
-                Logger.Log(EventID.Application.Exception, ex);
+                Utils.Logger.Log(EventID.Application.Exception, ex);
             }
         }
         #endregion
@@ -311,7 +311,7 @@ namespace DIYoutubeDownloader
         }
         #endregion
         #region DownloadMediaAsync
-        private void DownloadMediaAsync(Downloader downloader, Media downloadingMedia, MediaType downloadinMediaType)
+        private void DownloadMediaAsync(IDownloader downloader, Media downloadingMedia, MediaType downloadinMediaType)
         {
             if (downloadinMediaType != null && downloadingMedia != null)
             {

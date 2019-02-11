@@ -6,13 +6,39 @@ using System.Threading.Tasks;
 
 namespace DIYoutubeDownloader.Internal
 {
-    internal class Logger
+    internal class Logger : ILogger
     {
-        private static NLog.Logger LoggerInstance = null;
-        private static bool InitializationFailed = false;
-        private static bool Closed = false;
+        private NLog.Logger LoggerInstance = null;
+        private bool InitializationFailed = false;
+        private bool Closed = false;
 
-        public static void Initialize()
+        #region GetLogLevel
+        private NLog.LogLevel GetLogLevel(Enums.LogLevel logLevel)
+        {
+            switch (logLevel)
+            {
+                case Enums.LogLevel.Trace:
+                    return NLog.LogLevel.Trace;
+                case Enums.LogLevel.Debug:
+                    return NLog.LogLevel.Debug;
+                case Enums.LogLevel.Info:
+                    return NLog.LogLevel.Info;
+                case Enums.LogLevel.Warn:
+                    return NLog.LogLevel.Warn;
+                case Enums.LogLevel.Error:
+                    return NLog.LogLevel.Error;
+                case Enums.LogLevel.Fatal:
+                    return NLog.LogLevel.Fatal;
+                default:
+                    return NLog.LogLevel.Off;
+            }
+        }
+        #endregion
+
+        #region ILogger implementation
+
+        #region Initialize
+        public void Initialize()
         {
             try
             {
@@ -25,8 +51,9 @@ namespace DIYoutubeDownloader.Internal
                 InitializationFailed = true;
             }
         }
-
-        public static void Close()
+        #endregion
+        #region Close
+        public void Close()
         {
             try
             {
@@ -38,34 +65,22 @@ namespace DIYoutubeDownloader.Internal
                 Console.WriteLine(ex.ToString());
             }
         }
-
-        public static void Log(LogData logData, params object[] args)
+        #endregion
+        #region Log
+        public void Log(LogData logData, params object[] args)
         {
             if (logData != null && !InitializationFailed && !Closed)
             {
                 if (LoggerInstance == null)
                     Initialize();
-                NLog.LogEventInfo lei = new NLog.LogEventInfo(logData.LogLevel, LoggerInstance.Name, null, logData.Message, args);
+                NLog.LogEventInfo lei = new NLog.LogEventInfo(this.GetLogLevel(logData.LogLevel), LoggerInstance.Name, null, logData.Message, args);
                 // this data can be retrieved using ${event-context:EventID}
                 lei.Properties["EventID"] = logData.EventID;
                 LoggerInstance.Log(lei);
             }
         }
+        #endregion
 
-        public class LogData
-        {
-            public long EventID { get; private set; }
-            public NLog.LogLevel LogLevel { get; private set; }
-            public string Message { get; private set; }
-
-            public LogData(long EventID, NLog.LogLevel LogLevel, string Message)
-            {
-                this.EventID = EventID;
-                this.LogLevel = LogLevel;
-                this.Message = Message;
-            }
-        }
-
-
+        #endregion
     }
 }

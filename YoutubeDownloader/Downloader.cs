@@ -14,7 +14,7 @@ using YoutubeExplode.Models.MediaStreams;
 
 namespace DIYoutubeDownloader
 {
-    public class Downloader : IDisposable, IProgress<double>
+    public class Downloader : IDownloader, IProgress<double>
     {
         /*
          * https://github.com/Tyrrrz/YoutubeExplode
@@ -36,13 +36,7 @@ namespace DIYoutubeDownloader
 
         private CancellationTokenSource CancelOperation { get; set; }
 
-        public bool IsDownloading { get; private set; }
-
-        public delegate void Progress(double progress);
-        public delegate void BeginDownload();
-        public delegate void EndDownload();
-        public delegate void BeginLoadMediaInfo();
-        public delegate void EndLoadMediaInfo(Media mediaInfo);
+        public bool InProgress { get; private set; }
 
         public event Progress OnProgress;
         public event BeginDownload OnBeginDownload;
@@ -55,7 +49,7 @@ namespace DIYoutubeDownloader
         public Downloader()
         {
             this.youtubeClient = new YoutubeClient();
-            this.IsDownloading = false;
+            this.InProgress = false;
         }
 
         #endregion
@@ -204,12 +198,7 @@ namespace DIYoutubeDownloader
         #endregion
 
         #region GetThumbnailUrl
-
-        public string GetThumbnailUrl(string mediaUrl)
-        {
-            return this.GetThumbnailUrl(mediaUrl, ThumbnailQuality.Standard);
-        }
-
+        
         public string GetThumbnailUrl(string mediaUrl, ThumbnailQuality quality = ThumbnailQuality.Standard)
         {
             return this.GetThumbnailUrl(this.GetVideoInfo(mediaUrl), quality: quality);
@@ -248,11 +237,6 @@ namespace DIYoutubeDownloader
         #endregion
         #region GetThumbnail
 
-        public Bitmap GetThumbnail(string mediaUrl)
-        {
-            return this.GetThumbnail(mediaUrl, ThumbnailQuality.Standard);
-        }
-
         public Bitmap GetThumbnail(string mediaUrl, ThumbnailQuality quality = ThumbnailQuality.Standard)
         {
             return this.GetThumbnail(this.GetVideoInfo(mediaUrl), quality: quality);
@@ -286,6 +270,32 @@ namespace DIYoutubeDownloader
 
         #endregion
 
+        #region IDownloader implementation
+
+        #region IsDownloading
+
+        public bool IsDownloading()
+        {
+            return this.InProgress;
+        }
+
+        #endregion
+        #region GetThumbnailUrl
+
+        public string GetThumbnailUrl(string mediaUrl)
+        {
+            return this.GetThumbnailUrl(mediaUrl, ThumbnailQuality.Standard);
+        }
+
+        #endregion
+        #region GetThumbnail
+
+        public Bitmap GetThumbnail(string mediaUrl)
+        {
+            return this.GetThumbnail(mediaUrl, ThumbnailQuality.Standard);
+        }
+
+        #endregion
         #region Download
 
         public MemoryStream Download(string mediaId, MediaType mediaType)
@@ -294,7 +304,7 @@ namespace DIYoutubeDownloader
             Task videoDownloader = null;
             try
             {
-                this.IsDownloading = true;
+                this.InProgress = true;
                 if (this.OnBeginDownload != null)
                     this.OnBeginDownload();
                 if (mediaType == null || mediaType.Extension == MediaType.ExtensionType.Unknown)
@@ -324,7 +334,7 @@ namespace DIYoutubeDownloader
                 this.CancelOperation = new CancellationTokenSource();
 
                 downlaodStream = new MemoryStream();
-                videoDownloader = this.youtubeClient.DownloadMediaStreamAsync(mediaStreamInfo, downlaodStream, 
+                videoDownloader = this.youtubeClient.DownloadMediaStreamAsync(mediaStreamInfo, downlaodStream,
                                                                                    progress: this,
                                                                                    cancellationToken: this.CancelOperation.Token);
                 videoDownloader.Wait();
@@ -340,7 +350,7 @@ namespace DIYoutubeDownloader
             }
             finally
             {
-                this.IsDownloading = false;
+                this.InProgress = false;
                 if (this.OnEndDownload != null)
                     this.OnEndDownload();
                 this.CancelOperation?.Dispose();
@@ -351,14 +361,13 @@ namespace DIYoutubeDownloader
         }
 
         #endregion
-
         #region Cancel
 
         public void Cancel()
         {
             try
             {
-                if(this.CancelOperation != null && !this.CancelOperation.IsCancellationRequested)
+                if (this.CancelOperation != null && !this.CancelOperation.IsCancellationRequested)
                 {
                     this.CancelOperation.Cancel();
                 }
@@ -376,6 +385,7 @@ namespace DIYoutubeDownloader
 
         #endregion
 
+        #endregion
         #region IDisposable implementation
 
         public void Dispose()
@@ -393,7 +403,6 @@ namespace DIYoutubeDownloader
         }
 
         #endregion
-
         #region IProgress implementation
 
         public void Report(double value)

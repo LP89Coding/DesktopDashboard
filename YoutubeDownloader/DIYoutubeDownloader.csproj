@@ -89,7 +89,9 @@
     </ApplicationDefinition>
     <Compile Include="Interfaces\IDownloader.cs" />
     <Compile Include="Interfaces\ILogger.cs" />
+    <Compile Include="Internals\Enums.cs" />
     <Compile Include="Internals\EventID.cs" />
+    <Compile Include="Internals\LogData.cs" />
     <Compile Include="Internals\Logger.cs" />
     <Compile Include="Models\DownloadMenuCollection.cs" />
     <Compile Include="Models\DownloadMenuItem.cs" />

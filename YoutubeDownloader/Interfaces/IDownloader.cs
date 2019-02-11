@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.IO;
 
-namespace DIYoutubeDownloader.Interfaces
+namespace DIYoutubeDownloader
 {
     public delegate void Progress(double progress);
     public delegate void BeginDownload();
@@ -12,8 +12,7 @@ namespace DIYoutubeDownloader.Interfaces
 
     public interface IDownloader : IDisposable
     {
-        bool IsDownloading { get; set; }
-
+        bool IsDownloading();
         Media GetMediaInfo(string url);
         string GetThumbnailUrl(string mediaUrl);
         Bitmap GetThumbnail(string mediaUrl);
