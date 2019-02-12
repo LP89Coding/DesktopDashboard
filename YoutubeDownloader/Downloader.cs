@@ -109,52 +109,6 @@ namespace DIYoutubeDownloader
         }
 
         #endregion
-
-        #region GetMediaInfo
-
-        public Media GetMediaInfo(string url)
-        {
-            Media ymItem = null;
-            try
-            {
-                if (this.OnBeginLoadMediaInfo != null)
-                    OnBeginLoadMediaInfo();
-                if (!String.IsNullOrWhiteSpace(url))
-                {
-                    Video videoInfo = this.GetVideoInfo(url);
-
-                    ymItem = new Media(videoInfo.Id, url)
-                    {
-                        Author = videoInfo.Author,
-                        Description = videoInfo.Description,
-                        Duration = videoInfo.Duration,
-                        Title = videoInfo.Title,
-                        UploadDate = videoInfo.UploadDate,
-                        Thumbnail = this.GetThumbnail(videoInfo),
-                        LikesCount = videoInfo?.Statistics.LikeCount ?? 0,
-                        DislikesCount = videoInfo?.Statistics.DislikeCount ?? 0,
-                        ViewsCount = videoInfo?.Statistics.ViewCount ?? 0,
-                        AverageRatings = videoInfo?.Statistics.AverageRating ?? 0.0
-                    };
-                    ymItem.MediaTypes.AddRange(this.GetMediaTypeInfo(ymItem.MediaId));
-                }
-            }
-            catch (Exception ex)
-            {
-                Utils.Logger.Log(EventID.DIYoutubeDowbloader.Downloader.GetMediaInfoException, ex);
-                ymItem = null;
-            }
-            finally
-            {
-                if (this.OnEndLoadMediaInfo != null)
-                    OnEndLoadMediaInfo(ymItem);
-                this.CancelOperation?.Dispose();
-                this.CancelOperation = null;
-            }
-            return ymItem;
-        }
-
-        #endregion
         #region GetMediaTypeInfo
 
         private List<MediaType> GetMediaTypeInfo(string mediaId)
@@ -257,7 +211,10 @@ namespace DIYoutubeDownloader
                         using (Stream stream = webClient.OpenRead(url))
                         {
                             result = new Bitmap(stream);
+                            stream.Close();
+                            stream.Dispose();
                         }
+                        webClient.Dispose();
                     }
                 }
                 catch (Exception ex)
@@ -278,6 +235,53 @@ namespace DIYoutubeDownloader
         public bool IsDownloading()
         {
             return this.InProgress;
+        }
+
+        #endregion
+        #region GetMediaInfo
+
+        public Media GetMediaInfo(string url)
+        {
+            Media ymItem = null;
+            try
+            {
+                this.InProgress = true;
+                if (this.OnBeginLoadMediaInfo != null)
+                    OnBeginLoadMediaInfo();
+                if (!String.IsNullOrWhiteSpace(url))
+                {
+                    Video videoInfo = this.GetVideoInfo(url);
+
+                    ymItem = new Media(videoInfo.Id, url)
+                    {
+                        Author = videoInfo.Author,
+                        Description = videoInfo.Description,
+                        Duration = videoInfo.Duration,
+                        Title = videoInfo.Title,
+                        UploadDate = videoInfo.UploadDate,
+                        Thumbnail = this.GetThumbnail(videoInfo),
+                        LikesCount = videoInfo?.Statistics.LikeCount ?? 0,
+                        DislikesCount = videoInfo?.Statistics.DislikeCount ?? 0,
+                        ViewsCount = videoInfo?.Statistics.ViewCount ?? 0,
+                        AverageRatings = videoInfo?.Statistics.AverageRating ?? 0.0
+                    };
+                    ymItem.MediaTypes.AddRange(this.GetMediaTypeInfo(ymItem.MediaId));
+                }
+            }
+            catch (Exception ex)
+            {
+                Utils.Logger.Log(EventID.DIYoutubeDowbloader.Downloader.GetMediaInfoException, ex);
+                ymItem = null;
+            }
+            finally
+            {
+                if (this.OnEndLoadMediaInfo != null)
+                    OnEndLoadMediaInfo(ymItem);
+                this.CancelOperation?.Dispose();
+                this.CancelOperation = null;
+                this.InProgress = false;
+            }
+            return ymItem;
         }
 
         #endregion
@@ -351,12 +355,12 @@ namespace DIYoutubeDownloader
             }
             finally
             {
-                this.InProgress = false;
                 if (this.OnEndDownload != null)
                     this.OnEndDownload();
                 this.CancelOperation?.Dispose();
                 this.CancelOperation = null;
                 videoDownloader?.Dispose();
+                this.InProgress = false;
             }
             return downlaodStream;
         }

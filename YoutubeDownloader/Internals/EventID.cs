@@ -76,11 +76,18 @@ namespace DIYoutubeDownloader.Internal
                 public static LogData Exception = new LogData(10090, LogLevel.Error, "Error: {0}");
             }
             /// <summary>
-            /// Reserved EventID Range <10 100; 10 109>
+            /// Reserved EventID Range <10 100; 10 104>
             /// </summary>
             internal class DownloadMediaAsync
             {
                 public static LogData Exception = new LogData(10100, LogLevel.Error, "Error: {0}");
+            }
+            /// <summary>
+            /// Reserved EventID Range <10 105; 10 109>
+            /// </summary>
+            internal class LoadMediaInfoAsync
+            {
+                public static LogData Exception = new LogData(10105, LogLevel.Error, "Error: {0}");
             }
             /// <summary>
             /// Reserved EventID Range <10 100; 10 129>

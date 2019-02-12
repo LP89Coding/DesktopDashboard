@@ -89,12 +89,11 @@
     </ApplicationDefinition>
     <Compile Include="Interfaces\IDownloader.cs" />
     <Compile Include="Interfaces\ILogger.cs" />
+    <Compile Include="Internals\Consts.cs" />
     <Compile Include="Internals\Enums.cs" />
     <Compile Include="Internals\EventID.cs" />
     <Compile Include="Internals\LogData.cs" />
     <Compile Include="Internals\Logger.cs" />
-    <Compile Include="Models\DownloadMenuCollection.cs" />
-    <Compile Include="Models\DownloadMenuItem.cs" />
     <Compile Include="ResourceImage128.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -104,7 +103,7 @@
     <Compile Include="Downloader.cs" />
     <Compile Include="Models\Media.cs" />
     <Compile Include="Models\MediaType.cs" />
-    <Page Include="MainWindow.xaml">
+    <Page Include="YoutubeDownloader.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -112,8 +111,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="ViewModels\ObservableViewModel.cs" />
+    <Compile Include="ViewModels\YoutubeDownloaderViewModel.cs" />
+    <Compile Include="YoutubeDownloader.xaml.cs">
+      <DependentUpon>YoutubeDownloader.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -199,5 +200,6 @@
   <ItemGroup>
     <Resource Include="Images\256x256\RightArrow.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
