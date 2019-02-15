@@ -99,7 +99,8 @@
             <syncfusion:DropDownMenuGroup ItemsSource="{Binding DownloadMediaTypes}">
                 <syncfusion:DropDownMenuGroup.ItemTemplate>
                     <DataTemplate>
-                        <syncfusion:DropDownMenuItem Header="{Binding}" Tag="{Binding}" Click="ddbaDownloadMedia_DropDownMenuItemClick_">
+                        <syncfusion:DropDownMenuItem Header="{Binding}" Tag="{Binding}" 
+                                                     Command="{Binding DownloadMediaButtonCommand}">
                             <syncfusion:DropDownMenuItem.Icon>
                                 <Image Source="Images/32x32/Download.png"/>
                             </syncfusion:DropDownMenuItem.Icon>
@@ -111,9 +112,10 @@
         <syncfusion:ButtonAdv x:Name="baDownloadMediaCancel" Content="ButtonAdv" 
                               HorizontalAlignment="Left" VerticalAlignment="Top" 
                               Height="61" Width="61" 
+                              IsEnabled="{Binding Path=DownloadMediaCancelIsEnabled, Mode=OneWay}"
                               Label="" Visibility="{Binding Path=DownloadMediaCancelVisibility, Mode=OneWay}"
                               Margin="35,118,0,0" 
-                              Click="baDownloadMediaCancel_Click" 
+                              Command="{Binding Path=CancelButtonCommand}"
                               Background="{x:Null}" 
                               SizeMode="Large" LargeIcon="Images/128x128/Cancel.png" IconHeight="45" IconWidth="45" IconStretch="Fill" 
                               Grid.Column="2"/>
@@ -121,12 +123,12 @@
                               HorizontalAlignment="Left" VerticalAlignment="Top" 
                               Height="28" Width="28" MinWidth="28" MaxWidth="28" MaxHeight="28" MinHeight="28" 
                               Label="" 
+                              Command="{Binding FindMediaButtonCommand}" CommandParameter="{Binding Text, ElementName=tbeUrl}"
                               IsEnabled="{Binding Path=FindMediaIsEnabled, Mode=OneWay}"
                               Margin="68,10,0,0" Padding="0" 
                               RenderTransformOrigin="4.304,-2.671" 
                               Grid.Column="2" Foreground="{x:Null}" Background="{x:Null}" 
-                              SmallIcon="Images/32x32/RightArrow.png" IconWidth="20" IconHeight="20" 
-                              Click="baFindMedia_Click"/>
+                              SmallIcon="Images/32x32/RightArrow.png" IconWidth="20" IconHeight="20" />
 
     </Grid>
 </Window>

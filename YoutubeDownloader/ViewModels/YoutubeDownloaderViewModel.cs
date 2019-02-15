@@ -10,9 +10,10 @@ using System.Windows.Shell;
 using Microsoft.Win32;
 
 using DIYoutubeDownloader.Internal;
-using EventID = DIYoutubeDownloader.Internal.EventID.DIYoutubeDowbloader;
+using EventID = DIYoutubeDownloader.Internal.EventID.DIYoutubeDownloader;
 using System.Windows;
 using DIYoutubeDownloader.Internals;
+using System.Windows.Input;
 
 namespace DIYoutubeDownloader.ViewModels
 {
@@ -59,7 +60,7 @@ namespace DIYoutubeDownloader.ViewModels
             }
         }
 
-        public List<MediaType> DownloadMediaTypes { get { return this.Media?.MediaTypes; } }
+        public List<MediaTypeViewModel> DownloadMediaTypes { get { return this.Media?.MediaTypes.Select(mt => new MediaTypeViewModel(mt, this.downloader, this.media)).ToList(); } }
         public string MediaDescription { get { return this.Media?.ToString(); } }
 
         private bool isDownloading;
@@ -72,11 +73,14 @@ namespace DIYoutubeDownloader.ViewModels
                 RaisePropertyChangedEvent(nameof(this.DownloadMediaIsEnabled));
                 RaisePropertyChangedEvent(nameof(this.FindMediaIsEnabled));
                 RaisePropertyChangedEvent(nameof(this.MediaLoaderVisibility));
+                RaisePropertyChangedEvent(nameof(this.DownloadMediaCancelIsEnabled));
             }
         }
+        public bool IsIdle { get { return !this.IsDownloading; } }
 
         public string WindowTitle { get { return this.IsDownloading && this.TaskBarProgressState == TaskbarItemProgressState.Normal ? $"{Consts.YoutubeDownloaderTitle} ({Math.Round(this.TaskBarProgressValue * 100.0, 0)}%)" : Consts.YoutubeDownloaderTitle; } }
         public bool DownloadMediaIsEnabled { get { return !String.IsNullOrWhiteSpace(this.Media?.MediaId) && !this.IsDownloading; } }
+        public bool DownloadMediaCancelIsEnabled { get { return this.IsDownloading; } }
         public bool FindMediaIsEnabled { get { return !this.IsDownloading; } }
         public Visibility MediaLoaderVisibility { get { return this.IsDownloading ? Visibility.Visible : Visibility.Hidden; } }
         public Visibility DownloadMedialVisibility { get { return !this.IsDownloading ? Visibility.Visible : Visibility.Hidden; } }
@@ -95,6 +99,7 @@ namespace DIYoutubeDownloader.ViewModels
         private TaskbarItemProgressState taskBarProgressState;
         public TaskbarItemProgressState TaskBarProgressState
         {
+
             get { return this.taskBarProgressState; }
             set
             {
@@ -103,10 +108,17 @@ namespace DIYoutubeDownloader.ViewModels
                 RaisePropertyChangedEvent(nameof(this.WindowTitle));
             }
         }
+        
+        private ICommand cancelButtonCommand;
+        public ICommand CancelButtonCommand { get { return this.cancelButtonCommand; } private set { this.cancelButtonCommand = value; } }
+        private ICommand findMediaButtonCommand;
+        public ICommand FindMediaButtonCommand { get { return this.findMediaButtonCommand; } private set { this.findMediaButtonCommand = value; } }
 
         #region Ctor
         public YoutubeDownloaderViewModel()
         {
+            this.FindMediaButtonCommand = new Command((object parameter) => { LoadMediaInfoAsync(parameter?.ToString()); }, param => FindMediaIsEnabled);
+            this.CancelButtonCommand = new Command((object parameter) => { CancelDownload(); });
             this.SetEvents();
 
         }
@@ -217,51 +229,6 @@ namespace DIYoutubeDownloader.ViewModels
             catch(Exception ex)
             {
                 Utils.Logger.Log(EventID.LoadMediaInfoAsync.Exception, ex);
-            }
-        }
-        #endregion
-        #region DownloadMediaAsync
-        public void DownloadMediaAsync(MediaType downloadinMediaType)
-        {
-            IDownloader downloader = this.downloader;
-            Media downloadingMedia = this.Media;
-            if (downloadinMediaType != null && downloadingMedia != null)
-            {
-                try
-                {
-                    new Task(() =>
-                    {
-                        using (MemoryStream downloadStream = this.downloader.Download(downloadingMedia.MediaId, downloadinMediaType))
-                        {
-                            if (downloadStream != null)
-                            {
-                                string fileName = downloadingMedia.Title;
-                                string fileExtension = downloadinMediaType.Extension.ToString().ToLower();
-
-                                System.IO.Path.GetInvalidFileNameChars().Select(c => fileName.Replace(c, ' '));
-
-                                SaveFileDialog dialog = new SaveFileDialog()
-                                {
-                                    Filter = $"*{fileExtension} files |*.{fileExtension}",
-                                    DefaultExt = $"*.{fileExtension}",
-                                    InitialDirectory = Utils.GetDownloadFolderPath(),
-                                    FileName = $"{fileName}.{fileExtension}"
-                                };
-
-                                if (dialog.ShowDialog() == true)
-                                {
-                                    File.WriteAllBytes(dialog.FileName, downloadStream.ToArray());
-                                }
-                                downloadStream.Close();
-                                downloadStream.Dispose();
-                            }
-                        }
-                    }).Start();
-                }
-                catch (Exception ex)
-                {
-                    Utils.Logger.Log(EventID.DownloadMediaAsync.Exception, ex);
-                }
             }
         }
         #endregion

@@ -13,7 +13,7 @@ namespace DIYoutubeDownloader.Internal
         /// <summary>
         /// Reserved EventID Range <10 000; 10 999>
         /// </summary>
-        internal class DIYoutubeDowbloader
+        internal class DIYoutubeDownloader
         {
             /// <summary>
             /// Reserved EventID Range <10 000; 10 029>

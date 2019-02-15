@@ -100,7 +100,7 @@
       <DependentUpon>ResourceImage128.resx</DependentUpon>
     </Compile>
     <Compile Include="Internals\Utils.cs" />
-    <Compile Include="Downloader.cs" />
+    <Compile Include="Internals\Downloader.cs" />
     <Compile Include="Models\Media.cs" />
     <Compile Include="Models\MediaType.cs" />
     <Page Include="YoutubeDownloader.xaml">
@@ -111,6 +111,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModels\Command.cs" />
+    <Compile Include="ViewModels\MediaTypeViewModel.cs" />
     <Compile Include="ViewModels\ObservableViewModel.cs" />
     <Compile Include="ViewModels\YoutubeDownloaderViewModel.cs" />
     <Compile Include="YoutubeDownloader.xaml.cs">

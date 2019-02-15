@@ -15,7 +15,7 @@ using YoutubeExplode.Models.MediaStreams;
 
 namespace DIYoutubeDownloader
 {
-    public class Downloader : IDownloader, IProgress<double>
+    internal class Downloader : IDownloader, IProgress<double>
     {
         /*
          * https://github.com/Tyrrrz/YoutubeExplode
@@ -219,7 +219,7 @@ namespace DIYoutubeDownloader
                 }
                 catch (Exception ex)
                 {
-                    Utils.Logger.Log(EventID.DIYoutubeDowbloader.Downloader.GetThumbnailException, ex);
+                    Utils.Logger.Log(EventID.DIYoutubeDownloader.Downloader.GetThumbnailException, ex);
                 }
             }
 
@@ -270,7 +270,7 @@ namespace DIYoutubeDownloader
             }
             catch (Exception ex)
             {
-                Utils.Logger.Log(EventID.DIYoutubeDowbloader.Downloader.GetMediaInfoException, ex);
+                Utils.Logger.Log(EventID.DIYoutubeDownloader.Downloader.GetMediaInfoException, ex);
                 ymItem = null;
             }
             finally
@@ -348,7 +348,7 @@ namespace DIYoutubeDownloader
             }
             catch (Exception ex)
             {
-                Utils.Logger.Log(EventID.DIYoutubeDowbloader.Downloader.DownloadException, ex);
+                Utils.Logger.Log(EventID.DIYoutubeDownloader.Downloader.DownloadException, ex);
                 downlaodStream?.Close();
                 downlaodStream?.Dispose();
                 downlaodStream = null;
@@ -379,7 +379,7 @@ namespace DIYoutubeDownloader
             }
             catch (Exception ex)
             {
-                Utils.Logger.Log(EventID.DIYoutubeDowbloader.Downloader.CancelException, ex);
+                Utils.Logger.Log(EventID.DIYoutubeDownloader.Downloader.CancelException, ex);
             }
             finally
             {
@@ -403,7 +403,7 @@ namespace DIYoutubeDownloader
             }
             catch(Exception ex)
             {
-                Utils.Logger.Log(EventID.DIYoutubeDowbloader.Downloader.DisposeException, ex);
+                Utils.Logger.Log(EventID.DIYoutubeDownloader.Downloader.DisposeException, ex);
             }
         }
 

@@ -6,7 +6,7 @@ using Syncfusion.SfSkinManager;
 
 using DIYoutubeDownloader.Internal;
 using DIYoutubeDownloader.ViewModels;
-using EventID = DIYoutubeDownloader.Internal.EventID.DIYoutubeDowbloader;
+using EventID = DIYoutubeDownloader.Internal.EventID.DIYoutubeDownloader;
 
 namespace DIYoutubeDownloader
 {
@@ -29,44 +29,7 @@ namespace DIYoutubeDownloader
         #endregion
 
         #region Events
-
-        #region Form
-
-        #region baFindMedia_Click
-        private void baFindMedia_Click(object sender, RoutedEventArgs e)
-        {
-            this.viewModel.LoadMediaInfoAsync(tbeUrl.Text);
-        }
-        #endregion
-        #region ddbaDownloadMedia_DropDownMenuItemClick_
-        private void ddbaDownloadMedia_DropDownMenuItemClick_(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Syncfusion.Windows.Tools.Controls.DropDownMenuItem ddmiItem = sender as Syncfusion.Windows.Tools.Controls.DropDownMenuItem;
-                if (ddmiItem != null)
-                {
-                    MediaType ytmtItem = ddmiItem.Tag as MediaType;
-                    this.viewModel.DownloadMediaAsync(ytmtItem);
-                }
-            }
-            catch (Exception ex)
-            {
-                Utils.Logger.Log(EventID.DownloadMediaClick.Exception, ex);
-                this.viewModel.DownloadMediaAsync(null);
-            }
-        }
-        #endregion
-        #region baDownloadMediaCancel_Click
-        private void baDownloadMediaCancel_Click(object sender, RoutedEventArgs e)
-        {
-            this.viewModel?.CancelDownload();
-        }
-        #endregion
-
-        #endregion
-        #region Application
-
+       
         #region UnhandledException_Raised
 
         private void UnhandledException_Raised(Exception exception, string source)
@@ -108,8 +71,6 @@ namespace DIYoutubeDownloader
 
         #endregion
 
-        #endregion
-
         #region Methods
 
         #region InitializeControls
@@ -117,7 +78,6 @@ namespace DIYoutubeDownloader
         {
             try
             {
-                Utils.Logger.Initialize();
                 Utils.Logger.Log(EventID.Application.Start);
                 //TODO Create Own style
                 SfSkinManager.ApplyStylesOnApplication = true;
@@ -144,6 +104,5 @@ namespace DIYoutubeDownloader
         #endregion
 
         #endregion
-
     }
 }

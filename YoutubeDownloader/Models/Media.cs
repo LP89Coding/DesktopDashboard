@@ -55,7 +55,7 @@ namespace DIYoutubeDownloader
             }
             catch(Exception ex)
             {
-                Utils.Logger.Log(EventID.DIYoutubeDowbloader.Media.DisposeException, ex);
+                Utils.Logger.Log(EventID.DIYoutubeDownloader.Media.DisposeException, ex);
             }
         }
 

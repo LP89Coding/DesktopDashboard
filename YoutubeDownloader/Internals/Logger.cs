@@ -12,6 +12,14 @@ namespace DIYoutubeDownloader.Internal
         private bool InitializationFailed = false;
         private bool Closed = false;
 
+        #region Ctor
+
+        public Logger()
+        {
+        }
+
+        #endregion
+
         #region GetLogLevel
         private NLog.LogLevel GetLogLevel(Enums.LogLevel logLevel)
         {
