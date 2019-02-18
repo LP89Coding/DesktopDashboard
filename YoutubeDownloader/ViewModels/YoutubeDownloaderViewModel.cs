@@ -45,8 +45,8 @@ namespace DIYoutubeDownloader.ViewModels
 
         public string Title { get { return this.Media?.Title; } }
         public double AverageRatings { get { return this.Media?.AverageRatings ?? 0.0; } }
-        public long LikesCount { get { return this.Media?.LikesCount ?? 0; } }
-        public long DislikesCount { get { return this.Media?.DislikesCount ?? 0; } }
+        public string LikesCount { get { return this.GetStatisticsShortcutString(this.Media?.LikesCount); } }
+        public string DislikesCount { get { return this.GetStatisticsShortcutString(this.Media?.DislikesCount); } }
         public string Duration { get { return (this.Media?.Duration ?? new TimeSpan()).ToString("c"); } }
         private BitmapImage thumbnail;
         public BitmapImage Thumbnail
@@ -237,6 +237,27 @@ namespace DIYoutubeDownloader.ViewModels
         public void CancelDownload()
         {
             this.downloader?.Cancel();
+        }
+
+        #endregion
+        #region GetStatisticsShortcutString
+
+        private string GetStatisticsShortcutString(long? statistics)
+        {
+            string result = "-";
+            const double m = 1000000;
+            const double k = 1000;
+
+            if (statistics.HasValue)
+            {
+                if (statistics >= m)
+                    result = $"{Math.Round((statistics.Value / m), 1)}M";
+                else if (statistics >= k)
+                    result = $"{Math.Round((statistics.Value / k), 1)}K";
+                else
+                    result = statistics.Value.ToString();
+            }
+            return result;
         }
 
         #endregion

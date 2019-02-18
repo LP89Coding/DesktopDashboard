@@ -10,7 +10,7 @@
         Title="{Binding Path=WindowTitle, Mode=OneWay}" 
         Height="226.856" Width="284.186" MaxHeight="226.856" MinHeight="226.856" MinWidth="480.147" MaxWidth="480.147" 
         ResizeMode="CanMinimize" 
-        Icon="Images/Icon/YouTube.ico" HorizontalContentAlignment="Center" Closing="WDIYoutubeDonwloader_Closing">
+        Icon="Images/Icon/YouTube.ico" HorizontalContentAlignment="Center">
     <Window.TaskbarItemInfo>
         <TaskbarItemInfo ProgressValue="{Binding Path=TaskBarProgressValue, Mode=OneWay}" 
                          ProgressState="{Binding Path=TaskBarProgressState, Mode=OneWay}">
