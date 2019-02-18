@@ -10,7 +10,8 @@
         Title="{Binding Path=WindowTitle, Mode=OneWay}" 
         Height="226.856" Width="284.186" MaxHeight="226.856" MinHeight="226.856" MinWidth="480.147" MaxWidth="480.147" 
         ResizeMode="CanMinimize" 
-        Icon="Images/Icon/YouTube.ico" HorizontalContentAlignment="Center">
+        HorizontalContentAlignment="Center" 
+        Icon="/DIYoutubeDownloader;component/Images/Icon/YouTube.ico">
     <Window.TaskbarItemInfo>
         <TaskbarItemInfo ProgressValue="{Binding Path=TaskBarProgressValue, Mode=OneWay}" 
                          ProgressState="{Binding Path=TaskBarProgressState, Mode=OneWay}">
@@ -20,11 +21,12 @@
     <Window.DataContext>
         <viewModel:YoutubeDownloaderViewModel></viewModel:YoutubeDownloaderViewModel>
     </Window.DataContext>
-    
-    
+
+
     <Grid Margin="0,0,0,5" HorizontalAlignment="Left" Width="470">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="287*"/>
+            <ColumnDefinition Width="244*"/>
+            <ColumnDefinition Width="43*"/>
             <ColumnDefinition Width="72*"/>
             <ColumnDefinition Width="111*"/>
             <ColumnDefinition Width="0*"/>
@@ -32,7 +34,7 @@
 
         <syncfusion:SfBusyIndicator x:Name="biMediaLoader" Content="" 
                                     Margin="10,96,15,75" Panel.ZIndex="100" 
-                                    Grid.ColumnSpan="3" 
+                                    Grid.ColumnSpan="4" 
                                     AnimationSpeed="90" AnimationType="HorizontalPulsingBox" 
                                     Visibility="{Binding Path=MediaLoaderVisibility, Mode=OneWay}"/>
         <syncfusion:ButtonAdv x:Name="baThumbnail" 
@@ -47,14 +49,14 @@
                                  Height="28" Width="412"
                                  Margin="10,10,0,0" 
                                  Text="" Watermark="Input URL"
-                                 FontSize="15" SelectionBrush="{x:Null}" Padding="-1" OverridesDefaultStyle="True" VerticalContentAlignment="Center" MaxLines="1" Grid.ColumnSpan="3"/>
+                                 FontSize="15" SelectionBrush="{x:Null}" Padding="-1" OverridesDefaultStyle="True" VerticalContentAlignment="Center" MaxLines="1" Grid.ColumnSpan="4"/>
         <syncfusion:SfTextBoxExt x:Name="tbeTitleAuthor" 
             HorizontalAlignment="Left" VerticalAlignment="Top"  VerticalContentAlignment="Center"
             Height="58" Width="310"
             Margin="145,49,0,0" 
             TextWrapping="Wrap" 
             Text="{Binding Path=MediaDescription, Mode=OneWay}" Watermark="Title (Author)"
-            FontSize="14" OverridesDefaultStyle="True" IsReadOnly="True" TextAlignment="Center" IsEnabled="False" Grid.ColumnSpan="3"/>
+            FontSize="14" OverridesDefaultStyle="True" IsReadOnly="True" TextAlignment="Center" IsEnabled="False" Grid.ColumnSpan="4"/>
         <syncfusion:MaskedTextBox x:Name="mtbDuration" 
                                   HorizontalAlignment="Left" VerticalAlignment="Top"
                                   Height="23" Width="59"  Margin="81,156,0,0" 
@@ -68,7 +70,7 @@
                              VerticalAlignment="Top" 
                              Foreground="#FF151414" 
                              Value="{Binding Path=AverageRatings, Mode=OneWay}"
-                             BorderThickness="0" ItemsCount="5" Opacity="0.8" ItemSize="10" FontSize="5" IsReadOnly="True" IsEnabled="False" Precision="Half" Focusable="False" Grid.ColumnSpan="2">
+                             BorderThickness="0" ItemsCount="5" Opacity="0.8" ItemSize="10" FontSize="5" IsReadOnly="True" IsEnabled="False" Precision="Half" Focusable="False" Grid.ColumnSpan="3">
             <syncfusion:SfRating.ItemContainerStyle>
                 <Style TargetType="syncfusion:SfRatingItem">
                     <Setter Property="Height" Value="20"/>
@@ -79,30 +81,30 @@
                               HorizontalAlignment="Left" VerticalAlignment="Top" 
                               Height="32" Width="72" Margin="145,147,0,0"
                               Label="{Binding Path=LikesCount, Mode=OneWay}" 
-                              SmallIcon="Images/32x32/Like.png" Focusable="False" 
+                              SmallIcon="/DIYoutubeDownloader;component/Images/32x32/Like.png" Focusable="False" 
                               Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" IsEnabled="False"/>
         <syncfusion:ButtonAdv x:Name="baMediaDislikes" Content="ButtonAdv" 
                               HorizontalAlignment="Left" VerticalAlignment="Top" 
                               Height="32" Width="74" Margin="217,147,0,0" 
                               Label="{Binding Path=DislikesCount, Mode=OneWay}" 
-                              SmallIcon="Images/32x32/Dislike.png" Focusable="False" 
-                              Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" IsEnabled="False" Grid.ColumnSpan="2"/>
+                              SmallIcon="/DIYoutubeDownloader;component/Images/32x32/Dislike.png" Focusable="False" 
+                              Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" IsEnabled="False" Grid.ColumnSpan="3"/>
         <syncfusion:DropDownButtonAdv x:Name="ddbaDownloadMedia" HorizontalAlignment="Left" VerticalAlignment="Top" 
                                       Height="61" Width="61" Margin="35,118,0,0" Padding="0" Panel.ZIndex="5" 
-                                      SizeMode="Large" LargeIcon="Images/128x128/Download.png" IconWidth="61" IconHeight="55" 
+                                      SizeMode="Large" LargeIcon="/DIYoutubeDownloader;component/Images/128x128/Download.png" IconWidth="61" IconHeight="55" 
                                       Background="{x:Null}" Opacity="0.6" BorderBrush="#CC000000" BorderThickness="1" RenderTransformOrigin="0,0" 
                                       Foreground="#FFA7A8AA" 
                                       IsEnabled="{Binding Path=DownloadMediaIsEnabled, Mode=OneWay}" 
                                       Visibility="{Binding Path=DownloadMedialVisibility, Mode=OneWay}"
                                       ScrollViewer.VerticalScrollBarVisibility="Disabled" 
-                                      Label="" Grid.Column="2">
+                                      Label="" Grid.Column="3">
             <syncfusion:DropDownMenuGroup ItemsSource="{Binding DownloadMediaTypes}">
                 <syncfusion:DropDownMenuGroup.ItemTemplate>
                     <DataTemplate>
                         <syncfusion:DropDownMenuItem Header="{Binding}" Tag="{Binding}" 
                                                      Command="{Binding DownloadMediaButtonCommand}">
                             <syncfusion:DropDownMenuItem.Icon>
-                                <Image Source="Images/32x32/Download.png"/>
+                                <Image Source="/DIYoutubeDownloader;component/Images/32x32/Download.png"/>
                             </syncfusion:DropDownMenuItem.Icon>
                         </syncfusion:DropDownMenuItem>
                     </DataTemplate>
@@ -117,8 +119,8 @@
                               Margin="35,118,0,0" 
                               Command="{Binding Path=CancelButtonCommand}"
                               Background="{x:Null}" 
-                              SizeMode="Large" LargeIcon="Images/128x128/Cancel.png" IconHeight="45" IconWidth="45" IconStretch="Fill" 
-                              Grid.Column="2"/>
+                              SizeMode="Large" LargeIcon="/DIYoutubeDownloader;component/Images/128x128/Cancel.png" IconHeight="45" IconWidth="45" IconStretch="Fill" 
+                              Grid.Column="3"/>
         <syncfusion:ButtonAdv x:Name="baFindMedia" Content="ButtonAdv" 
                               HorizontalAlignment="Left" VerticalAlignment="Top" 
                               Height="28" Width="28" MinWidth="28" MaxWidth="28" MaxHeight="28" MinHeight="28" 
@@ -127,8 +129,8 @@
                               IsEnabled="{Binding Path=FindMediaIsEnabled, Mode=OneWay}"
                               Margin="68,10,0,0" Padding="0" 
                               RenderTransformOrigin="4.304,-2.671" 
-                              Grid.Column="2" Foreground="{x:Null}" Background="{x:Null}" 
-                              SmallIcon="Images/32x32/RightArrow.png" IconWidth="20" IconHeight="20" />
+                              Grid.Column="3" Foreground="{x:Null}" Background="{x:Null}" 
+                              SmallIcon="/DIYoutubeDownloader;component/Images/32x32/RightArrow.png" IconWidth="20" IconHeight="20" />
 
     </Grid>
 </Window>

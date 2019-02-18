@@ -103,7 +103,7 @@
     <Compile Include="Internals\Downloader.cs" />
     <Compile Include="Models\Media.cs" />
     <Compile Include="Models\MediaType.cs" />
-    <Page Include="YoutubeDownloader.xaml">
+    <Page Include="View\YoutubeDownloader.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -115,7 +115,7 @@
     <Compile Include="ViewModels\MediaTypeViewModel.cs" />
     <Compile Include="ViewModels\ObservableViewModel.cs" />
     <Compile Include="ViewModels\YoutubeDownloaderViewModel.cs" />
-    <Compile Include="YoutubeDownloader.xaml.cs">
+    <Compile Include="View\YoutubeDownloader.xaml.cs">
       <DependentUpon>YoutubeDownloader.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
