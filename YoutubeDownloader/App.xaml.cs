@@ -71,9 +71,7 @@ namespace DIYoutubeDownloader
             try
             {
                 Utils.Logger.Log(EventID.Application.Start);
-                //TODO Create Own style
                 SfSkinManager.ApplyStylesOnApplication = true;
-
                 #region GlobalUnhandledExceptionEvents
 
                 AppDomain.CurrentDomain.UnhandledException += (s, e) =>

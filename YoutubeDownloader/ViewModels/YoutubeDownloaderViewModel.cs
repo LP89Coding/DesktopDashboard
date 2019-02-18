@@ -17,9 +17,9 @@ using System.Windows.Input;
 
 namespace DIYoutubeDownloader.ViewModels
 {
-    public class YoutubeDownloaderViewModel : ObservableViewModel, IDisposable
+    public class YoutubeDownloaderViewModel : ObservableViewModel, IViewModel
     {
-        private IDownloader downloader { get; } = new Downloader();
+        private IDownloader downloader { get; set; }
 
         private Media media;
         private Media Media
@@ -117,9 +117,6 @@ namespace DIYoutubeDownloader.ViewModels
         #region Ctor
         public YoutubeDownloaderViewModel()
         {
-            this.FindMediaButtonCommand = new Command((object parameter) => { LoadMediaInfoAsync(parameter?.ToString()); }, param => FindMediaIsEnabled);
-            this.CancelButtonCommand = new Command((object parameter) => { CancelDownload(); });
-            this.SetEvents();
 
         }
         #endregion
@@ -172,7 +169,7 @@ namespace DIYoutubeDownloader.ViewModels
         #region Methods
 
         #region SetEvents
-        private void SetEvents()
+        private void SetDownloaderEvents()
         {
             if (this.downloader != null)
             {
@@ -201,7 +198,7 @@ namespace DIYoutubeDownloader.ViewModels
                         }
                         catch(Exception ex)
                         {
-                            Utils.Logger.Log(EventID.FindMediaClick.Exception, ex);
+                            Utils.Logger.Log(EventID.Application.Exception, ex);
                             ytMedia = null;
                         }
 
@@ -228,7 +225,7 @@ namespace DIYoutubeDownloader.ViewModels
             }
             catch(Exception ex)
             {
-                Utils.Logger.Log(EventID.LoadMediaInfoAsync.Exception, ex);
+                Utils.Logger.Log(EventID.Application.Exception, ex);
             }
         }
         #endregion
@@ -275,9 +272,24 @@ namespace DIYoutubeDownloader.ViewModels
             }
             catch (Exception ex)
             {
-                //TODO Log
-                //Utils.Logger.Log(EventID.DIYoutubeDowbloader.Downloader.DisposeException, ex);
+                Utils.Logger.Log(EventID.Application.Exception, ex);
             }
+        }
+
+        #endregion
+        #region IViewModel implementation
+
+        public void Initialize(params object[] parameters)
+        {
+            if (parameters == null || parameters.Length == 0)
+                throw new Exception("Parameters cannot be empty");
+            if(!(parameters[0] is IDownloader))
+                throw new Exception("First parametr needs to implement IDownloader interface");
+            this.downloader = parameters[0] as IDownloader;
+
+            this.FindMediaButtonCommand = new Command((object parameter) => { LoadMediaInfoAsync(parameter?.ToString()); }, param => FindMediaIsEnabled);
+            this.CancelButtonCommand = new Command((object parameter) => { CancelDownload(); });
+            this.SetDownloaderEvents();
         }
 
         #endregion

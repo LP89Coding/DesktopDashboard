@@ -89,11 +89,14 @@
     </ApplicationDefinition>
     <Compile Include="Interfaces\IDownloader.cs" />
     <Compile Include="Interfaces\ILogger.cs" />
+    <Compile Include="Interfaces\IViewModel.cs" />
+    <Compile Include="Interfaces\IViewModelFactory.cs" />
     <Compile Include="Internals\Consts.cs" />
     <Compile Include="Internals\Enums.cs" />
     <Compile Include="Internals\EventID.cs" />
     <Compile Include="Internals\LogData.cs" />
     <Compile Include="Internals\Logger.cs" />
+    <Compile Include="Internals\ViewModelFactory.cs" />
     <Compile Include="ResourceImage128.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

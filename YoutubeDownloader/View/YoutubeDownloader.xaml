@@ -18,9 +18,6 @@
         </TaskbarItemInfo>
     </Window.TaskbarItemInfo>
 
-    <Window.DataContext>
-        <viewModel:YoutubeDownloaderViewModel></viewModel:YoutubeDownloaderViewModel>
-    </Window.DataContext>
 
 
     <Grid Margin="0,0,0,5" HorizontalAlignment="Left" Width="470">

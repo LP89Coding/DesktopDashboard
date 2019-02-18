@@ -16,15 +16,13 @@ namespace DIYoutubeDownloader
     /// </summary>
     public partial class YoutubeDownloader : Window
     {
-        private YoutubeDownloaderViewModel viewModel { get; }
+        private IViewModel viewModel { get; set; }
 
         #region Ctor
         public YoutubeDownloader()
         {
-            InitializeComponent();
-
-            this.viewModel = new YoutubeDownloaderViewModel();
             this.Initialize();
+            InitializeComponent();
         }
         #endregion
 
@@ -56,6 +54,9 @@ namespace DIYoutubeDownloader
             {
                 //TODO Create Own style
                 SfSkinManager.SetVisualStyle(this, VisualStyles.Office2013DarkGray);
+
+                ViewModelFactory factory = new ViewModelFactory();
+                this.viewModel = factory.CreateViewModel<YoutubeDownloaderViewModel>(new Downloader());
                 this.DataContext = viewModel;
             }
             catch(Exception ex)

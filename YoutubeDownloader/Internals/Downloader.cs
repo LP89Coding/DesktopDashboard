@@ -71,7 +71,7 @@ namespace DIYoutubeDownloader
             }
             catch (Exception ex)
             {
-                //TODO Log
+                Utils.Logger.Log(EventID.DIYoutubeDownloader.Downloader.GetVideoInfoException, ex);
                 throw ex;
             }
             finally

@@ -74,7 +74,7 @@ namespace DIYoutubeDownloader.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    Utils.Logger.Log(EventID.DIYoutubeDownloader.DownloadMediaAsync.Exception, ex);
+                    Utils.Logger.Log(EventID.DIYoutubeDownloader.Application.Exception, ex);
                 }
             }
         }
