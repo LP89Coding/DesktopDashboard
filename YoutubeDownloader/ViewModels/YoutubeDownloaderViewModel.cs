@@ -12,12 +12,11 @@ using Microsoft.Win32;
 using DIYoutubeDownloader.Internal;
 using EventID = DIYoutubeDownloader.Internal.EventID.DIYoutubeDownloader;
 using System.Windows;
-using DIYoutubeDownloader.Internals;
 using System.Windows.Input;
 
 namespace DIYoutubeDownloader.ViewModels
 {
-    public class YoutubeDownloaderViewModel : ObservableViewModel, IViewModel
+    public class YoutubeDownloaderViewModel : ObservableViewModel, IViewModel, IWindowPropertyChangeNotifier
     {
         private IDownloader downloader { get; set; }
 
@@ -55,7 +54,7 @@ namespace DIYoutubeDownloader.ViewModels
             {
                 this.thumbnail = null;
                 GC.Collect();
-                this.thumbnail = Utils.ToBitmapImage(this.Media?.Thumbnail ?? ResourceImage128.YouTube);
+                this.thumbnail = Utils.ToBitmapImage(this.Media?.Thumbnail ?? ResourceImage.YouTube);
                 return this.thumbnail;
             }
         }
@@ -77,37 +76,13 @@ namespace DIYoutubeDownloader.ViewModels
             }
         }
         public bool IsIdle { get { return !this.IsDownloading; } }
-
-        public string WindowTitle { get { return this.IsDownloading && this.TaskBarProgressState == TaskbarItemProgressState.Normal ? $"{Consts.YoutubeDownloaderTitle} ({Math.Round(this.TaskBarProgressValue * 100.0, 0)}%)" : Consts.YoutubeDownloaderTitle; } }
+        
         public bool DownloadMediaIsEnabled { get { return !String.IsNullOrWhiteSpace(this.Media?.MediaId) && !this.IsDownloading; } }
         public bool DownloadMediaCancelIsEnabled { get { return this.IsDownloading; } }
         public bool FindMediaIsEnabled { get { return !this.IsDownloading; } }
         public Visibility MediaLoaderVisibility { get { return this.IsDownloading ? Visibility.Visible : Visibility.Hidden; } }
         public Visibility DownloadMedialVisibility { get { return !this.IsDownloading ? Visibility.Visible : Visibility.Hidden; } }
         public Visibility DownloadMediaCancelVisibility { get { return this.IsDownloading ? Visibility.Visible : Visibility.Hidden; } }
-        private double taskBarProgressValue;
-        public double TaskBarProgressValue
-        {
-            get { return this.taskBarProgressValue; }
-            set
-            {
-                this.taskBarProgressValue = value;
-                RaisePropertyChangedEvent(nameof(this.TaskBarProgressValue));
-                RaisePropertyChangedEvent(nameof(this.WindowTitle));
-            }
-        }
-        private TaskbarItemProgressState taskBarProgressState;
-        public TaskbarItemProgressState TaskBarProgressState
-        {
-
-            get { return this.taskBarProgressState; }
-            set
-            {
-                this.taskBarProgressState = value;
-                RaisePropertyChangedEvent(nameof(this.TaskBarProgressState));
-                RaisePropertyChangedEvent(nameof(this.WindowTitle));
-            }
-        }
         
         private ICommand cancelButtonCommand;
         public ICommand CancelButtonCommand { get { return this.cancelButtonCommand; } private set { this.cancelButtonCommand = value; } }
@@ -212,7 +187,7 @@ namespace DIYoutubeDownloader.ViewModels
                                 AverageRatings = 0.0,
                                 LikesCount = 0,
                                 DislikesCount = 0,
-                                Thumbnail = ResourceImage128.YouTube
+                                Thumbnail = ResourceImage.YouTube
                             };
                         }
                         if (ytMedia != null)
@@ -279,20 +254,69 @@ namespace DIYoutubeDownloader.ViewModels
         #endregion
         #region IViewModel implementation
 
-        public void Initialize(params object[] parameters)
+        public void Initialize(ArgumentCollection args)
         {
-            if (parameters == null || parameters.Length == 0)
+            if (args == null || args.Length == 0)
                 throw new Exception("Parameters cannot be empty");
-            if(!(parameters[0] is IDownloader))
+            if(!args.Contains(ArgumentCollection.ArgumentType.Downloader) && !(args.Get(ArgumentCollection.ArgumentType.Downloader) is IDownloader))
                 throw new Exception("First parametr needs to implement IDownloader interface");
-            this.downloader = parameters[0] as IDownloader;
-
+            this.downloader = args.Get(ArgumentCollection.ArgumentType.Downloader) as IDownloader;
+            
             this.FindMediaButtonCommand = new Command((object parameter) => { LoadMediaInfoAsync(parameter?.ToString()); }, param => FindMediaIsEnabled);
             this.CancelButtonCommand = new Command((object parameter) => { CancelDownload(); });
             this.SetDownloaderEvents();
         }
 
-        #endregion
+        public bool NotifyPropertyChange(string propertyName, object propertyValue)
+        {
+            return false;
+        }
 
+        public object GetPropertyValue(string propertyName)
+        {
+            switch(propertyName)
+            {
+                case nameof(this.TaskBarProgressState): return this.TaskBarProgressState;
+                case nameof(this.TaskBarProgressValue): return this.TaskBarProgressValue;
+                default: return null;
+            }
+        }
+
+        #endregion
+        #region IWindowPropertyNotifier implementation
+
+        private string windowTitle;
+        public string WindowTitle
+        {
+            get { return this.windowTitle; }
+            set
+            {
+                this.windowTitle = value;
+                RaisePropertyChangedEvent(nameof(this.WindowTitle));
+            }
+        }
+        private double taskBarProgressValue;
+        public double TaskBarProgressValue
+        {
+            get { return this.taskBarProgressValue; }
+            set
+            {
+                this.taskBarProgressValue = value;
+                RaisePropertyChangedEvent(nameof(this.TaskBarProgressValue));
+            }
+        }
+        private TaskbarItemProgressState taskBarProgressState;
+        public TaskbarItemProgressState TaskBarProgressState
+        {
+
+            get { return this.taskBarProgressState; }
+            set
+            {
+                this.taskBarProgressState = value;
+                RaisePropertyChangedEvent(nameof(this.TaskBarProgressState));
+            }
+        }
+
+        #endregion
     }
 }

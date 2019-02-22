@@ -1,5 +1,4 @@
 ﻿using DIYoutubeDownloader.Internal;
-using Syncfusion.SfSkinManager;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -24,6 +23,13 @@ namespace DIYoutubeDownloader
         {
             base.OnStartup(e);
             this.Initialize();
+
+            ArgumentCollection args = new ArgumentCollection();
+            args.Set(ArgumentCollection.ArgumentType.WindowIcon, ResourceImage.YouTubeIcon);
+            args.Set(ArgumentCollection.ArgumentType.WindowTitle, Consts.YoutubeDownloaderTitle);
+
+            BaseWindow bwItem = new BaseWindow(args);
+            bwItem.Show();
         }
 
         #endregion
@@ -71,7 +77,6 @@ namespace DIYoutubeDownloader
             try
             {
                 Utils.Logger.Log(EventID.Application.Start);
-                SfSkinManager.ApplyStylesOnApplication = true;
                 #region GlobalUnhandledExceptionEvents
 
                 AppDomain.CurrentDomain.UnhandledException += (s, e) =>

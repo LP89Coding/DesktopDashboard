@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIYoutubeDownloader.Internals
+namespace DIYoutubeDownloader.Internal
 {
     internal class Consts
     {

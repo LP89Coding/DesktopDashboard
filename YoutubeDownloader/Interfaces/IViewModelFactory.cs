@@ -1,8 +1,10 @@
 ﻿
+using DIYoutubeDownloader.Internal;
+
 namespace DIYoutubeDownloader
 {
     public interface IViewModelFactory
     {
-        T CreateViewModel<T>(params object[] parameters) where T: IViewModel, new();
+        T CreateViewModel<T>(ArgumentCollection args) where T: IViewModel, new();
     }
 }

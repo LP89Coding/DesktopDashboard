@@ -52,7 +52,6 @@
     <Reference Include="Syncfusion.SfBusyIndicator.WPF, Version=16.4460.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.SfInput.WPF, Version=16.4460.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.SfShared.Wpf, Version=16.4460.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
-    <Reference Include="Syncfusion.SfSkinManager.WPF, Version=16.4460.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Shared.WPF, Version=16.4460.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -87,6 +86,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Interfaces\IWindowPropertyChangeNotifier.cs" />
+    <Compile Include="Internals\Argument.cs" />
+    <Compile Include="Internals\ArgumentCollection.cs" />
+    <Compile Include="ViewModels\BaseWindowViewModel.cs" />
+    <Compile Include="View\BaseWindow.xaml.cs">
+      <DependentUpon>BaseWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Interfaces\IDownloader.cs" />
     <Compile Include="Interfaces\ILogger.cs" />
     <Compile Include="Interfaces\IViewModel.cs" />
@@ -97,31 +103,34 @@
     <Compile Include="Internals\LogData.cs" />
     <Compile Include="Internals\Logger.cs" />
     <Compile Include="Internals\ViewModelFactory.cs" />
-    <Compile Include="ResourceImage128.Designer.cs">
+    <Compile Include="ResourceImage.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ResourceImage128.resx</DependentUpon>
+      <DependentUpon>ResourceImage.resx</DependentUpon>
     </Compile>
     <Compile Include="Internals\Utils.cs" />
     <Compile Include="Internals\Downloader.cs" />
     <Compile Include="Models\Media.cs" />
     <Compile Include="Models\MediaType.cs" />
-    <Page Include="View\YoutubeDownloader.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="View\BaseWindow.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ucYoutubeDownloader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ucYoutubeDownloader.xaml.cs">
+      <DependentUpon>ucYoutubeDownloader.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\Command.cs" />
     <Compile Include="ViewModels\MediaTypeViewModel.cs" />
     <Compile Include="ViewModels\ObservableViewModel.cs" />
     <Compile Include="ViewModels\YoutubeDownloaderViewModel.cs" />
-    <Compile Include="View\YoutubeDownloader.xaml.cs">
-      <DependentUpon>YoutubeDownloader.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -141,9 +150,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ResourceImage128.resx">
+    <EmbeddedResource Include="ResourceImage.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ResourceImage128.Designer.cs</LastGenOutput>
+      <LastGenOutput>ResourceImage.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -205,6 +214,39 @@
   <ItemGroup>
     <Resource Include="Images\256x256\RightArrow.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\128x128\CancelLight.png" />
+    <Resource Include="Images\128x128\DownloadLight.png" />
+    <Resource Include="Images\128x128\RightArrowLight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\16x16\CancelLight.png" />
+    <Resource Include="Images\16x16\DownloadLight.png" />
+    <Resource Include="Images\16x16\RightArrowLight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\256x256\CancelLight.png" />
+    <Resource Include="Images\256x256\DownloadLight.png" />
+    <Resource Include="Images\256x256\RightArrowLight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\32x32\CancelLight.png" />
+    <Resource Include="Images\32x32\DislikeLight.png" />
+    <Resource Include="Images\32x32\DownloadLight.png" />
+    <Resource Include="Images\32x32\LikeLight.png" />
+    <Resource Include="Images\32x32\RightArrowLight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\256x256\X.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\128x128\X.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\32x32\X.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\16x16\X.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
