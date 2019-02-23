@@ -86,8 +86,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Interfaces\IWindowControl.cs" />
     <Compile Include="Interfaces\IWindowPropertyChangeNotifier.cs" />
-    <Compile Include="Internals\Argument.cs" />
     <Compile Include="Internals\ArgumentCollection.cs" />
     <Compile Include="ViewModels\BaseWindowViewModel.cs" />
     <Compile Include="View\BaseWindow.xaml.cs">
@@ -116,7 +116,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ucYoutubeDownloader.xaml">
+    <Page Include="View\ucYoutubeDownloader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -124,7 +124,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ucYoutubeDownloader.xaml.cs">
+    <Compile Include="View\ucYoutubeDownloader.xaml.cs">
       <DependentUpon>ucYoutubeDownloader.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\Command.cs" />

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using System.Windows.Shell;
 using DIYoutubeDownloader.Internal;
 
@@ -19,6 +20,16 @@ namespace DIYoutubeDownloader.ViewModels
             {
                 this.windowTitle = value;
                 RaisePropertyChangedEvent(nameof(this.WindowTitle));
+            }
+        }
+        private BitmapImage windowIcon;
+        public BitmapImage WindowIcon
+        {
+            get { return this.windowIcon; }
+            set
+            {
+                this.windowIcon = value;
+                RaisePropertyChangedEvent(nameof(this.WindowIcon));
             }
         }
         private double taskBarProgressValue;
@@ -102,6 +113,8 @@ namespace DIYoutubeDownloader.ViewModels
             {
                 if (args.Contains(ArgumentCollection.ArgumentType.WindowTitle))
                     this.WindowTitle = args.Get(ArgumentCollection.ArgumentType.WindowTitle)?.ToString();
+                if (args.Contains(ArgumentCollection.ArgumentType.WindowIcon))
+                    this.WindowIcon = Utils.ToBitmapImage(args.Get(ArgumentCollection.ArgumentType.WindowIcon));
             }
             this.CloseButtonCommand = new Command((object parametrer) => { System.Windows.Application.Current.Shutdown(); });
         }

@@ -18,7 +18,7 @@ using EventID = DIYoutubeDownloader.Internal.EventID.DIYoutubeDownloader;
 
 namespace DIYoutubeDownloader
 {
-    public partial class ucYoutubeDownloader : UserControl
+    public partial class ucYoutubeDownloader : UserControl, IWindowControl
     {
         private IViewModel viewModel { get; set; }
 
@@ -49,6 +49,11 @@ namespace DIYoutubeDownloader
             }
         }
         #endregion
+
+        #endregion
+
+        #region IWindowControl implementation
+
         #region SubscribePropertyChangeNotification
 
         public void SubscribePropertyChangeNotification(System.ComponentModel.PropertyChangedEventHandler propertyChangedHandler)

@@ -51,7 +51,9 @@
 
         <Rectangle x:Name="rNavBar" VerticalAlignment="Top" 
                Height="40" MouseDown="RNavBar_MouseDown"/>
-        <Image x:Name="iWindowIcon" HorizontalAlignment="Left" Height="26" VerticalAlignment="Top" Width="26" Margin="6,6,0,0" MouseDown="IWindowIcon_MouseDown"/>
+        <Image x:Name="iWindowIcon" HorizontalAlignment="Left" Height="26" VerticalAlignment="Top" 
+               Width="26" Margin="6,6,0,0" MouseDown="IWindowIcon_MouseDown"
+               Source="{Binding Path=WindowIcon, Mode=OneWay}"/>
         <syncfusion:SfTextBoxExt x:Name="tbeTitle" HorizontalAlignment="Center" Height="23" Margin="121,10,116,0" 
                                  TextWrapping="Wrap" Text="{Binding Path=WindowTitle, Mode=OneWay}" VerticalAlignment="Top" Width="237" Background="{x:Null}" BorderBrush="{x:Null}" 
                                  HorizontalContentAlignment="Center" Focusable="False" IsReadOnly="True" IsUndoEnabled="False" BorderThickness="0" Cursor="Arrow" FontSize="16" MouseDown="TbeTitle_MouseDown"/>

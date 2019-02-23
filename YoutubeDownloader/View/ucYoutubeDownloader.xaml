@@ -70,17 +70,17 @@
                               HorizontalAlignment="Left" VerticalAlignment="Top" 
                               Height="32" Width="72" Margin="145,147,0,0"
                               Label="{Binding Path=LikesCount, Mode=OneWay}" 
-                              SmallIcon="Images/32x32/LikeLight.png" Focusable="False" 
+                              SmallIcon="../Images/32x32/LikeLight.png" Focusable="False" 
                               Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" IsEnabled="False"/>
         <syncfusion:ButtonAdv x:Name="baMediaDislikes" Content="ButtonAdv" 
                               HorizontalAlignment="Left" VerticalAlignment="Top" 
                               Height="32" Width="74" Margin="217,147,0,0" 
                               Label="{Binding Path=DislikesCount, Mode=OneWay}" 
-                              SmallIcon="Images/32x32/DislikeLight.png" Focusable="False" 
+                              SmallIcon="../Images/32x32/DislikeLight.png" Focusable="False" 
                               Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" IsEnabled="False" Grid.ColumnSpan="3"/>
         <syncfusion:DropDownButtonAdv x:Name="ddbaDownloadMedia" HorizontalAlignment="Left" VerticalAlignment="Top" 
                                       Height="61" Width="61" Margin="35,118,0,0" Padding="0" Panel.ZIndex="5" 
-                                      SizeMode="Large" LargeIcon="Images/32x32/DownloadLight.png" IconWidth="61" IconHeight="55" 
+                                      SizeMode="Large" LargeIcon="../Images/32x32/DownloadLight.png" IconWidth="61" IconHeight="55" 
                                       Background="{x:Null}" Opacity="0.6" BorderBrush="#CC000000" BorderThickness="1" RenderTransformOrigin="0,0" 
                                       Foreground="#FFA7A8AA" 
                                       IsEnabled="{Binding Path=DownloadMediaIsEnabled, Mode=OneWay}" 
@@ -108,7 +108,7 @@
                               Margin="35,118,0,0" 
                               Command="{Binding Path=CancelButtonCommand}"
                               Background="{x:Null}" 
-                              SizeMode="Large" LargeIcon="Images/32x32/CancelLight.png" IconHeight="45" IconWidth="45" IconStretch="Fill" 
+                              SizeMode="Large" LargeIcon="../Images/32x32/CancelLight.png" IconHeight="45" IconWidth="45" IconStretch="Fill" 
                               Grid.Column="3"/>
         <syncfusion:ButtonAdv x:Name="baFindMedia" Content="ButtonAdv" 
                               HorizontalAlignment="Left" VerticalAlignment="Top" 
@@ -119,7 +119,7 @@
                               Margin="68,10,0,0" Padding="0" 
                               RenderTransformOrigin="4.304,-2.671" 
                               Grid.Column="3" Foreground="{x:Null}" Background="{x:Null}" 
-                              SmallIcon="Images/32x32/RightArrowLight.png" IconWidth="20" IconHeight="20" OverridesDefaultStyle="True" />
+                              SmallIcon="../Images/32x32/RightArrowLight.png" IconWidth="20" IconHeight="20" OverridesDefaultStyle="True" />
 
     </Grid>
 </UserControl>

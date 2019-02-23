@@ -66,16 +66,8 @@ namespace DIYoutubeDownloader
                 ViewModelFactory factory = new ViewModelFactory();
                 this.viewModel = factory.CreateViewModel<BaseWindowViewModel>(args);
                 this.DataContext = viewModel;
-
-                if (args != null)
-                {
-                    if (args.Contains(ArgumentCollection.ArgumentType.WindowIcon))
-                        iWindowIcon.Source = Utils.ToBitmapImage(args.Get(ArgumentCollection.ArgumentType.WindowIcon));
-
-                }
-
-                //TODO - nie odwoływać się do kokretnych kontrolek tylko do klas implementujacych interfejs
-                this.ucYoutubeDownloader.SubscribePropertyChangeNotification(new System.ComponentModel.PropertyChangedEventHandler(this.ChangeListener));
+                
+                this.SubscribePropertyChangeNotification(this.Content as Visual);
             }
             catch (Exception ex)
             {
@@ -96,6 +88,22 @@ namespace DIYoutubeDownloader
                         viewModel.NotifyPropertyChange(e.PropertyName, childViewModel.GetPropertyValue(e.PropertyName));
                         break;
                     default: break;
+                }
+            }
+        }
+        #endregion
+        #region SubscribePropertyChangeNotification
+        private void SubscribePropertyChangeNotification(Visual parent)
+        {
+            if (parent != null)
+            {
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+                {
+                    Visual childVisual = (Visual)VisualTreeHelper.GetChild(parent, i);
+                    if (childVisual is IWindowControl)
+                        (childVisual as IWindowControl).SubscribePropertyChangeNotification(new System.ComponentModel.PropertyChangedEventHandler(this.ChangeListener));
+
+                    SubscribePropertyChangeNotification(childVisual);
                 }
             }
         }
