@@ -23,13 +23,7 @@ namespace DIYoutubeDownloader
         {
             base.OnStartup(e);
             this.Initialize();
-
-            ArgumentCollection args = new ArgumentCollection();
-            args.Set(ArgumentCollection.ArgumentType.WindowIcon, ResourceImage.YouTubeIcon);
-            args.Set(ArgumentCollection.ArgumentType.WindowTitle, Consts.YoutubeDownloaderTitle);
-
-            BaseWindow bwItem = new BaseWindow(args);
-            bwItem.Show();
+            this.InitializeWindow();
         }
 
         #endregion
@@ -94,6 +88,17 @@ namespace DIYoutubeDownloader
             {
                 Utils.Logger.Log(EventID.Application.Exception, ex);
             }
+        }
+        #endregion
+        #region InitializeWindow
+        private void InitializeWindow()
+        {
+            ArgumentCollection args = new ArgumentCollection();
+            args.Set(ArgumentCollection.ArgumentType.WindowIcon, ResourceImage.YouTubeIcon);
+            args.Set(ArgumentCollection.ArgumentType.WindowTitle, Consts.YoutubeDownloaderTitle);
+
+            BaseWindow bwItem = new BaseWindow(args);
+            bwItem.Show();
         }
         #endregion
         #region Close

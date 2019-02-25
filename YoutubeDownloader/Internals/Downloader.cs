@@ -12,6 +12,7 @@ using DIYoutubeDownloader.Internal;
 using YoutubeExplode;
 using YoutubeExplode.Models;
 using YoutubeExplode.Models.MediaStreams;
+using DIYoutubeDownloader.Models;
 
 namespace DIYoutubeDownloader
 {

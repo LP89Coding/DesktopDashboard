@@ -8,7 +8,7 @@ namespace DIYoutubeDownloader.Internal
 {
     internal class ViewModelFactory : IViewModelFactory
     {
-        public T CreateViewModel<T>(ArgumentCollection args) where T : IViewModel, new()
+        public virtual T CreateViewModel<T>(ArgumentCollection args) where T : IViewModel, new()
         {
             T item = (T)Activator.CreateInstance(typeof(T));
 

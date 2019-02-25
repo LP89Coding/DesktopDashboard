@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using DIYoutubeDownloader.Internal;
 
-namespace DIYoutubeDownloader
+namespace DIYoutubeDownloader.Models
 {
     public class Media : IDisposable
     {

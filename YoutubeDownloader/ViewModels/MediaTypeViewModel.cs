@@ -1,4 +1,5 @@
 ﻿using DIYoutubeDownloader.Internal;
+using DIYoutubeDownloader.Models;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -52,7 +53,7 @@ namespace DIYoutubeDownloader.ViewModels
                                 string fileName = downloadingMedia.Title;
                                 string fileExtension = downloadingMediaType.Extension.ToString().ToLower();
 
-                                System.IO.Path.GetInvalidFileNameChars().Select(c => fileName.Replace(c, ' '));
+                                Path.GetInvalidFileNameChars().Select(c => fileName.Replace(c, ' '));
 
                                 SaveFileDialog dialog = new SaveFileDialog()
                                 {

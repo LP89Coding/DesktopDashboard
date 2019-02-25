@@ -89,6 +89,8 @@
     <Compile Include="Interfaces\IWindowControl.cs" />
     <Compile Include="Interfaces\IWindowPropertyChangeNotifier.cs" />
     <Compile Include="Internals\ArgumentCollection.cs" />
+    <Compile Include="Internals\Tools.cs" />
+    <Compile Include="Internals\YoutubeDownloaderViewModelFactory.cs" />
     <Compile Include="ViewModels\BaseWindowViewModel.cs" />
     <Compile Include="View\BaseWindow.xaml.cs">
       <DependentUpon>BaseWindow.xaml</DependentUpon>

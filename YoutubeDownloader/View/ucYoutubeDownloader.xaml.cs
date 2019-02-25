@@ -37,11 +37,7 @@ namespace DIYoutubeDownloader
         {
             try
             {
-                ArgumentCollection args = new ArgumentCollection();
-                args.Set(ArgumentCollection.ArgumentType.Downloader, new Downloader());
-                ViewModelFactory factory = new ViewModelFactory();
-                this.viewModel = factory.CreateViewModel<YoutubeDownloaderViewModel>(args);
-                this.DataContext = viewModel;
+                this.DataContext = this.viewModel = Tools.CreateYoutubeDownloaderViewModel();
             }
             catch (Exception ex)
             {

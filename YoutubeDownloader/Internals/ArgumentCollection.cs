@@ -18,7 +18,8 @@ namespace DIYoutubeDownloader.Internal
             Downloader = 3,
         }
 
-        public int Length { get { return this?.arguments.Count ?? 0; } }
+        public int Length { get { return this.arguments?.Count ?? 0; } }
+        public ArgumentType[] Keys { get { return this.arguments?.Keys.ToArray() ?? new ArgumentType[] { }; } }
 
         public ArgumentCollection()
         {
@@ -35,6 +36,16 @@ namespace DIYoutubeDownloader.Internal
         public void Set(ArgumentType type, object value)
         {
             this.arguments[type] = value;
+        }
+        public void Set(ArgumentCollection args)
+        {
+            if(args != null)
+            {
+                foreach(ArgumentType key in args.Keys)
+                {
+                    this.Set(key, args.Get(key));
+                }
+            }
         }
 
         public bool Contains(ArgumentType type)

@@ -13,6 +13,7 @@ using DIYoutubeDownloader.Internal;
 using EventID = DIYoutubeDownloader.Internal.EventID.DIYoutubeDownloader;
 using System.Windows;
 using System.Windows.Input;
+using DIYoutubeDownloader.Models;
 
 namespace DIYoutubeDownloader.ViewModels
 {
@@ -21,13 +22,13 @@ namespace DIYoutubeDownloader.ViewModels
         private IDownloader downloader { get; set; }
 
         private Media media;
-        private Media Media
+        public Media Media
         {
             get
             {
                 return this.media;
             }
-            set
+            private set
             {
                 this.media = value;
                 RaisePropertyChangedEvent(nameof(this.AverageRatings));
@@ -157,7 +158,7 @@ namespace DIYoutubeDownloader.ViewModels
         }
         #endregion
         #region LoadMediaInfoAsync
-        public void LoadMediaInfoAsync(string url)
+        private void LoadMediaInfoAsync(string url)
         {
             try
             {
@@ -206,7 +207,7 @@ namespace DIYoutubeDownloader.ViewModels
         #endregion
         #region CancelDownload
 
-        public void CancelDownload()
+        private void CancelDownload()
         {
             this.downloader?.Cancel();
         }
