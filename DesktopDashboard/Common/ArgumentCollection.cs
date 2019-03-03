@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIYoutubeDownloader.Internal
+namespace DesktopDashboard.Common
 {
     public class ArgumentCollection
     {
-        private Dictionary<ArgumentType, object> arguments;
+        private readonly Dictionary<ArgumentType, object> arguments;
 
         public enum ArgumentType
         {
@@ -16,6 +16,8 @@ namespace DIYoutubeDownloader.Internal
             WindowIcon = 1,
             WindowTitle = 2,
             Downloader = 3,
+            IsPluginMode = 4,
+            WindowCloseCommand = 5
         }
 
         public int Length { get { return this.arguments?.Count ?? 0; } }
@@ -31,6 +33,12 @@ namespace DIYoutubeDownloader.Internal
             object result = null;
             arguments?.TryGetValue(type, out result);
             return result;
+        }
+        public T Get<T>(ArgumentType type)
+        {
+            object result = null;
+            arguments?.TryGetValue(type, out result);
+            return (T)result;
         }
 
         public void Set(ArgumentType type, object value)

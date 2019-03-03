@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Shell;
 
-namespace DIYoutubeDownloader
+namespace DesktopDashboard.Interfaces
 {
     public interface IWindowPropertyChangeNotifier
     {

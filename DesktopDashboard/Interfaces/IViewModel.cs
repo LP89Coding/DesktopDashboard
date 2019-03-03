@@ -4,9 +4,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DIYoutubeDownloader.Internal;
 
-namespace DIYoutubeDownloader
+using ArgumentCollection = DesktopDashboard.Common.ArgumentCollection;
+
+namespace DesktopDashboard.Interfaces
 {
     public delegate void ChangeListenerDelegate(object sender, System.ComponentModel.PropertyChangedEventArgs e);
     public interface IViewModel : IDisposable

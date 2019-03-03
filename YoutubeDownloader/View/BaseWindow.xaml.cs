@@ -1,19 +1,16 @@
-﻿using DIYoutubeDownloader.Internal;
-using DIYoutubeDownloader.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Windows.Shell;
+
+using DIYoutubeDownloader.Internal;
+using DIYoutubeDownloader.ViewModels;
+using IntrnalUtils = DIYoutubeDownloader.Internal.Utils;
+
+using DesktopDashboard.Common;
+using DesktopDashboard.Interfaces;
+using ArgumentCollection = DesktopDashboard.Common.ArgumentCollection;
+using System.ComponentModel;
 
 namespace DIYoutubeDownloader
 {
@@ -38,6 +35,26 @@ namespace DIYoutubeDownloader
 
         #endregion
 
+        #region Overrides
+
+        #region OnClosing
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            try
+            {
+                this.viewModel?.Dispose();
+            }
+            catch(Exception ex)
+            {
+                //TODO Logs
+            }
+            base.OnClosing(e);
+        }
+
+        #endregion
+
+        #endregion
         #region Events
 
         private void RNavBar_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -71,7 +88,7 @@ namespace DIYoutubeDownloader
             }
             catch (Exception ex)
             {
-                Utils.Logger.Log(EventID.DIYoutubeDownloader.Application.Exception, ex);
+                IntrnalUtils.Logger.Log(EventID.DIYoutubeDownloader.Application.Exception, ex);
             }
         }
         #endregion

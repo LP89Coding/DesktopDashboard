@@ -1,19 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
-using System.IO;
-using System.Windows.Media.Imaging;
-using System.Windows.Shell;
-using Microsoft.Win32;
-
-using DIYoutubeDownloader.Internal;
-using EventID = DIYoutubeDownloader.Internal.EventID.DIYoutubeDownloader;
 using System.Windows;
 using System.Windows.Input;
 using DIYoutubeDownloader.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
+using System.Windows.Shell;
+
+using DIYoutubeDownloader.Internal;
+using EventID = DIYoutubeDownloader.Internal.EventID.DIYoutubeDownloader;
+
+using DesktopDashboard.Interfaces;
+using ArgumentCollection = DesktopDashboard.Common.ArgumentCollection;
 
 namespace DIYoutubeDownloader.ViewModels
 {

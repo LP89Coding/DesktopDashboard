@@ -86,32 +86,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Interfaces\IWindowControl.cs" />
-    <Compile Include="Interfaces\IWindowPropertyChangeNotifier.cs" />
-    <Compile Include="Internals\ArgumentCollection.cs" />
-    <Compile Include="Internals\Tools.cs" />
-    <Compile Include="Internals\YoutubeDownloaderViewModelFactory.cs" />
+    <Compile Include="Common\Plugin.cs" />
+    <Compile Include="Common\Utils.cs" />
+    <Compile Include="Internal\YoutubeDownloaderViewModelFactory.cs" />
     <Compile Include="ViewModels\BaseWindowViewModel.cs" />
     <Compile Include="View\BaseWindow.xaml.cs">
       <DependentUpon>BaseWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IDownloader.cs" />
-    <Compile Include="Interfaces\ILogger.cs" />
-    <Compile Include="Interfaces\IViewModel.cs" />
-    <Compile Include="Interfaces\IViewModelFactory.cs" />
-    <Compile Include="Internals\Consts.cs" />
-    <Compile Include="Internals\Enums.cs" />
-    <Compile Include="Internals\EventID.cs" />
-    <Compile Include="Internals\LogData.cs" />
-    <Compile Include="Internals\Logger.cs" />
-    <Compile Include="Internals\ViewModelFactory.cs" />
+    <Compile Include="Internal\Consts.cs" />
+    <Compile Include="Internal\Enums.cs" />
+    <Compile Include="Internal\EventID.cs" />
     <Compile Include="ResourceImage.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ResourceImage.resx</DependentUpon>
     </Compile>
-    <Compile Include="Internals\Utils.cs" />
-    <Compile Include="Internals\Downloader.cs" />
+    <Compile Include="Internal\Utils.cs" />
+    <Compile Include="Internal\Downloader.cs" />
     <Compile Include="Models\Media.cs" />
     <Compile Include="Models\MediaType.cs" />
     <Page Include="View\BaseWindow.xaml">
@@ -249,6 +241,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\16x16\X.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DesktopDashboard\DesktopDashboard.csproj">
+      <Project>{d2c756c9-8614-4e6c-b44f-aa32eca025f9}</Project>
+      <Name>DesktopDashboard</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

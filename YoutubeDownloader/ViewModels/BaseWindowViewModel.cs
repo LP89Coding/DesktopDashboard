@@ -6,12 +6,21 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Shell;
+
 using DIYoutubeDownloader.Internal;
+
+using DesktopDashboard.Interfaces;
+using ArgumentCollection = DesktopDashboard.Common.ArgumentCollection;
+using System.Windows;
+using System.Windows.Interop;
 
 namespace DIYoutubeDownloader.ViewModels
 {
     public class BaseWindowViewModel : ObservableViewModel, IViewModel
     {
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        static extern IntPtr GetActiveWindow();
+
         private string windowTitle;
         public string WindowTitle
         {
@@ -115,8 +124,24 @@ namespace DIYoutubeDownloader.ViewModels
                     this.WindowTitle = args.Get(ArgumentCollection.ArgumentType.WindowTitle)?.ToString();
                 if (args.Contains(ArgumentCollection.ArgumentType.WindowIcon))
                     this.WindowIcon = Utils.ToBitmapImage(args.Get(ArgumentCollection.ArgumentType.WindowIcon));
+                if (args.Contains(ArgumentCollection.ArgumentType.WindowCloseCommand))
+                    this.CloseButtonCommand = args.Get<Command>(ArgumentCollection.ArgumentType.WindowCloseCommand);
             }
-            this.CloseButtonCommand = new Command((object parametrer) => { System.Windows.Application.Current.Shutdown(); });
+            if(this.CloseButtonCommand == null)
+                this.CloseButtonCommand = new Command((object parametrer) => 
+                {
+                    IntPtr active = GetActiveWindow();
+                    Window activeWindow = null;
+                    if (active != null)
+                    {
+                        activeWindow = Application.Current.Windows.OfType<Window>()
+                            .SingleOrDefault(window => new WindowInteropHelper(window).Handle == active);
+                    }
+                    if (activeWindow != null)
+                        activeWindow.Close();
+                    else
+                        Application.Current.Shutdown();
+                });
         }
 
         #endregion

@@ -5,9 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
-namespace DIYoutubeDownloader.Internal
+using DIYoutubeDownloader.Internal;
+
+using DesktopDashboard.Interfaces;
+using ArgumentCollection = DesktopDashboard.Common.ArgumentCollection;
+
+namespace DIYoutubeDownloader.Common
 {
-    public class Tools
+    public class Utils
     {
         #region CreateYoutubeDownloaderViewModel
 

@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIYoutubeDownloader.Internal
+using DesktopDashboard.Interfaces;
+
+namespace DesktopDashboard.Common
 {
-    internal class Logger : ILogger
+    public class Logger : ILogger
     {
         private NLog.Logger LoggerInstance = null;
         private bool InitializationFailed = false;

@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
-using System.Drawing.Imaging;
+using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
-using System.IO;
 
-namespace DIYoutubeDownloader.Internal
+namespace DesktopDashboard.Common
 {
-    internal class Utils
+    public class Utils
     {
-        public static ILogger Logger { get; } = new Logger();
 
         #region ToBitmapImage
         public static BitmapImage ToBitmapImage(object toConvert)
@@ -56,30 +55,6 @@ namespace DIYoutubeDownloader.Internal
                 bitmapImage = ToBitmapImage(bitmap);
             }
             return bitmapImage;
-        }
-
-        #endregion
-        #region GetDownloadFolderPath
-
-        public static string GetDownloadFolderPath()
-        {
-            return Path.Combine(Environment.GetEnvironmentVariable("USERPROFILE"), "Downloads");
-        }
-
-        #endregion
-        #region GetAssemblyName
-
-        public static string GetAssemblyName()
-        {
-            return System.Reflection.Assembly.GetExecutingAssembly()?.GetName()?.Name;
-        }
-
-        #endregion
-        #region GetAssemblyVersion
-
-        public static Version GetAssemblyVersion()
-        {
-            return System.Reflection.Assembly.GetExecutingAssembly()?.GetName()?.Version;
         }
 
         #endregion

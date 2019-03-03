@@ -1,7 +1,6 @@
-﻿
-using DIYoutubeDownloader.Internal;
+﻿using ArgumentCollection = DesktopDashboard.Common.ArgumentCollection;
 
-namespace DIYoutubeDownloader
+namespace DesktopDashboard.Interfaces
 {
     public interface IViewModelFactory
     {

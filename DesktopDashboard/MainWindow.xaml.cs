@@ -17,6 +17,9 @@ using System.Diagnostics;
 using System.Threading;
 using Syncfusion.UI.Xaml.Gauges;
 using DesktopDashboard.Resources;
+using DesktopDashboard.Internals;
+using DesktopDashboard.Interfaces;
+using DesktopDashboard.Common;
 
 namespace DesktopDashboard
 {
@@ -26,6 +29,7 @@ namespace DesktopDashboard
     public partial class MainWindow : Window
     {
         private PerformanceCounter cpuTotalCntr = null;
+        private PluginManager pluginManager = new PluginManager();
 
 
         private readonly ManualResetEvent DashboardUpdateWaitEvent = new ManualResetEvent(false);
@@ -47,6 +51,7 @@ namespace DesktopDashboard
             InitializeComponent();
             try
             {
+                Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-us");
                 Left = SystemParameters.PrimaryScreenWidth - Width;
 
                 ProceedDashboardUpdateDelegateItem = new ProceedDashboardUpdateDelegate(ProceedDashboardUpdate);
@@ -252,6 +257,26 @@ namespace DesktopDashboard
                 }
 
                 #endregion
+                
+                List<Plugin> plugins = pluginManager.GetPlugins();
+
+                foreach(Control itItem in baToolbarMenu.Items)
+                {
+                    if(itItem.Name == "baToolbarMenuItemPlugins")
+                    {
+                        Syncfusion.Windows.Shared.MenuItemAdv menuItem = itItem as Syncfusion.Windows.Shared.MenuItemAdv;
+                        foreach(IPlugin plugin in plugins)
+                        {
+                            Syncfusion.Windows.Shared.MenuItemAdv subMenuItem = new Syncfusion.Windows.Shared.MenuItemAdv();
+                            subMenuItem.Header = plugin.GetPluginName();
+                            subMenuItem.Icon = new Image() { Source = Utils.ToBitmapImage(plugin.GetPluginIcon()) };
+                            subMenuItem.Tag = plugin;
+                            subMenuItem.Click += SubMenuItem_Click;
+                            menuItem.Items.Add(subMenuItem);
+                        }
+                      //  bItem.ContextMenu.Items.Add()
+                    }
+                }
 
                 DashboardUpdateTask = new Task(() => DashboardUpdater(), TaskCreationOptions.LongRunning);
                 DashboardUpdateTask.Start();
@@ -262,7 +287,13 @@ namespace DesktopDashboard
             }
         }
 
-        
+        private void SubMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Plugin plugin = (sender as Syncfusion.Windows.Shared.MenuItemAdv)?.Tag as Plugin;
+            if (plugin != null)
+                plugin.InitializePlugin(null);
+        }
+
         private static System.Windows.Media.Color ConvertColorType(System.Drawing.Color color)
         {
             return Color.FromArgb(color.A, color.R, color.G, color.B);
@@ -541,5 +572,6 @@ namespace DesktopDashboard
                 return Math.Round(this.DriveInfo.TotalFreeSpace * BToGbRefactor, 1);
             }
         }
+        
     }
 }

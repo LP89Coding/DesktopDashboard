@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DIYoutubeDownloader.Internal;
+using DesktopDashboard.Common;
 
-namespace DIYoutubeDownloader
+namespace DesktopDashboard.Interfaces
 {
     public interface ILogger
     {

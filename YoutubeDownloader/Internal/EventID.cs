@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LogData = DIYoutubeDownloader.Internal.LogData;
-using LogLevel = DIYoutubeDownloader.Internal.Enums.LogLevel;
+using LogData = DesktopDashboard.Common.LogData;
+using LogLevel = DesktopDashboard.Common.Enums.LogLevel;
 
 namespace DIYoutubeDownloader.Internal
 {

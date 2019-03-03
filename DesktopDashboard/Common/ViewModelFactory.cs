@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace DIYoutubeDownloader.Internal
+using DesktopDashboard.Interfaces;
+using ArgumentCollection = DesktopDashboard.Common.ArgumentCollection;
+
+namespace DesktopDashboard.Common
 {
-    internal class ViewModelFactory : IViewModelFactory
+    public class ViewModelFactory : IViewModelFactory
     {
         public virtual T CreateViewModel<T>(ArgumentCollection args) where T : IViewModel, new()
         {

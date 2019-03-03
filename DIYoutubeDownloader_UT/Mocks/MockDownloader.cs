@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using DIYoutubeDownloader.Internal;
 using DIYoutubeDownloader;
 using DIYoutubeDownloader.Models;
-using Tools = DIYoutubeDownloader.Internal.Tools;
 
 namespace DIYoutubeDownloader_UT.Mocks
 {

@@ -6,6 +6,10 @@ using DIYoutubeDownloader.Internal;
 using DIYoutubeDownloader.Models;
 using DIYoutubeDownloader.ViewModels;
 
+using Common = DIYoutubeDownloader.Common.Utils;
+
+using ArgumentCollection = DesktopDashboard.Common.ArgumentCollection;
+
 using DIYoutubeDownloader_UT.Mocks;
 
 namespace DIYoutubeDownloader_UT.Internal
@@ -18,7 +22,7 @@ namespace DIYoutubeDownloader_UT.Internal
 
             ArgumentCollection args = new ArgumentCollection();
             args.Set(ArgumentCollection.ArgumentType.Downloader, downloader);
-            return Tools.CreateYoutubeDownloaderViewModel(args) as YoutubeDownloaderViewModel;
+            return Common.CreateYoutubeDownloaderViewModel(args) as YoutubeDownloaderViewModel;
         }
 
         public static Media GetMediaInfo_GivenUrl_MediaInfo(YoutubeDownloaderViewModel youtubeDownloaderViewModel)
