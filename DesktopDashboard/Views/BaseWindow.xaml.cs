@@ -2,24 +2,30 @@
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-
-using DIYoutubeDownloader.Internal;
-using DIYoutubeDownloader.ViewModels;
-using IntrnalUtils = DIYoutubeDownloader.Internal.Utils;
+using System.ComponentModel;
 
 using DesktopDashboard.Common;
 using DesktopDashboard.Interfaces;
+using DesktopDashboard.ViewModels;
 using ArgumentCollection = DesktopDashboard.Common.ArgumentCollection;
-using System.ComponentModel;
+using EventID = DesktopDashboard.Internals.EventID.DesktopDashboard;
+using Utils = DesktopDashboard.Common.Utils;
 
-namespace DIYoutubeDownloader
+namespace DesktopDashboard.Views
 {
     /// <summary>
     /// Interaction logic for BaseWindow.xaml
     /// </summary>
     public partial class BaseWindow : Window
     {
+        private enum PropertyChangeNotificationOperation
+        {
+            Subscribe,
+            Unsubscribe
+        }
+
         private IViewModel viewModel { get; set; }
+        private PropertyChangedEventHandler propertyChangedEventHandler;
 
         #region Ctor
 
@@ -57,19 +63,19 @@ namespace DIYoutubeDownloader
         #endregion
         #region Events
 
-        private void RNavBar_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void RNavBar_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            this.DragMove();
+            try { if(e.ButtonState == MouseButtonState.Pressed) this.DragMove();} catch { }
         }
 
         private void TbeTitle_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            this.DragMove();
+            try { if (e.ButtonState == MouseButtonState.Pressed) this.DragMove(); } catch { }
         }
 
         private void IWindowIcon_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            this.DragMove();
+            try { if (e.ButtonState == MouseButtonState.Pressed) this.DragMove(); } catch { }
         }
 
         #endregion  
@@ -80,15 +86,17 @@ namespace DIYoutubeDownloader
         {
             try
             {
+                this.propertyChangedEventHandler = new PropertyChangedEventHandler(this.ChangeListener);
+
                 ViewModelFactory factory = new ViewModelFactory();
                 this.viewModel = factory.CreateViewModel<BaseWindowViewModel>(args);
                 this.DataContext = viewModel;
                 
-                this.SubscribePropertyChangeNotification(this.Content as Visual);
+                this.ManagePropertyChangeNotificationSubscription(this.Content as Visual, PropertyChangeNotificationOperation.Subscribe);
             }
             catch (Exception ex)
             {
-                IntrnalUtils.Logger.Log(EventID.DIYoutubeDownloader.Application.Exception, ex);
+                Utils.Logger.Log(EventID.Application.Exception, ex);
             }
         }
         #endregion
@@ -109,8 +117,8 @@ namespace DIYoutubeDownloader
             }
         }
         #endregion
-        #region SubscribePropertyChangeNotification
-        private void SubscribePropertyChangeNotification(Visual parent)
+        #region ManagePropertyChangeNotificationSubscription
+        private void ManagePropertyChangeNotificationSubscription(Visual parent, PropertyChangeNotificationOperation operation)
         {
             if (parent != null)
             {
@@ -118,12 +126,30 @@ namespace DIYoutubeDownloader
                 {
                     Visual childVisual = (Visual)VisualTreeHelper.GetChild(parent, i);
                     if (childVisual is IWindowControl)
-                        (childVisual as IWindowControl).SubscribePropertyChangeNotification(new System.ComponentModel.PropertyChangedEventHandler(this.ChangeListener));
+                    {
+                        if(operation == PropertyChangeNotificationOperation.Subscribe)
+                            (childVisual as IWindowControl).SubscribePropertyChangeNotification(this.propertyChangedEventHandler);
+                        else
+                            (childVisual as IWindowControl).UnsubscribePropertyChangeNotification(this.propertyChangedEventHandler);
+                    }
 
-                    SubscribePropertyChangeNotification(childVisual);
+                    ManagePropertyChangeNotificationSubscription(childVisual, operation);
                 }
             }
         }
+        #endregion
+        #region SetContent
+
+        public void SetContent(IWindowControl windowControl)
+        {
+            if (!(windowControl is UIElement))
+                throw new ArgumentException("WindowControl has to be UIElement");
+            this.ManagePropertyChangeNotificationSubscription(wpFillContent, PropertyChangeNotificationOperation.Unsubscribe);
+            wpFillContent.Children.Clear();
+            wpFillContent.Children.Add(windowControl as UIElement);
+            this.ManagePropertyChangeNotificationSubscription(wpFillContent, PropertyChangeNotificationOperation.Subscribe);
+        }
+
         #endregion
 
         #endregion

@@ -6,15 +6,14 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Shell;
-
-using DIYoutubeDownloader.Internal;
-
-using DesktopDashboard.Interfaces;
-using ArgumentCollection = DesktopDashboard.Common.ArgumentCollection;
 using System.Windows;
 using System.Windows.Interop;
 
-namespace DIYoutubeDownloader.ViewModels
+using DesktopDashboard.Interfaces;
+using ArgumentCollection = DesktopDashboard.Common.ArgumentCollection;
+using Utils = DesktopDashboard.Common.Utils;
+
+namespace DesktopDashboard.ViewModels
 {
     public class BaseWindowViewModel : ObservableViewModel, IViewModel
     {

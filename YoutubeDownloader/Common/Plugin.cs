@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 using DesktopDashboard.Interfaces;
+using DesktopDashboard.ViewModels;
+using BaseWindow = DesktopDashboard.Views.BaseWindow;
 using ArgumentCollection = DesktopDashboard.Common.ArgumentCollection;
 
 using DIYoutubeDownloader.Internal;
-using DIYoutubeDownloader.ViewModels;
 using EventID = DIYoutubeDownloader.Internal.EventID.DIYoutubeDownloader;
 using IntrnalUtils = DIYoutubeDownloader.Internal.Utils;
 
@@ -79,6 +80,8 @@ namespace DIYoutubeDownloader.Common
             args.Set(ArgumentCollection.ArgumentType.WindowCloseCommand, new Command((object parametrer) => { this.ClosePlugin(); }));
 
             mainWindow = new BaseWindow(args);
+            ucYoutubeDownloader youtubeDownloader = new ucYoutubeDownloader();
+            mainWindow.SetContent(youtubeDownloader);
             mainWindow.Show();
         }
         #endregion

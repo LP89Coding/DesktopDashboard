@@ -42,6 +42,7 @@
     </Reference>
     <Reference Include="ReachFramework" />
     <Reference Include="Syncfusion.SfGauge.WPF, Version=15.4460.0.17, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.SfInput.WPF, Version=16.4460.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Shared.WPF, Version=16.4460.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -74,7 +75,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Common\ArgumentCollection.cs" />
-    <Compile Include="Common\Common.cs" />
+    <Compile Include="Internals\EventID.cs" />
+    <Compile Include="ViewModels\BaseWindowViewModel.cs" />
+    <Compile Include="ViewModels\Command.cs" />
     <Compile Include="Common\LogData.cs" />
     <Compile Include="Common\Logger.cs" />
     <Compile Include="Common\Utils.cs" />
@@ -91,6 +94,10 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ResourceImage48.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\ObservableViewModel.cs" />
+    <Compile Include="Views\BaseWindow.xaml.cs">
+      <DependentUpon>BaseWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -111,6 +118,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\BaseWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MarkUpTools.cs" />
@@ -157,6 +168,47 @@
   <ItemGroup>
     <Resource Include="DesktopDashboard.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\128x128\Cancel.png" />
+    <Resource Include="Images\128x128\CancelLight.png" />
+    <Resource Include="Images\128x128\Download.png" />
+    <Resource Include="Images\128x128\DownloadLight.png" />
+    <Resource Include="Images\128x128\RightArrow.png" />
+    <Resource Include="Images\128x128\RightArrowLight.png" />
+    <Resource Include="Images\128x128\X.png" />
+    <Resource Include="Images\128x128\YouTube.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\16x16\Cancel.png" />
+    <Resource Include="Images\16x16\CancelLight.png" />
+    <Resource Include="Images\16x16\Download.png" />
+    <Resource Include="Images\16x16\DownloadLight.png" />
+    <Resource Include="Images\16x16\RightArrow.png" />
+    <Resource Include="Images\16x16\RightArrowLight.png" />
+    <Resource Include="Images\16x16\X.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\256x256\Cancel.png" />
+    <Resource Include="Images\256x256\CancelLight.png" />
+    <Resource Include="Images\256x256\Download.png" />
+    <Resource Include="Images\256x256\DownloadLight.png" />
+    <Resource Include="Images\256x256\RightArrow.png" />
+    <Resource Include="Images\256x256\RightArrowLight.png" />
+    <Resource Include="Images\256x256\X.png" />
+    <Resource Include="Images\256x256\YouTube.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\32x32\Cancel.png" />
+    <Resource Include="Images\32x32\CancelLight.png" />
+    <Resource Include="Images\32x32\Dislike.png" />
+    <Resource Include="Images\32x32\DislikeLight.png" />
+    <Resource Include="Images\32x32\Download.png" />
+    <Resource Include="Images\32x32\DownloadLight.png" />
+    <Resource Include="Images\32x32\Like.png" />
+    <Resource Include="Images\32x32\LikeLight.png" />
+    <Resource Include="Images\32x32\RightArrow.png" />
+    <Resource Include="Images\32x32\RightArrowLight.png" />
+    <Resource Include="Images\32x32\X.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

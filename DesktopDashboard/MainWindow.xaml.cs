@@ -430,9 +430,9 @@ namespace DesktopDashboard
         {
             this.Topmost = !this.Topmost;
             if (this.Topmost)
-                baToolBarTopMost.SmallIcon = Common.Common.GetBitmapImage(Common.Enums.ImageName.LockOpen, Common.Enums.ImageSize._48x48);//(System.Windows.Media.Imaging.BitmapImage)BitmapConverter.Convert(ResourceImage48.LockOpen, typeof(BitmapImage), null, Thread.CurrentThread.CurrentCulture);// ConvertImage(ResourceImage48.LockOpen);
+                baToolBarTopMost.SmallIcon = Utils.GetBitmapImage(Common.Enums.ImageName.LockOpen, Common.Enums.ImageSize._48x48);//(System.Windows.Media.Imaging.BitmapImage)BitmapConverter.Convert(ResourceImage48.LockOpen, typeof(BitmapImage), null, Thread.CurrentThread.CurrentCulture);// ConvertImage(ResourceImage48.LockOpen);
             else
-                baToolBarTopMost.SmallIcon = Common.Common.GetBitmapImage(Common.Enums.ImageName.Lock, Common.Enums.ImageSize._48x48);//(System.Windows.Media.Imaging.BitmapImage)BitmapConverter.Convert(ResourceImage48.Lock, typeof(BitmapImage), null, Thread.CurrentThread.CurrentCulture);//ConvertImage(ResourceImage48.Lock);
+                baToolBarTopMost.SmallIcon = Utils.GetBitmapImage(Common.Enums.ImageName.Lock, Common.Enums.ImageSize._48x48);//(System.Windows.Media.Imaging.BitmapImage)BitmapConverter.Convert(ResourceImage48.Lock, typeof(BitmapImage), null, Thread.CurrentThread.CurrentCulture);//ConvertImage(ResourceImage48.Lock);
         }
 
         #region PerformanceInfo

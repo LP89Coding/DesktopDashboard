@@ -9,5 +9,6 @@ namespace DesktopDashboard.Interfaces
     public interface IWindowControl
     {
         void SubscribePropertyChangeNotification(System.ComponentModel.PropertyChangedEventHandler propertyChangedHandler);
+        void UnsubscribePropertyChangeNotification(System.ComponentModel.PropertyChangedEventHandler propertyChangedHandler);
     }
 }

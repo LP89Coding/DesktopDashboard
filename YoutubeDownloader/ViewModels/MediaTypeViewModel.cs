@@ -1,6 +1,4 @@
-﻿using DIYoutubeDownloader.Internal;
-using DIYoutubeDownloader.Models;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,6 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+
+using DIYoutubeDownloader.Internal;
+using DIYoutubeDownloader.Models;
+
+using DesktopDashboard.ViewModels;
 
 namespace DIYoutubeDownloader.ViewModels
 {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 
-namespace DIYoutubeDownloader.ViewModels
+namespace DesktopDashboard.ViewModels
 {
     public abstract class ObservableViewModel : INotifyPropertyChanged
     {

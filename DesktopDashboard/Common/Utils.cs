@@ -6,10 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
+using Logger = DesktopDashboard.Common.Logger;
+using ILogger = DesktopDashboard.Interfaces.ILogger;
+
 namespace DesktopDashboard.Common
 {
     public class Utils
     {
+        public static ILogger Logger { get; } = new Logger();
 
         #region ToBitmapImage
         public static BitmapImage ToBitmapImage(object toConvert)
@@ -58,5 +62,17 @@ namespace DesktopDashboard.Common
         }
 
         #endregion
+
+
+        public static BitmapImage GetBitmapImage(Enums.ImageName imageName, Enums.ImageSize imageSize,
+            Enums.ImageExtension imageExtension = Enums.ImageExtension.PNG)
+        {
+            string str = String.Format("pack://application:,,,/Images/{0}/{1}.{2}",
+                imageSize.ToString().Substring(1, imageSize.ToString().Length - 1),
+                imageName.ToString(),
+                imageExtension.ToString().ToLower());
+            Uri uri = new Uri(str);
+            return new BitmapImage(uri);
+        }
     }
 }

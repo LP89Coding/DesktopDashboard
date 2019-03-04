@@ -58,6 +58,10 @@ namespace DIYoutubeDownloader
         {
             this.viewModel.PropertyChanged += propertyChangedHandler;
         }
+        public void UnsubscribePropertyChangeNotification(System.ComponentModel.PropertyChangedEventHandler propertyChangedHandler)
+        {
+            this.viewModel.PropertyChanged -= propertyChangedHandler;
+        }
 
         #endregion
 

@@ -89,10 +89,6 @@
     <Compile Include="Common\Plugin.cs" />
     <Compile Include="Common\Utils.cs" />
     <Compile Include="Internal\YoutubeDownloaderViewModelFactory.cs" />
-    <Compile Include="ViewModels\BaseWindowViewModel.cs" />
-    <Compile Include="View\BaseWindow.xaml.cs">
-      <DependentUpon>BaseWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Interfaces\IDownloader.cs" />
     <Compile Include="Internal\Consts.cs" />
     <Compile Include="Internal\Enums.cs" />
@@ -106,10 +102,6 @@
     <Compile Include="Internal\Downloader.cs" />
     <Compile Include="Models\Media.cs" />
     <Compile Include="Models\MediaType.cs" />
-    <Page Include="View\BaseWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\ucYoutubeDownloader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -121,9 +113,7 @@
     <Compile Include="View\ucYoutubeDownloader.xaml.cs">
       <DependentUpon>ucYoutubeDownloader.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\Command.cs" />
     <Compile Include="ViewModels\MediaTypeViewModel.cs" />
-    <Compile Include="ViewModels\ObservableViewModel.cs" />
     <Compile Include="ViewModels\YoutubeDownloaderViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

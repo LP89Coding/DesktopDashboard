@@ -12,6 +12,7 @@ using DIYoutubeDownloader.Internal;
 using EventID = DIYoutubeDownloader.Internal.EventID.DIYoutubeDownloader;
 
 using DesktopDashboard.Interfaces;
+using DesktopDashboard.ViewModels;
 using ArgumentCollection = DesktopDashboard.Common.ArgumentCollection;
 
 namespace DIYoutubeDownloader.ViewModels
