@@ -12,14 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
 using System.Diagnostics;
 using System.Threading;
+
 using Syncfusion.UI.Xaml.Gauges;
+
 using DesktopDashboard.Resources;
 using DesktopDashboard.Internals;
 using DesktopDashboard.Interfaces;
 using DesktopDashboard.Common;
+using DesktopDashboard.ViewModels;
+using EventID = DesktopDashboard.Internals.EventID.DesktopDashboard;
 
 namespace DesktopDashboard
 {
@@ -28,9 +31,9 @@ namespace DesktopDashboard
     /// </summary>
     public partial class MainWindow : Window
     {
-        private PerformanceCounter cpuTotalCntr = null;
-        private PluginManager pluginManager = new PluginManager();
+        private IViewModel viewModel;
 
+        private PerformanceCounter cpuTotalCntr = null;
 
         private readonly ManualResetEvent DashboardUpdateWaitEvent = new ManualResetEvent(false);
         private Task DashboardUpdateTask = null;
@@ -49,8 +52,10 @@ namespace DesktopDashboard
         public MainWindow()
         {
             InitializeComponent();
+            Initialize(null);
             try
             {
+
                 Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-us");
                 Left = SystemParameters.PrimaryScreenWidth - Width;
 
@@ -258,26 +263,6 @@ namespace DesktopDashboard
 
                 #endregion
                 
-                List<Plugin> plugins = pluginManager.GetPlugins();
-
-                foreach(Control itItem in baToolbarMenu.Items)
-                {
-                    if(itItem.Name == "baToolbarMenuItemPlugins")
-                    {
-                        Syncfusion.Windows.Shared.MenuItemAdv menuItem = itItem as Syncfusion.Windows.Shared.MenuItemAdv;
-                        foreach(IPlugin plugin in plugins)
-                        {
-                            Syncfusion.Windows.Shared.MenuItemAdv subMenuItem = new Syncfusion.Windows.Shared.MenuItemAdv();
-                            subMenuItem.Header = plugin.GetPluginName();
-                            subMenuItem.Icon = new Image() { Source = Utils.ToBitmapImage(plugin.GetPluginIcon()) };
-                            subMenuItem.Tag = plugin;
-                            subMenuItem.Click += SubMenuItem_Click;
-                            menuItem.Items.Add(subMenuItem);
-                        }
-                      //  bItem.ContextMenu.Items.Add()
-                    }
-                }
-
                 DashboardUpdateTask = new Task(() => DashboardUpdater(), TaskCreationOptions.LongRunning);
                 DashboardUpdateTask.Start();
             }
@@ -286,6 +271,27 @@ namespace DesktopDashboard
 
             }
         }
+
+
+        #region Methods
+
+        #region Initialize
+        private void Initialize(ArgumentCollection args)
+        {
+            try
+            {
+                ViewModelFactory factory = new ViewModelFactory();
+                this.viewModel = factory.CreateViewModel<MainWindowViewModel>(args);
+                this.DataContext = viewModel;
+            }
+            catch (Exception ex)
+            {
+                Utils.Logger.Log(EventID.Application.Exception, ex);
+            }
+        }
+        #endregion
+
+        #endregion
 
         private void SubMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -430,9 +436,9 @@ namespace DesktopDashboard
         {
             this.Topmost = !this.Topmost;
             if (this.Topmost)
-                baToolBarTopMost.SmallIcon = Utils.GetBitmapImage(Common.Enums.ImageName.LockOpen, Common.Enums.ImageSize._48x48);//(System.Windows.Media.Imaging.BitmapImage)BitmapConverter.Convert(ResourceImage48.LockOpen, typeof(BitmapImage), null, Thread.CurrentThread.CurrentCulture);// ConvertImage(ResourceImage48.LockOpen);
+                baToolBarTopMost.SmallIcon = Utils.ToBitmapImage(ResourceImage48.LockOpen);
             else
-                baToolBarTopMost.SmallIcon = Utils.GetBitmapImage(Common.Enums.ImageName.Lock, Common.Enums.ImageSize._48x48);//(System.Windows.Media.Imaging.BitmapImage)BitmapConverter.Convert(ResourceImage48.Lock, typeof(BitmapImage), null, Thread.CurrentThread.CurrentCulture);//ConvertImage(ResourceImage48.Lock);
+                baToolBarTopMost.SmallIcon = Utils.ToBitmapImage(ResourceImage48.Lock);
         }
 
         #region PerformanceInfo

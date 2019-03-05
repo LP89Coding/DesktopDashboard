@@ -95,7 +95,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ResourceImage48.resx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\ObservableViewModel.cs" />
+    <Compile Include="ViewModels\PluginViewModel.cs" />
     <Compile Include="Views\BaseWindow.xaml.cs">
       <DependentUpon>BaseWindow.xaml</DependentUpon>
     </Compile>
@@ -209,6 +211,21 @@
     <Resource Include="Images\32x32\RightArrow.png" />
     <Resource Include="Images\32x32\RightArrowLight.png" />
     <Resource Include="Images\32x32\X.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\128x128\Plugin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\16x16\Plugin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\256x256\Plugin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\32x32\Plugin.png.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\48x48\Plugin.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

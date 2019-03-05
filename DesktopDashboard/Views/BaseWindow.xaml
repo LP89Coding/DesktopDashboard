@@ -35,6 +35,10 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <Style TargetType="syncfusion:DropDownButtonAdv">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="#FFA7A8AA" />
+        </Style>
         <Style TargetType="syncfusion:DropDownMenuItem">
             <Setter Property="Background" Value="#CC1B1717"/>
             <Setter Property="Foreground" Value="White"/>

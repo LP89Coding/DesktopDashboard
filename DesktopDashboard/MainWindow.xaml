@@ -4,7 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DesktopDashboard"
-        xmlns:Syncfusion="http://schemas.syncfusion.com/wpf" x:Class="DesktopDashboard.MainWindow"
+        xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
+        x:Class="DesktopDashboard.MainWindow"
         xmlns:MarkUpTools="clr-namespace:DesktopDashboard"
         mc:Ignorable="d"
         Title="Desktop dashboard"
@@ -16,14 +17,18 @@
     </Window.Background>
 
     <Window.Resources>
-        <Style TargetType="Syncfusion:MenuItemAdv">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="Red"/>
-
+        <Style TargetType="syncfusion:DropDownButtonAdv">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="#FFA7A8AA" />
         </Style>
-        <Style TargetType="Syncfusion:MenuAdv">
-            <Setter Property="Background" Value="Transparent"/>
+        <Style TargetType="syncfusion:DropDownMenuItem">
+            <Setter Property="Background" Value="#CC1B1717"/>
             <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FF343330"/>
+        </Style>
+        <Style TargetType="syncfusion:DropDownMenuGroup">
+            <Setter Property="Foreground" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="#FF343330"/>
         </Style>
     </Window.Resources>
     <DockPanel>
@@ -33,7 +38,7 @@
                    Margin="0 0 0 10"
                    HorizontalAlignment="Right" VerticalAlignment="Center" FlowDirection="RightToLeft"
                    Background="#CC2D2D30">
-            <Syncfusion:ButtonAdv x:Name="baToolBarCloseApp" SizeMode="Small"
+            <syncfusion:ButtonAdv x:Name="baToolBarCloseApp" SizeMode="Small"
                                   Background="Transparent" 
                                   BorderBrush="Transparent" BorderThickness="0"
                                   SmallIcon="Images/48x48/Close.png"
@@ -43,7 +48,7 @@
                                   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                                   Click="baToolBarCloseApp_Click"
                                   ToolTip="Close dashboard" />
-            <Syncfusion:ButtonAdv x:Name="baToolBarTopMost" SizeMode="Small"
+            <syncfusion:ButtonAdv x:Name="baToolBarTopMost" SizeMode="Small"
                                   Background="Transparent" BorderBrush="Transparent" BorderThickness="0"
                                   SmallIcon="Images/48x48/Lock.png" 
                                   Width="{x:Static SystemParameters.WindowCaptionHeight}" 
@@ -52,12 +57,21 @@
                                   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                                   Click="baToolBarTopMost_Click"
                                   ToolTip="Always on top"/>
-            <Syncfusion:MenuAdv x:Name="baToolbarMenu" Height="23" Width="146" HorizontalAlignment="Left" Background="{x:Null}">
-                <Syncfusion:MenuItemAdv Width="54" Name="baToolbarMenuItemPlugins" Header="Plugins" >
-
-                </Syncfusion:MenuItemAdv>
-
-            </Syncfusion:MenuAdv>
+            <syncfusion:DropDownButtonAdv Width="33"
+                                          Label="" 
+                                          SizeMode="Normal" SmallIcon="Images/48x48/Plugin.png"
+                                          BorderBrush="Transparent" BorderThickness="0" Foreground="Black" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" 
+                                          VerticalAlignment="Center" VerticalContentAlignment="Center">
+                <syncfusion:DropDownMenuGroup ItemsSource="{Binding Path=AvailablePlugins}">
+                    <syncfusion:DropDownMenuGroup.ItemTemplate>
+                        <DataTemplate>
+                            <syncfusion:DropDownMenuItem Header="{Binding}" Tag="{Binding}" Icon="{Binding Path=Icon, Mode=OneWay}"
+                                                     Command="{Binding InitializePluginCommand}">
+                            </syncfusion:DropDownMenuItem>
+                        </DataTemplate>
+                    </syncfusion:DropDownMenuGroup.ItemTemplate>
+                </syncfusion:DropDownMenuGroup>
+            </syncfusion:DropDownButtonAdv>
         </WrapPanel>
         <WrapPanel x:Name="wpDashboard" DockPanel.Dock="Bottom" Orientation="Vertical">
 

@@ -17,8 +17,6 @@ namespace DesktopDashboard.ViewModels
 {
     public class BaseWindowViewModel : ObservableViewModel, IViewModel
     {
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
-        static extern IntPtr GetActiveWindow();
 
         private string windowTitle;
         public string WindowTitle
@@ -126,21 +124,6 @@ namespace DesktopDashboard.ViewModels
                 if (args.Contains(ArgumentCollection.ArgumentType.WindowCloseCommand))
                     this.CloseButtonCommand = args.Get<Command>(ArgumentCollection.ArgumentType.WindowCloseCommand);
             }
-            if(this.CloseButtonCommand == null)
-                this.CloseButtonCommand = new Command((object parametrer) => 
-                {
-                    IntPtr active = GetActiveWindow();
-                    Window activeWindow = null;
-                    if (active != null)
-                    {
-                        activeWindow = Application.Current.Windows.OfType<Window>()
-                            .SingleOrDefault(window => new WindowInteropHelper(window).Handle == active);
-                    }
-                    if (activeWindow != null)
-                        activeWindow.Close();
-                    else
-                        Application.Current.Shutdown();
-                });
         }
 
         #endregion

@@ -14,6 +14,8 @@ namespace DesktopDashboard.Common
     public class Utils
     {
         public static ILogger Logger { get; } = new Logger();
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern IntPtr GetActiveWindow();
 
         #region ToBitmapImage
         public static BitmapImage ToBitmapImage(object toConvert)
@@ -62,17 +64,23 @@ namespace DesktopDashboard.Common
         }
 
         #endregion
+        #region CloseActiveWindow
 
-
-        public static BitmapImage GetBitmapImage(Enums.ImageName imageName, Enums.ImageSize imageSize,
-            Enums.ImageExtension imageExtension = Enums.ImageExtension.PNG)
+        public static void CloseActiveWindow()
         {
-            string str = String.Format("pack://application:,,,/Images/{0}/{1}.{2}",
-                imageSize.ToString().Substring(1, imageSize.ToString().Length - 1),
-                imageName.ToString(),
-                imageExtension.ToString().ToLower());
-            Uri uri = new Uri(str);
-            return new BitmapImage(uri);
+            IntPtr active = GetActiveWindow();
+            System.Windows.Window activeWindow = null;
+            if (active != null)
+            {
+                activeWindow = System.Windows.Application.Current.Windows.OfType<System.Windows.Window>()
+                    .SingleOrDefault(window => new System.Windows.Interop.WindowInteropHelper(window).Handle == active);
+            }
+            if (activeWindow != null)
+                activeWindow.Close();
+            else
+                System.Windows.Application.Current.Shutdown();
         }
+
+        #endregion
     }
 }
