@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
+using Logger = WPF.Common.Logger.Logger;
+
 using DIYoutubeDownloader.Internal;
 using DIYoutubeDownloader.Models;
 
@@ -78,7 +80,7 @@ namespace DIYoutubeDownloader.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    Utils.Logger.Log(EventID.DIYoutubeDownloader.Application.Exception, ex);
+                    Logger.Log(EventID.DIYoutubeDownloader.Application.Exception, ex);
                 }
             }
         }

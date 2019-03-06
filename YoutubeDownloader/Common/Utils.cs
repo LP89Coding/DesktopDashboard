@@ -22,14 +22,5 @@ namespace DIYoutubeDownloader.Common
         }
 
         #endregion
-
-        #region ToBitmapImage
-
-        public static BitmapImage ToBitmapImage(object toConvert)
-        {
-            return Utils.ToBitmapImage(toConvert);
-        }
-
-        #endregion
     }
 }

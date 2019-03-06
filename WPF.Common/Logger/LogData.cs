@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DesktopDashboard.Common
+namespace WPF.Common.Logger
 {
     public class LogData
     {

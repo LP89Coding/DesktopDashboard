@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using System.Windows.Shell;
 
+using Logger = WPF.Common.Logger.Logger;
+
 using DIYoutubeDownloader.Internal;
 using EventID = DIYoutubeDownloader.Internal.EventID.DIYoutubeDownloader;
 
@@ -174,7 +176,7 @@ namespace DIYoutubeDownloader.ViewModels
                         }
                         catch(Exception ex)
                         {
-                            Utils.Logger.Log(EventID.Application.Exception, ex);
+                            Logger.Log(EventID.Application.Exception, ex);
                             ytMedia = null;
                         }
 
@@ -201,7 +203,7 @@ namespace DIYoutubeDownloader.ViewModels
             }
             catch(Exception ex)
             {
-                Utils.Logger.Log(EventID.Application.Exception, ex);
+                Logger.Log(EventID.Application.Exception, ex);
             }
         }
         #endregion
@@ -248,7 +250,7 @@ namespace DIYoutubeDownloader.ViewModels
             }
             catch (Exception ex)
             {
-                Utils.Logger.Log(EventID.Application.Exception, ex);
+                Logger.Log(EventID.Application.Exception, ex);
             }
         }
 

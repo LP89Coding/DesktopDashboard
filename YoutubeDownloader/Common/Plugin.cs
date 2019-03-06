@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Logger = WPF.Common.Logger.Logger;
+
 using DesktopDashboard.Interfaces;
 using DesktopDashboard.ViewModels;
 using BaseWindow = DesktopDashboard.Views.BaseWindow;
@@ -33,11 +35,11 @@ namespace DIYoutubeDownloader.Common
             }
             catch (Exception ex)
             {
-                IntrnalUtils.Logger.Log(EventID.Application.UnhandledExceptionException, ex);
+                Logger.Log(EventID.Application.UnhandledExceptionException, ex);
             }
             finally
             {
-                IntrnalUtils.Logger.Log(EventID.Application.UnhandledException, message);
+                Logger.Log(EventID.Application.UnhandledException, message);
             }
         }
 
@@ -51,7 +53,7 @@ namespace DIYoutubeDownloader.Common
         {
             try
             {
-                IntrnalUtils.Logger.Log(EventID.Application.Start);
+                Logger.Log(EventID.Application.Start);
                 #region GlobalUnhandledExceptionEvents
 
                 AppDomain.CurrentDomain.UnhandledException += (s, e) =>
@@ -67,7 +69,7 @@ namespace DIYoutubeDownloader.Common
             }
             catch (Exception ex)
             {
-                IntrnalUtils.Logger.Log(EventID.Application.Exception, ex);
+                Logger.Log(EventID.Application.Exception, ex);
             }
         }
         #endregion
@@ -91,8 +93,8 @@ namespace DIYoutubeDownloader.Common
         {
             try
             {
-                IntrnalUtils.Logger.Log(EventID.Application.End);
-                try { IntrnalUtils.Logger.Close(); } catch (Exception ex) { Console.WriteLine(ex.ToString()); IntrnalUtils.Logger.Log(EventID.Application.Exception, ex); }
+                Logger.Log(EventID.Application.End);
+                try { Logger.Close(); } catch (Exception ex) { Console.WriteLine(ex.ToString()); Logger.Log(EventID.Application.Exception, ex); }
                 mainWindow?.Close();
             }
             catch (Exception ex)

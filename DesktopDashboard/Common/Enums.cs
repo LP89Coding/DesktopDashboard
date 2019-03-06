@@ -24,24 +24,5 @@ namespace DesktopDashboard.Common
         {
             _48x48
         }
-        public enum LogLevel
-        {
-            Trace = 1,
-            Debug = 2,
-            Info = 3,
-            Warn = 4,
-            Error = 5,
-            Fatal = 6,
-            Off = 7,
-        }
-        public enum ObjectState
-        {
-            Unknown = 0,
-            New = 1,
-            Modified = 2,
-            Loaded = 3,
-            Delete = 4,
-            Incorect = 5,
-        }
     }
 }

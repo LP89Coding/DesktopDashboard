@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+
+using Logger = WPF.Common.Logger.Logger;
+
 using DIYoutubeDownloader.Internal;
 
 namespace DIYoutubeDownloader.Models
@@ -55,7 +58,7 @@ namespace DIYoutubeDownloader.Models
             }
             catch(Exception ex)
             {
-                Utils.Logger.Log(EventID.DIYoutubeDownloader.Media.DisposeException, ex);
+                Logger.Log(EventID.DIYoutubeDownloader.Media.DisposeException, ex);
             }
         }
 

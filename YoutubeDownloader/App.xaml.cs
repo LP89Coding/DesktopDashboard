@@ -28,6 +28,7 @@ namespace DIYoutubeDownloader
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            ArgumentCollection args = new ArgumentCollection();
             plugin.InitializePlugin(null);
         }
 

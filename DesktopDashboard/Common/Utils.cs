@@ -6,14 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
-using Logger = DesktopDashboard.Common.Logger;
-using ILogger = DesktopDashboard.Interfaces.ILogger;
+using Logger = WPF.Common.Logger.Logger;
 
 namespace DesktopDashboard.Common
 {
     public class Utils
     {
-        public static ILogger Logger { get; } = new Logger();
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         private static extern IntPtr GetActiveWindow();
 

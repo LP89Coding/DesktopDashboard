@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesktopDashboard_UT", "Desk
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIYoutubeDownloader_UT", "DIYoutubeDownloader_UT\DIYoutubeDownloader_UT.csproj", "{24D43602-266B-45CB-9FAA-BCD3E31E658C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF.Common", "WPF.Common\WPF.Common.csproj", "{865884C9-774D-4FCA-8C0C-59C52260FEFD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{24D43602-266B-45CB-9FAA-BCD3E31E658C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24D43602-266B-45CB-9FAA-BCD3E31E658C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24D43602-266B-45CB-9FAA-BCD3E31E658C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{865884C9-774D-4FCA-8C0C-59C52260FEFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{865884C9-774D-4FCA-8C0C-59C52260FEFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{865884C9-774D-4FCA-8C0C-59C52260FEFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{865884C9-774D-4FCA-8C0C-59C52260FEFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

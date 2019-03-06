@@ -8,10 +8,14 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using DIYoutubeDownloader.Internal;
+
 using YoutubeExplode;
 using YoutubeExplode.Models;
 using YoutubeExplode.Models.MediaStreams;
+
+using Logger = WPF.Common.Logger.Logger;
+
+using DIYoutubeDownloader.Internal;
 using DIYoutubeDownloader.Models;
 
 namespace DIYoutubeDownloader
@@ -72,7 +76,7 @@ namespace DIYoutubeDownloader
             }
             catch (Exception ex)
             {
-                Utils.Logger.Log(EventID.DIYoutubeDownloader.Downloader.GetVideoInfoException, ex);
+                Logger.Log(EventID.DIYoutubeDownloader.Downloader.GetVideoInfoException, ex);
                 throw ex;
             }
             finally
@@ -220,7 +224,7 @@ namespace DIYoutubeDownloader
                 }
                 catch (Exception ex)
                 {
-                    Utils.Logger.Log(EventID.DIYoutubeDownloader.Downloader.GetThumbnailException, ex);
+                    Logger.Log(EventID.DIYoutubeDownloader.Downloader.GetThumbnailException, ex);
                 }
             }
 
@@ -271,7 +275,7 @@ namespace DIYoutubeDownloader
             }
             catch (Exception ex)
             {
-                Utils.Logger.Log(EventID.DIYoutubeDownloader.Downloader.GetMediaInfoException, ex);
+                Logger.Log(EventID.DIYoutubeDownloader.Downloader.GetMediaInfoException, ex);
                 ymItem = null;
             }
             finally
@@ -349,7 +353,7 @@ namespace DIYoutubeDownloader
             }
             catch (Exception ex)
             {
-                Utils.Logger.Log(EventID.DIYoutubeDownloader.Downloader.DownloadException, ex);
+                Logger.Log(EventID.DIYoutubeDownloader.Downloader.DownloadException, ex);
                 downlaodStream?.Close();
                 downlaodStream?.Dispose();
                 downlaodStream = null;
@@ -380,7 +384,7 @@ namespace DIYoutubeDownloader
             }
             catch (Exception ex)
             {
-                Utils.Logger.Log(EventID.DIYoutubeDownloader.Downloader.CancelException, ex);
+                Logger.Log(EventID.DIYoutubeDownloader.Downloader.CancelException, ex);
             }
             finally
             {
@@ -404,7 +408,7 @@ namespace DIYoutubeDownloader
             }
             catch(Exception ex)
             {
-                Utils.Logger.Log(EventID.DIYoutubeDownloader.Downloader.DisposeException, ex);
+                Logger.Log(EventID.DIYoutubeDownloader.Downloader.DisposeException, ex);
             }
         }
 

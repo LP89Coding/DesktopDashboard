@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using Logger = WPF.Common.Logger.Logger;
+
 using DesktopDashboard.Interfaces;
 
 using DIYoutubeDownloader.Internal;
@@ -43,7 +45,7 @@ namespace DIYoutubeDownloader
             }
             catch (Exception ex)
             {
-                Utils.Logger.Log(EventID.Application.Exception, ex);
+                Logger.Log(EventID.Application.Exception, ex);
             }
         }
         #endregion

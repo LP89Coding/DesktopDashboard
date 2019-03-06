@@ -18,7 +18,7 @@ namespace DesktopDashboard.Common
             Downloader = 3,
             IsPluginMode = 4,
             WindowCloseCommand = 5,
-            Plugin = 3,
+            Plugin = 6,
         }
 
         public int Length { get { return this.arguments?.Count ?? 0; } }

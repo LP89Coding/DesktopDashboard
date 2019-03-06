@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LogData = DesktopDashboard.Common.LogData;
-using LogLevel = DesktopDashboard.Common.Enums.LogLevel;
+using LogData = WPF.Common.Logger.LogData;
+using LogLevel = WPF.Common.Enums.LogLevel;
 
 namespace DesktopDashboard.Internals
 {

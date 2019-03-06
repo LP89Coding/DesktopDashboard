@@ -6,15 +6,10 @@ using System.Drawing.Imaging;
 using System.Windows.Media.Imaging;
 using System.IO;
 
-using Logger = DesktopDashboard.Common.Logger;
-using ILogger = DesktopDashboard.Interfaces.ILogger;
-
 namespace DIYoutubeDownloader.Internal
 {
     internal class Utils
     {
-        public static ILogger Logger { get; } = new Logger();
-
         #region ToBitmapImage
         public static BitmapImage ToBitmapImage(object toConvert)
         {

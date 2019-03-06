@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WPF.Common.Interfaces;
 
-using DesktopDashboard.Interfaces;
-
-namespace DesktopDashboard.Common
+namespace WPF.Common.Logger
 {
-    public class Logger : ILogger
+    internal class NLogLogger : ILogger
     {
         private NLog.Logger LoggerInstance = null;
         private bool InitializationFailed = false;
@@ -16,7 +15,7 @@ namespace DesktopDashboard.Common
 
         #region Ctor
 
-        public Logger()
+        public NLogLogger()
         {
         }
 
@@ -77,7 +76,7 @@ namespace DesktopDashboard.Common
         }
         #endregion
         #region Log
-        public void Log(LogData logData, params object[] args)
+        public void Log(Common.Logger.LogData logData, params object[] args)
         {
             if (logData != null && !InitializationFailed && !Closed)
             {

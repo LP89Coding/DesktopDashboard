@@ -17,6 +17,8 @@ using System.Threading;
 
 using Syncfusion.UI.Xaml.Gauges;
 
+using Logger = WPF.Common.Logger.Logger;
+
 using DesktopDashboard.Resources;
 using DesktopDashboard.Internals;
 using DesktopDashboard.Interfaces;
@@ -55,6 +57,7 @@ namespace DesktopDashboard
             Initialize(null);
             try
             {
+                Logger.Log(EventID.Application.Start);
 
                 Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-us");
                 Left = SystemParameters.PrimaryScreenWidth - Width;
@@ -286,7 +289,7 @@ namespace DesktopDashboard
             }
             catch (Exception ex)
             {
-                Utils.Logger.Log(EventID.Application.Exception, ex);
+                Logger.Log(EventID.Application.Exception, ex);
             }
         }
         #endregion

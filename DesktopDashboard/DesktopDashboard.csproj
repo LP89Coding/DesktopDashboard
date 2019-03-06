@@ -78,11 +78,8 @@
     <Compile Include="Internals\EventID.cs" />
     <Compile Include="ViewModels\BaseWindowViewModel.cs" />
     <Compile Include="ViewModels\Command.cs" />
-    <Compile Include="Common\LogData.cs" />
-    <Compile Include="Common\Logger.cs" />
     <Compile Include="Common\Utils.cs" />
     <Compile Include="Common\ViewModelFactory.cs" />
-    <Compile Include="Interfaces\ILogger.cs" />
     <Compile Include="Interfaces\IPlugin.cs" />
     <Compile Include="Interfaces\IViewModel.cs" />
     <Compile Include="Interfaces\IViewModelFactory.cs" />
@@ -226,6 +223,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\48x48\Plugin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WPF.Common\WPF.Common.csproj">
+      <Project>{865884c9-774d-4fca-8c0c-59c52260fefd}</Project>
+      <Name>WPF.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

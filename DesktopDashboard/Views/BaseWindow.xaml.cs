@@ -4,12 +4,13 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.ComponentModel;
 
+using Logger = WPF.Common.Logger.Logger;
+
 using DesktopDashboard.Common;
 using DesktopDashboard.Interfaces;
 using DesktopDashboard.ViewModels;
 using ArgumentCollection = DesktopDashboard.Common.ArgumentCollection;
 using EventID = DesktopDashboard.Internals.EventID.DesktopDashboard;
-using Utils = DesktopDashboard.Common.Utils;
 
 namespace DesktopDashboard.Views
 {
@@ -96,7 +97,7 @@ namespace DesktopDashboard.Views
             }
             catch (Exception ex)
             {
-                Utils.Logger.Log(EventID.Application.Exception, ex);
+                Logger.Log(EventID.Application.Exception, ex);
             }
         }
         #endregion

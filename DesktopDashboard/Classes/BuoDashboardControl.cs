@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Enums = WPF.Common.Enums;
+
 namespace DesktopDashboard.Classes
 {
     public class BuoDashboardControl : IObjectState
