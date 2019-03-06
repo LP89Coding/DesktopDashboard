@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Shell;
 
-namespace DesktopDashboard.Interfaces
+namespace WPF.Common.Interfaces
 {
     public interface IWindowPropertyChangeNotifier
     {

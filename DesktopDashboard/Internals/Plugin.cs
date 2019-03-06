@@ -6,8 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-using DesktopDashboard.Interfaces;
-using ArgumentCollection = DesktopDashboard.Common.ArgumentCollection;
+using WPF.Common.Interfaces;
+using ArgumentCollection = WPF.Common.Common.ArgumentCollection;
 
 namespace DesktopDashboard.Internals
 {

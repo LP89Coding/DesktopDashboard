@@ -1,6 +1,7 @@
-﻿using ArgumentCollection = DesktopDashboard.Common.ArgumentCollection;
+﻿
+using ArgumentCollection = WPF.Common.Common.ArgumentCollection;
 
-namespace DesktopDashboard.Interfaces
+namespace WPF.Common.Interfaces
 {
     public interface IViewModelFactory
     {

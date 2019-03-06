@@ -17,11 +17,14 @@ using System.Threading;
 
 using Syncfusion.UI.Xaml.Gauges;
 
+using WPF.Common.Factories;
+using WPF.Common.Interfaces;
 using Logger = WPF.Common.Logger.Logger;
+using ArgumentCollection = WPF.Common.Common.ArgumentCollection;
+using WPFUtils = WPF.Common.Common.Utils;
 
 using DesktopDashboard.Resources;
 using DesktopDashboard.Internals;
-using DesktopDashboard.Interfaces;
 using DesktopDashboard.Common;
 using DesktopDashboard.ViewModels;
 using EventID = DesktopDashboard.Internals.EventID.DesktopDashboard;
@@ -439,9 +442,9 @@ namespace DesktopDashboard
         {
             this.Topmost = !this.Topmost;
             if (this.Topmost)
-                baToolBarTopMost.SmallIcon = Utils.ToBitmapImage(ResourceImage48.LockOpen);
+                baToolBarTopMost.SmallIcon = WPFUtils.ToBitmapImage(ResourceImage48.LockOpen);
             else
-                baToolBarTopMost.SmallIcon = Utils.ToBitmapImage(ResourceImage48.Lock);
+                baToolBarTopMost.SmallIcon = WPFUtils.ToBitmapImage(ResourceImage48.Lock);
         }
 
         #region PerformanceInfo

@@ -74,17 +74,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Common\ArgumentCollection.cs" />
     <Compile Include="Internals\EventID.cs" />
-    <Compile Include="ViewModels\BaseWindowViewModel.cs" />
-    <Compile Include="ViewModels\Command.cs" />
-    <Compile Include="Common\Utils.cs" />
-    <Compile Include="Common\ViewModelFactory.cs" />
-    <Compile Include="Interfaces\IPlugin.cs" />
-    <Compile Include="Interfaces\IViewModel.cs" />
-    <Compile Include="Interfaces\IViewModelFactory.cs" />
-    <Compile Include="Interfaces\IWindowControl.cs" />
-    <Compile Include="Interfaces\IWindowPropertyChangeNotifier.cs" />
     <Compile Include="Internals\Plugin.cs" />
     <Compile Include="Internals\PluginManager.cs" />
     <Compile Include="Resources\ResourceImage48.Designer.cs">
@@ -93,11 +83,7 @@
       <DependentUpon>ResourceImage48.resx</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
-    <Compile Include="ViewModels\ObservableViewModel.cs" />
     <Compile Include="ViewModels\PluginViewModel.cs" />
-    <Compile Include="Views\BaseWindow.xaml.cs">
-      <DependentUpon>BaseWindow.xaml</DependentUpon>
-    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -112,15 +98,10 @@
     <Compile Include="Classes\BuoPerformanceCounter.cs" />
     <Compile Include="Classes\BuoPerformanceCounterCategory.cs" />
     <Compile Include="Common\Enums.cs" />
-    <Compile Include="Common\IObjectState.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\BaseWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MarkUpTools.cs" />
@@ -229,6 +210,9 @@
       <Project>{865884c9-774d-4fca-8c0c-59c52260fefd}</Project>
       <Name>WPF.Common</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -9,7 +9,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
-using DesktopDashboard.Interfaces;
+using WPF.Common.Interfaces;
 
 namespace DesktopDashboard.Internals
 {

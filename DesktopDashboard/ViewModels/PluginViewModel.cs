@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using DesktopDashboard.Common;
-using DesktopDashboard.Interfaces;
-using DesktopDashboard.ViewModels;
-using ArgumentCollection = DesktopDashboard.Common.ArgumentCollection;
-using EventID = DesktopDashboard.Internals.EventID.DesktopDashboard;
-using Utils = DesktopDashboard.Common.Utils;
+using WPF.Common.Common;
+using WPF.Common.Interfaces;
+using ArgumentCollection = WPF.Common.Common.ArgumentCollection;
+
+using WPFUtils = WPF.Common.Common.Utils;
 
 namespace DesktopDashboard.ViewModels
 {
@@ -37,7 +36,7 @@ namespace DesktopDashboard.ViewModels
             get
             {
                 if (this.icon == null)
-                    this.icon = new System.Windows.Controls.Image() { Source = Utils.ToBitmapImage(this.Plugin?.GetPluginIcon()) };
+                    this.icon = new System.Windows.Controls.Image() { Source = WPFUtils.ToBitmapImage(this.Plugin?.GetPluginIcon()) };
                 return icon;
             }
         }

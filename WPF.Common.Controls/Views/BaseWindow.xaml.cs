@@ -4,15 +4,16 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.ComponentModel;
 
+using WPF.Common.Factories;
+using WPF.Common.Interfaces;
 using Logger = WPF.Common.Logger.Logger;
+using ArgumentCollection = WPF.Common.Common.ArgumentCollection;
 
-using DesktopDashboard.Common;
-using DesktopDashboard.Interfaces;
-using DesktopDashboard.ViewModels;
-using ArgumentCollection = DesktopDashboard.Common.ArgumentCollection;
-using EventID = DesktopDashboard.Internals.EventID.DesktopDashboard;
+using WPF.Common.Controls.ViewModels;
 
-namespace DesktopDashboard.Views
+//using EventID = DesktopDashboard.Internals.EventID.DesktopDashboard;
+
+namespace WPF.Common.Controls.Views
 {
     /// <summary>
     /// Interaction logic for BaseWindow.xaml
@@ -97,7 +98,8 @@ namespace DesktopDashboard.Views
             }
             catch (Exception ex)
             {
-                Logger.Log(EventID.Application.Exception, ex);
+                //TODO Log
+                //Logger.Log(EventID.Application.Exception, ex);
             }
         }
         #endregion

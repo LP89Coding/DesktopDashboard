@@ -1,7 +1,7 @@
 ﻿using DIYoutubeDownloader.ViewModels;
 
-using DesktopDashboard.Common;
-using ArgumentCollection = DesktopDashboard.Common.ArgumentCollection;
+using WPF.Common.Factories;
+using ArgumentCollection = WPF.Common.Common.ArgumentCollection;
 
 namespace DIYoutubeDownloader.Internal
 {

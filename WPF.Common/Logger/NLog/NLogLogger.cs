@@ -76,7 +76,7 @@ namespace WPF.Common.Logger
         }
         #endregion
         #region Log
-        public void Log(Common.Logger.LogData logData, params object[] args)
+        public void Log(WPF.Common.Logger.LogData logData, params object[] args)
         {
             if (logData != null && !InitializationFailed && !Closed)
             {

@@ -7,12 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
+using WPF.Common.Common;
 using Logger = WPF.Common.Logger.Logger;
 
 using DIYoutubeDownloader.Internal;
 using DIYoutubeDownloader.Models;
-
-using DesktopDashboard.ViewModels;
 
 namespace DIYoutubeDownloader.ViewModels
 {
@@ -64,7 +63,7 @@ namespace DIYoutubeDownloader.ViewModels
                                 {
                                     Filter = $"*{fileExtension} files |*.{fileExtension}",
                                     DefaultExt = $"*.{fileExtension}",
-                                    InitialDirectory = Utils.GetDownloadFolderPath(),
+                                    InitialDirectory = Internal.Utils.GetDownloadFolderPath(),
                                     FileName = $"{fileName}.{fileExtension}"
                                 };
 

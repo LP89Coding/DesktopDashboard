@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using WpfCommonEnums = WPF.Common.Enums;
 
-namespace DesktopDashboard.Common
+namespace WPF.Common.Interfaces
 {
     public interface IObjectState
     {

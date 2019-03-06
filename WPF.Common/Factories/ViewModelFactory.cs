@@ -1,9 +1,9 @@
 ﻿using System;
 
-using DesktopDashboard.Interfaces;
-using ArgumentCollection = DesktopDashboard.Common.ArgumentCollection;
+using WPF.Common.Interfaces;
+using ArgumentCollection = WPF.Common.Common.ArgumentCollection;
 
-namespace DesktopDashboard.Common
+namespace WPF.Common.Factories
 {
     public class ViewModelFactory : IViewModelFactory
     {

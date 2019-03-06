@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using ArgumentCollection = DesktopDashboard.Common.ArgumentCollection;
+using ArgumentCollection = WPF.Common.Common.ArgumentCollection;
 
-namespace DesktopDashboard.Interfaces
+namespace WPF.Common.Interfaces
 {
     public delegate void ChangeListenerDelegate(object sender, System.ComponentModel.PropertyChangedEventArgs e);
     public interface IViewModel : IDisposable

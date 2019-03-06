@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using WPF.Common.Interfaces;
 using Enums = WPF.Common.Enums;
 
 namespace DesktopDashboard.Classes

@@ -68,6 +68,10 @@
       <Project>{d2c756c9-8614-4e6c-b44f-aa32eca025f9}</Project>
       <Name>DesktopDashboard</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WPF.Common\WPF.Common.csproj">
+      <Project>{865884c9-774d-4fca-8c0c-59c52260fefd}</Project>
+      <Name>WPF.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\YoutubeDownloader\DIYoutubeDownloader.csproj">
       <Project>{e0331ae4-ec8a-49ff-aaac-416af21bc836}</Project>
       <Name>DIYoutubeDownloader</Name>

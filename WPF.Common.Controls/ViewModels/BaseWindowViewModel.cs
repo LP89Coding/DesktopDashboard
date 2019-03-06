@@ -9,11 +9,12 @@ using System.Windows.Shell;
 using System.Windows;
 using System.Windows.Interop;
 
-using DesktopDashboard.Interfaces;
-using ArgumentCollection = DesktopDashboard.Common.ArgumentCollection;
-using Utils = DesktopDashboard.Common.Utils;
+using WPF.Common.Common;
+using WPF.Common.Interfaces;
+using WPFUtils = WPF.Common.Common.Utils;
+using ArgumentCollection = WPF.Common.Common.ArgumentCollection;
 
-namespace DesktopDashboard.ViewModels
+namespace WPF.Common.Controls.ViewModels
 {
     public class BaseWindowViewModel : ObservableViewModel, IViewModel
     {
@@ -120,7 +121,7 @@ namespace DesktopDashboard.ViewModels
                 if (args.Contains(ArgumentCollection.ArgumentType.WindowTitle))
                     this.WindowTitle = args.Get(ArgumentCollection.ArgumentType.WindowTitle)?.ToString();
                 if (args.Contains(ArgumentCollection.ArgumentType.WindowIcon))
-                    this.WindowIcon = Utils.ToBitmapImage(args.Get(ArgumentCollection.ArgumentType.WindowIcon));
+                    this.WindowIcon = WPFUtils.ToBitmapImage(args.Get(ArgumentCollection.ArgumentType.WindowIcon));
                 if (args.Contains(ArgumentCollection.ArgumentType.WindowCloseCommand))
                     this.CloseButtonCommand = args.Get<Command>(ArgumentCollection.ArgumentType.WindowCloseCommand);
             }

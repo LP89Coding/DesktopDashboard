@@ -10,13 +10,6 @@ namespace DIYoutubeDownloader.Internal
 {
     internal class Utils
     {
-        #region ToBitmapImage
-        public static BitmapImage ToBitmapImage(object toConvert)
-        {
-            return DesktopDashboard.Common.Utils.ToBitmapImage(toConvert);
-        }
-
-        #endregion
         #region GetDownloadFolderPath
 
         public static string GetDownloadFolderPath()

@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using DesktopDashboard.Common;
-using DesktopDashboard.Interfaces;
+using WPF.Common.Common;
+using WPF.Common.Factories;
+using WPF.Common.Interfaces;
+using ArgumentCollection = WPF.Common.Common.ArgumentCollection;
+
 using DesktopDashboard.Internals;
-using ArgumentCollection = DesktopDashboard.Common.ArgumentCollection;
-using Utils = DesktopDashboard.Common.Utils;
 
 namespace DesktopDashboard.ViewModels
 {

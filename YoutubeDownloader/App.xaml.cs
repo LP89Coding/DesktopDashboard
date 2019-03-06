@@ -6,12 +6,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-using DesktopDashboard.Interfaces;
-using ArgumentCollection = DesktopDashboard.Common.ArgumentCollection;
+using WPF.Common.Interfaces;
+using ArgumentCollection = WPF.Common.Common.ArgumentCollection;
 
-using DIYoutubeDownloader.Internal;
 using DIYoutubeDownloader.Common;
-using EventID = DIYoutubeDownloader.Internal.EventID.DIYoutubeDownloader;
 
 namespace DIYoutubeDownloader
 {

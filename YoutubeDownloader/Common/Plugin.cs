@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using WPF.Common.Common;
+using WPF.Common.Interfaces;
 using Logger = WPF.Common.Logger.Logger;
+using ArgumentCollection = WPF.Common.Common.ArgumentCollection;
 
-using DesktopDashboard.Interfaces;
-using DesktopDashboard.ViewModels;
-using BaseWindow = DesktopDashboard.Views.BaseWindow;
-using ArgumentCollection = DesktopDashboard.Common.ArgumentCollection;
+using WPF.Common.Controls.Views;
 
 using DIYoutubeDownloader.Internal;
 using EventID = DIYoutubeDownloader.Internal.EventID.DIYoutubeDownloader;
@@ -20,7 +20,7 @@ namespace DIYoutubeDownloader.Common
     public class Plugin : IPlugin
     {
         private ArgumentCollection args { get; set; }
-        BaseWindow mainWindow { get; set; }
+        private BaseWindow mainWindow { get; set; }
         #region Events
 
         #region UnhandledException_Raised

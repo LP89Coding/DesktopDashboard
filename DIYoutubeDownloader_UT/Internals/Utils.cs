@@ -2,13 +2,12 @@
 using System.Diagnostics;
 using System.Threading;
 
-using DIYoutubeDownloader.Internal;
 using DIYoutubeDownloader.Models;
 using DIYoutubeDownloader.ViewModels;
 
 using Common = DIYoutubeDownloader.Common.Utils;
 
-using ArgumentCollection = DesktopDashboard.Common.ArgumentCollection;
+using ArgumentCollection = WPF.Common.Common.ArgumentCollection;
 
 using DIYoutubeDownloader_UT.Mocks;
 

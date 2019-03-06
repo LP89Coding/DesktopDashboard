@@ -8,14 +8,13 @@ using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using System.Windows.Shell;
 
+using WPF.Common.Common;
+using WPF.Common.Interfaces;
 using Logger = WPF.Common.Logger.Logger;
+using ArgumentCollection = WPF.Common.Common.ArgumentCollection;
+using WPFUtils = WPF.Common.Common.Utils;
 
-using DIYoutubeDownloader.Internal;
 using EventID = DIYoutubeDownloader.Internal.EventID.DIYoutubeDownloader;
-
-using DesktopDashboard.Interfaces;
-using DesktopDashboard.ViewModels;
-using ArgumentCollection = DesktopDashboard.Common.ArgumentCollection;
 
 namespace DIYoutubeDownloader.ViewModels
 {
@@ -57,7 +56,7 @@ namespace DIYoutubeDownloader.ViewModels
             {
                 this.thumbnail = null;
                 GC.Collect();
-                this.thumbnail = Utils.ToBitmapImage(this.Media?.Thumbnail ?? ResourceImage.YouTube);
+                this.thumbnail = WPFUtils.ToBitmapImage(this.Media?.Thumbnail ?? ResourceImage.YouTube);
                 return this.thumbnail;
             }
         }

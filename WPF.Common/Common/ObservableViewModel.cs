@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 
-namespace DesktopDashboard.ViewModels
+namespace WPF.Common.Common
 {
     public abstract class ObservableViewModel : INotifyPropertyChanged
     {

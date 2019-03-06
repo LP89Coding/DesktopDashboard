@@ -233,9 +233,9 @@
     <Resource Include="Images\16x16\X.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DesktopDashboard\DesktopDashboard.csproj">
-      <Project>{d2c756c9-8614-4e6c-b44f-aa32eca025f9}</Project>
-      <Name>DesktopDashboard</Name>
+    <ProjectReference Include="..\WPF.Common.Controls\WPF.Common.Controls.csproj">
+      <Project>{5c1d30f1-623d-4c8b-beec-95ee9cb309e9}</Project>
+      <Name>WPF.Common.Controls</Name>
     </ProjectReference>
     <ProjectReference Include="..\WPF.Common\WPF.Common.csproj">
       <Project>{865884c9-774d-4fca-8c0c-59c52260fefd}</Project>

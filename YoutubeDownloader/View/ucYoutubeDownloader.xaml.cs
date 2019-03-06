@@ -13,11 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using WPF.Common.Interfaces;
 using Logger = WPF.Common.Logger.Logger;
 
-using DesktopDashboard.Interfaces;
-
-using DIYoutubeDownloader.Internal;
 using EventID = DIYoutubeDownloader.Internal.EventID.DIYoutubeDownloader;
 
 namespace DIYoutubeDownloader

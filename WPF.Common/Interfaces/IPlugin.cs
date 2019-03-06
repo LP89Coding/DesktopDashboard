@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using ArgumentCollection = DesktopDashboard.Common.ArgumentCollection;
+using ArgumentCollection = WPF.Common.Common.ArgumentCollection;
 
-namespace DesktopDashboard.Interfaces
+namespace WPF.Common.Interfaces
 {
     public interface IPlugin
     {
@@ -16,7 +16,7 @@ namespace DesktopDashboard.Interfaces
         ArgumentCollection GetArgs();
 
         string GetPluginName();
-        Icon GetPluginIcon();
+        System.Drawing.Icon GetPluginIcon();
 
         void ClosePlugin();
     }

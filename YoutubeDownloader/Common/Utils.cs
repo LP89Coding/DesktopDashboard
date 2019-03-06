@@ -7,8 +7,8 @@ using System.Windows.Media.Imaging;
 
 using DIYoutubeDownloader.Internal;
 
-using DesktopDashboard.Interfaces;
-using ArgumentCollection = DesktopDashboard.Common.ArgumentCollection;
+using WPF.Common.Interfaces;
+using ArgumentCollection = WPF.Common.Common.ArgumentCollection;
 
 namespace DIYoutubeDownloader.Common
 {

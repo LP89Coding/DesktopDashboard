@@ -1,9 +1,9 @@
-﻿<Window x:Class="DesktopDashboard.Views.BaseWindow"
+﻿<Window x:Class="WPF.Common.Controls.Views.BaseWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DesktopDashboard.Views"
+        xmlns:local="clr-namespace:WPF.Common.Controls.Views"
         xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
         mc:Ignorable="d"
         Title="BaseWindow" Height="258" Width="478" AllowsTransparency="True" WindowStyle="None">
@@ -76,7 +76,7 @@
             <syncfusion:ButtonAdv Content="X" Height="30" Margin="0,6,6,0" 
                               Label="X" HorizontalAlignment="Right" VerticalAlignment="Top" Width="30" 
                               SizeMode="Small" IconStretch="Fill" IconHeight="20" IconWidth="20" 
-                              Background="#FFF14E4E" SmallIcon="/DesktopDashboard;component/Images/32x32/X.png"
+                              Background="#FFF14E4E" SmallIcon="/WPF.Common.Controls;component/Images/32x32/X.png"
                               Command="{Binding CloseButtonCommand}"
                Grid.Row="0" Grid.Column="2"/>
 

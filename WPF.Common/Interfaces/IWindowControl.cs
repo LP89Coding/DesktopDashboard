@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DesktopDashboard.Interfaces
+namespace WPF.Common.Interfaces
 {
     public interface IWindowControl
     {

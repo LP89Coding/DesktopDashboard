@@ -10,6 +10,6 @@ namespace WPF.Common.Interfaces
     {
         void Initialize();
         void Close();
-        void Log(Common.Logger.LogData logData, params object[] args);
+        void Log(WPF.Common.Logger.LogData logData, params object[] args);
     }
 }

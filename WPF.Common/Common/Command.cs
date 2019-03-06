@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace DesktopDashboard.ViewModels
+namespace WPF.Common.Common
 {
     public class Command : ICommand
     {
