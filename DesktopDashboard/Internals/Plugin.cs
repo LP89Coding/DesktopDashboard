@@ -15,7 +15,7 @@ namespace DesktopDashboard.Internals
     {
         private IPlugin instance { get; set; }
         private ArgumentCollection args { get; set; }
-       // private AppDomain domain { get; set; }
+        private AppDomain domain { get; set; }
 
         public Type Type { get; private set; }
         public string Path { get; private set; }
@@ -31,17 +31,19 @@ namespace DesktopDashboard.Internals
 
         public void InitializePlugin(ArgumentCollection args)
         {
+            //if (this.domain == null)
+            //{
+            //    string appDirectory = System.IO.Path.GetDirectoryName(this.Path);
+            //    //PermissionSet permSet = new PermissionSet(PermissionState.None);
+            //    //permSet.AddPermission(new SecurityPermission(SecurityPermissionFlag.Execution));
+            //    this.domain = AppDomain.CreateDomain(this.GetPluginName(), null, new AppDomainSetup() { ApplicationBase = appDirectory });
+
+            //}
+            //domain.ExecuteAssembly(this.Path);
+
+
             this.args = args ?? new ArgumentCollection();
             this.args.Set(ArgumentCollection.ArgumentType.IsPluginMode, true);
-           // if (this.domain == null)
-          //  {
-              //  string appDirectory = System.IO.Path.GetDirectoryName(this.Path);
-                //PermissionSet permSet = new PermissionSet(PermissionState.None);
-                //permSet.AddPermission(new SecurityPermission(SecurityPermissionFlag.Execution));
-              //  this.domain = AppDomain.CreateDomain(this.GetPluginName(), null, new AppDomainSetup() { ApplicationBase = appDirectory });
-
-         //   }
-          //  domain.ExecuteAssembly(this.Path);
             this.instance?.InitializePlugin(args);
         }
 

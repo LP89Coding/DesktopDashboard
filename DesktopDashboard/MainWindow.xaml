@@ -33,8 +33,13 @@
             <Setter Property="BorderBrush" Value="#FF343330"/>
         </Style>
     </Window.Resources>
-    <DockPanel>
-        <WrapPanel x:Name="wpToolbar" DockPanel.Dock="Top" Orientation="Vertical" 
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+        <WrapPanel x:Name="wpToolbar" Grid.Row="0" Orientation="Vertical" 
                    Height="{x:Static SystemParameters.WindowCaptionHeight}" 
                    Width="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}, Converter={MarkUpTools:RatioConverter}, ConverterParameter='0.1' }"
                    Margin="0 0 0 10"
@@ -75,8 +80,8 @@
                 </syncfusion:DropDownMenuGroup>
             </syncfusion:DropDownButtonAdv>
         </WrapPanel>
-        <WrapPanel x:Name="wpDashboard" DockPanel.Dock="Bottom" Orientation="Vertical">
+        <WrapPanel x:Name="wpDashboard" Grid.Row="1" Orientation="Vertical">
 
         </WrapPanel>
-    </DockPanel>
+    </Grid>
 </Window>
