@@ -8,6 +8,8 @@ namespace DIYoutubeDownloader.Internal
 {
     internal class Consts
     {
-        public const string YoutubeDownloaderTitle = "Youtube downloader";
+        public const string WindowTitle = "Youtube downloader";
+        public const double WindowDefaultHeigth = 260;
+        public const double WindowDefaultWidth = 480;
     }
 }

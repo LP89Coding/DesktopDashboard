@@ -206,6 +206,10 @@
     <Resource Include="Images\48x48\Plugin.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WPF.Common.Controls\WPF.Common.Controls.csproj">
+      <Project>{5c1d30f1-623d-4c8b-beec-95ee9cb309e9}</Project>
+      <Name>WPF.Common.Controls</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WPF.Common\WPF.Common.csproj">
       <Project>{865884c9-774d-4fca-8c0c-59c52260fefd}</Project>
       <Name>WPF.Common</Name>
@@ -213,6 +217,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\48x48\CloseLight.png" />
+    <Resource Include="Images\48x48\LockLight.png" />
+    <Resource Include="Images\48x48\LockOpenLight.png" />
+    <Resource Include="Images\48x48\PluginLight.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

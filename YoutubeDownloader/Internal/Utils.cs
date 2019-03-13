@@ -18,21 +18,6 @@ namespace DIYoutubeDownloader.Internal
         }
 
         #endregion
-        #region GetAssemblyName
 
-        public static string GetAssemblyName()
-        {
-            return System.Reflection.Assembly.GetExecutingAssembly()?.GetName()?.Name;
-        }
-
-        #endregion
-        #region GetAssemblyVersion
-
-        public static Version GetAssemblyVersion()
-        {
-            return System.Reflection.Assembly.GetExecutingAssembly()?.GetName()?.Version;
-        }
-
-        #endregion
     }
 }

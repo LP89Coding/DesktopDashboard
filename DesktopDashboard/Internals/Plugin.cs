@@ -65,6 +65,16 @@ namespace DesktopDashboard.Internals
             this.instance?.ClosePlugin();
         }
 
+        public string GetPluginAssemblyName()
+        {
+            return System.Reflection.Assembly.GetExecutingAssembly()?.GetName()?.Name;
+        }
+
+        public Version GetPluginAssemblyVersion()
+        {
+            return System.Reflection.Assembly.GetExecutingAssembly()?.GetName()?.Version;
+        }
+
         #endregion
     }
 }

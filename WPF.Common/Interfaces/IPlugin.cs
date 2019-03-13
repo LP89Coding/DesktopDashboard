@@ -18,6 +18,9 @@ namespace WPF.Common.Interfaces
         string GetPluginName();
         System.Drawing.Icon GetPluginIcon();
 
+        string GetPluginAssemblyName();
+        Version GetPluginAssemblyVersion();
+
         void ClosePlugin();
     }
 }

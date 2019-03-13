@@ -13,7 +13,6 @@ using WPF.Common.Controls.Views;
 
 using DIYoutubeDownloader.Internal;
 using EventID = DIYoutubeDownloader.Internal.EventID.DIYoutubeDownloader;
-using IntrnalUtils = DIYoutubeDownloader.Internal.Utils;
 
 namespace DIYoutubeDownloader.Common
 {
@@ -31,7 +30,7 @@ namespace DIYoutubeDownloader.Common
             try
             {
                 message = $"Unhandled exception in {source}, exception: {exception?.ToString()}.";
-                message += $"Exception in {IntrnalUtils.GetAssemblyName()} v{IntrnalUtils.GetAssemblyVersion()}";
+                message += $"Exception in {this.GetPluginAssemblyName()} v{this.GetPluginAssemblyVersion()}";
             }
             catch (Exception ex)
             {
@@ -77,8 +76,10 @@ namespace DIYoutubeDownloader.Common
         private void InitializeWindow()
         {
             ArgumentCollection args = new ArgumentCollection();
-            args.Set(ArgumentCollection.ArgumentType.WindowIcon, ResourceImage.YouTubeIcon);
-            args.Set(ArgumentCollection.ArgumentType.WindowTitle, Consts.YoutubeDownloaderTitle);
+            args.Set(ArgumentCollection.ArgumentType.WindowIcon, ResourceImage.WindowIcon);
+            args.Set(ArgumentCollection.ArgumentType.WindowTitle, Consts.WindowTitle);
+            args.Set(ArgumentCollection.ArgumentType.Width, Consts.WindowDefaultWidth);
+            args.Set(ArgumentCollection.ArgumentType.Height, Consts.WindowDefaultHeigth);
             args.Set(ArgumentCollection.ArgumentType.WindowCloseCommand, new Command((object parametrer) => { this.ClosePlugin(); }));
 
             mainWindow = new BaseWindow(args);
@@ -122,17 +123,27 @@ namespace DIYoutubeDownloader.Common
 
         public string GetPluginName()
         {
-            return Consts.YoutubeDownloaderTitle;
+            return Consts.WindowTitle;
         }
 
         public System.Drawing.Icon GetPluginIcon()
         {
-            return ResourceImage.YouTubeIcon;
+            return ResourceImage.WindowIcon;
         }
 
         public void ClosePlugin()
         {
             this.Close();
+        }
+        
+        public string GetPluginAssemblyName()
+        {
+            return System.Reflection.Assembly.GetExecutingAssembly()?.GetName()?.Name;
+        }
+        
+        public Version GetPluginAssemblyVersion()
+        {
+            return System.Reflection.Assembly.GetExecutingAssembly()?.GetName()?.Version;
         }
 
         #endregion

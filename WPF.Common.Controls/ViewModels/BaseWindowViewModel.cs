@@ -63,6 +63,27 @@ namespace WPF.Common.Controls.ViewModels
             }
         }
 
+        private double height;
+        public double Height
+        {
+            get { return this.height; }
+            set
+            {
+                this.height = value;
+                RaisePropertyChangedEvent(nameof(this.Height));
+            }
+        }
+        private double width;
+        public double Width
+        {
+            get { return this.width; }
+            set
+            {
+                this.width = value;
+                RaisePropertyChangedEvent(nameof(this.Width));
+            }
+        }
+
 
         private ICommand closeButtonCommand;
         public ICommand CloseButtonCommand { get { return this.closeButtonCommand; } private set { this.closeButtonCommand = value; } }
@@ -101,11 +122,17 @@ namespace WPF.Common.Controls.ViewModels
             bool result = true;
             switch (propertyName)
             {
+                case nameof(IWindowPropertyChangeNotifier.Height):
+                    this.Height = (double)(propertyValue ?? 0);
+                    break;
                 case nameof(IWindowPropertyChangeNotifier.TaskBarProgressState):
                     this.TaskBarProgressState = (TaskbarItemProgressState)(propertyValue ?? TaskbarItemProgressState.None);
                     break;
                 case nameof(IWindowPropertyChangeNotifier.TaskBarProgressValue):
                     this.TaskBarProgressValue = (double)(propertyValue ?? 0);
+                    break;
+                case nameof(IWindowPropertyChangeNotifier.Width):
+                    this.Width = (double)(propertyValue ?? 0);
                     break;
                 default:
                     result = false;
@@ -124,7 +151,15 @@ namespace WPF.Common.Controls.ViewModels
                     this.WindowIcon = WPFUtils.ToBitmapImage(args.Get(ArgumentCollection.ArgumentType.WindowIcon));
                 if (args.Contains(ArgumentCollection.ArgumentType.WindowCloseCommand))
                     this.CloseButtonCommand = args.Get<Command>(ArgumentCollection.ArgumentType.WindowCloseCommand);
+                if (args.Contains(ArgumentCollection.ArgumentType.Width))
+                    this.Width = args.Get<double>(ArgumentCollection.ArgumentType.Width);
+                if (args.Contains(ArgumentCollection.ArgumentType.Height))
+                    this.Height = args.Get<double>(ArgumentCollection.ArgumentType.Height);
             }
+            if (this.Width == 0 && !args.Contains(ArgumentCollection.ArgumentType.Width))
+                this.width = 800;
+            if (this.Height == 0 && !args.Contains(ArgumentCollection.ArgumentType.Height))
+                this.Height = 600;
         }
 
         #endregion

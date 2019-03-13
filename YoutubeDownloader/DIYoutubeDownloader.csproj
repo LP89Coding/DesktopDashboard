@@ -36,7 +36,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Images\Icon\YouTube.ico</ApplicationIcon>
+    <ApplicationIcon>Images\Icon\WindowIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AngleSharp, Version=0.9.9.0, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea, processorArchitecture=MSIL">
@@ -154,7 +154,7 @@
     <Resource Include="Images\32x32\Dislike.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Icon\YouTube.ico" />
+    <Resource Include="Images\Icon\WindowIcon.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\256x256\YouTube.png" />

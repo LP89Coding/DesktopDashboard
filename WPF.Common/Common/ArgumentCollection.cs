@@ -19,6 +19,10 @@ namespace WPF.Common.Common
             IsPluginMode = 4,
             WindowCloseCommand = 5,
             Plugin = 6,
+            DriveInfo = 7,
+            ForceRefresh = 8,
+            Height = 9,
+            Width = 10,
         }
 
         public int Length { get { return this.arguments?.Count ?? 0; } }

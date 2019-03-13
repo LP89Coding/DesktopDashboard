@@ -113,6 +113,8 @@ namespace WPF.Common.Controls.Views
                 {
                     case nameof(IWindowPropertyChangeNotifier.TaskBarProgressState):
                     case nameof(IWindowPropertyChangeNotifier.TaskBarProgressValue):
+                    case nameof(IWindowPropertyChangeNotifier.Width):
+                    case nameof(IWindowPropertyChangeNotifier.Height):
                         viewModel.NotifyPropertyChange(e.PropertyName, childViewModel.GetPropertyValue(e.PropertyName));
                         break;
                     default: break;

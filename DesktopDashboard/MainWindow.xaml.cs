@@ -331,6 +331,7 @@ namespace DesktopDashboard
                 }
                 catch (Exception ex)
                 {
+                    //TODO Log
                     //Log(EventID.ESBDriver.SendMessageFromQueueException, ex.Message, ex.StackTrace);
                 }
             }
@@ -373,6 +374,7 @@ namespace DesktopDashboard
             }
             catch (Exception ex)
             {
+                //TODO Log
                 //Log(EventID.ESBDriver.SendMessageFromQueueException, ex.Message, ex.StackTrace);
             }
         }

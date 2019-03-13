@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF.Common", "WPF.Common\WP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF.Common.Controls", "WPF.Common.Controls\WPF.Common.Controls.csproj", "{5C1D30F1-623D-4C8B-BEEC-95EE9CB309E9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIComputerPerformance", "DIComputerPerformance\DIComputerPerformance.csproj", "{62406A02-906C-44A6-B8B0-CA59125B95E3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{5C1D30F1-623D-4C8B-BEEC-95EE9CB309E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C1D30F1-623D-4C8B-BEEC-95EE9CB309E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C1D30F1-623D-4C8B-BEEC-95EE9CB309E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62406A02-906C-44A6-B8B0-CA59125B95E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62406A02-906C-44A6-B8B0-CA59125B95E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62406A02-906C-44A6-B8B0-CA59125B95E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62406A02-906C-44A6-B8B0-CA59125B95E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

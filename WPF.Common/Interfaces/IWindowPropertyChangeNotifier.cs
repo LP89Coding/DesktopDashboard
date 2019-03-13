@@ -11,5 +11,8 @@ namespace WPF.Common.Interfaces
     {
         double TaskBarProgressValue { get; set; }
         TaskbarItemProgressState TaskBarProgressState { get; set; }
+
+        double Height { get; set; }
+        double Width { get; set; }
     }
 }

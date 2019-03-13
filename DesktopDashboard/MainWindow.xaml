@@ -17,6 +17,8 @@
     </Window.Background>
 
     <Window.Resources>
+        <SolidColorBrush x:Key="DefaultBackground" Color="#CC4F4F4F"/>
+        
         <Style TargetType="syncfusion:DropDownButtonAdv">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Foreground" Value="#FFA7A8AA" />
@@ -37,11 +39,11 @@
                    Width="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}, Converter={MarkUpTools:RatioConverter}, ConverterParameter='0.1' }"
                    Margin="0 0 0 10"
                    HorizontalAlignment="Right" VerticalAlignment="Center" FlowDirection="RightToLeft"
-                   Background="#CC2D2D30">
+                   Background="{DynamicResource DefaultBackground}">
             <syncfusion:ButtonAdv x:Name="baToolBarCloseApp" SizeMode="Small"
                                   Background="Transparent" 
                                   BorderBrush="Transparent" BorderThickness="0"
-                                  SmallIcon="Images/48x48/Close.png"
+                                  SmallIcon="Images/48x48/CloseLight.png"
                                   Width="{x:Static SystemParameters.WindowCaptionHeight}" 
                                   Padding="2 0 3 0" Margin="0" 
                                   HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -50,7 +52,7 @@
                                   ToolTip="Close dashboard" />
             <syncfusion:ButtonAdv x:Name="baToolBarTopMost" SizeMode="Small"
                                   Background="Transparent" BorderBrush="Transparent" BorderThickness="0"
-                                  SmallIcon="Images/48x48/Lock.png" 
+                                  SmallIcon="Images/48x48/LockLight.png" 
                                   Width="{x:Static SystemParameters.WindowCaptionHeight}" 
                                   Padding="2 0 3 0" Margin="0" 
                                   HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -59,8 +61,8 @@
                                   ToolTip="Always on top"/>
             <syncfusion:DropDownButtonAdv Width="33"
                                           Label="" 
-                                          SizeMode="Normal" SmallIcon="Images/48x48/Plugin.png"
-                                          BorderBrush="Transparent" BorderThickness="0" Foreground="Black" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" 
+                                          SizeMode="Normal" SmallIcon="Images/48x48/PluginLight.png"
+                                          BorderBrush="Transparent" BorderThickness="0" Foreground="White" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" 
                                           VerticalAlignment="Center" VerticalContentAlignment="Center">
                 <syncfusion:DropDownMenuGroup ItemsSource="{Binding Path=AvailablePlugins}">
                     <syncfusion:DropDownMenuGroup.ItemTemplate>

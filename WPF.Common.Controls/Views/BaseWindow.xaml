@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:WPF.Common.Controls.Views"
         xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
         mc:Ignorable="d"
-        Title="BaseWindow" Height="258" Width="478" AllowsTransparency="True" WindowStyle="None">
+        Title="BaseWindow" Width="{Binding Path=Width, Mode=TwoWay}" Height="{Binding Path=Height, Mode=TwoWay}"
+        AllowsTransparency="True" WindowStyle="None" ResizeMode="CanResizeWithGrip">
 
     <Window.TaskbarItemInfo>
         <TaskbarItemInfo ProgressValue="{Binding Path=TaskBarProgressValue, Mode=OneWay}" 
@@ -49,8 +50,13 @@
         </Style>
     </Window.Resources>
 
-    <DockPanel>
-        <Grid x:Name="gNavBar" DockPanel.Dock="Top" Background="{DynamicResource DefaultBackground}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+        <Grid x:Name="gNavBar" Grid.Row="0" Background="{DynamicResource DefaultBackground}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
             </Grid.RowDefinitions>
@@ -81,9 +87,9 @@
                Grid.Row="0" Grid.Column="2"/>
 
         </Grid>
-        <WrapPanel x:Name="wpFillContent" DockPanel.Dock="Bottom" HorizontalAlignment="Center" VerticalAlignment="Center" >
+        <WrapPanel x:Name="wpFillContent" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" >
             
         </WrapPanel>
-    </DockPanel>
+    </Grid>
 
 </Window>
