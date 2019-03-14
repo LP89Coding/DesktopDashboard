@@ -78,8 +78,8 @@ namespace DIYoutubeDownloader.Common
             ArgumentCollection args = new ArgumentCollection();
             args.Set(ArgumentCollection.ArgumentType.WindowIcon, ResourceImage.WindowIcon);
             args.Set(ArgumentCollection.ArgumentType.WindowTitle, Consts.WindowTitle);
-            args.Set(ArgumentCollection.ArgumentType.Width, Consts.WindowDefaultWidth);
-            args.Set(ArgumentCollection.ArgumentType.Height, Consts.WindowDefaultHeigth);
+            args.Set(ArgumentCollection.ArgumentType.WindowWidth, Consts.WindowDefaultWidth);
+            args.Set(ArgumentCollection.ArgumentType.WindowHeight, Consts.WindowDefaultHeigth);
             args.Set(ArgumentCollection.ArgumentType.WindowCloseCommand, new Command((object parametrer) => { this.ClosePlugin(); }));
 
             mainWindow = new BaseWindow(args);

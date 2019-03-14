@@ -319,8 +319,8 @@ namespace DIYoutubeDownloader.ViewModels
             }
         }
 
-        public double Height { get; set; }
-        public double Width { get; set; }
+        public double WindowHeight { get; set; }
+        public double WindowWidth { get; set; }
 
         #endregion
     }

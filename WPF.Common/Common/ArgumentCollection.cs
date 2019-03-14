@@ -21,8 +21,8 @@ namespace WPF.Common.Common
             Plugin = 6,
             DriveInfo = 7,
             ForceRefresh = 8,
-            Height = 9,
-            Width = 10,
+            WindowHeight = 9,
+            WindowWidth = 10,
         }
 
         public int Length { get { return this.arguments?.Count ?? 0; } }

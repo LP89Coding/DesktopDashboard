@@ -63,24 +63,24 @@ namespace WPF.Common.Controls.ViewModels
             }
         }
 
-        private double height;
-        public double Height
+        private double windowHeight;
+        public double WindowHeight
         {
-            get { return this.height; }
+            get { return this.windowHeight; }
             set
             {
-                this.height = value;
-                RaisePropertyChangedEvent(nameof(this.Height));
+                this.windowHeight = value;
+                RaisePropertyChangedEvent(nameof(this.WindowHeight));
             }
         }
-        private double width;
-        public double Width
+        private double windowWidth;
+        public double WindowWidth
         {
-            get { return this.width; }
+            get { return this.windowWidth; }
             set
             {
-                this.width = value;
-                RaisePropertyChangedEvent(nameof(this.Width));
+                this.windowWidth = value;
+                RaisePropertyChangedEvent(nameof(this.WindowWidth));
             }
         }
 
@@ -122,8 +122,8 @@ namespace WPF.Common.Controls.ViewModels
             bool result = true;
             switch (propertyName)
             {
-                case nameof(IWindowPropertyChangeNotifier.Height):
-                    this.Height = (double)(propertyValue ?? 0);
+                case nameof(IWindowPropertyChangeNotifier.WindowHeight):
+                    this.WindowHeight = (double)(propertyValue ?? 0);
                     break;
                 case nameof(IWindowPropertyChangeNotifier.TaskBarProgressState):
                     this.TaskBarProgressState = (TaskbarItemProgressState)(propertyValue ?? TaskbarItemProgressState.None);
@@ -131,8 +131,8 @@ namespace WPF.Common.Controls.ViewModels
                 case nameof(IWindowPropertyChangeNotifier.TaskBarProgressValue):
                     this.TaskBarProgressValue = (double)(propertyValue ?? 0);
                     break;
-                case nameof(IWindowPropertyChangeNotifier.Width):
-                    this.Width = (double)(propertyValue ?? 0);
+                case nameof(IWindowPropertyChangeNotifier.WindowWidth):
+                    this.WindowWidth = (double)(propertyValue ?? 0);
                     break;
                 default:
                     result = false;
@@ -151,15 +151,19 @@ namespace WPF.Common.Controls.ViewModels
                     this.WindowIcon = WPFUtils.ToBitmapImage(args.Get(ArgumentCollection.ArgumentType.WindowIcon));
                 if (args.Contains(ArgumentCollection.ArgumentType.WindowCloseCommand))
                     this.CloseButtonCommand = args.Get<Command>(ArgumentCollection.ArgumentType.WindowCloseCommand);
-                if (args.Contains(ArgumentCollection.ArgumentType.Width))
-                    this.Width = args.Get<double>(ArgumentCollection.ArgumentType.Width);
-                if (args.Contains(ArgumentCollection.ArgumentType.Height))
-                    this.Height = args.Get<double>(ArgumentCollection.ArgumentType.Height);
+                if (args.Contains(ArgumentCollection.ArgumentType.WindowWidth))
+                    this.WindowWidth = args.Get<double>(ArgumentCollection.ArgumentType.WindowWidth);
+                if (args.Contains(ArgumentCollection.ArgumentType.WindowHeight))
+                    this.WindowHeight = args.Get<double>(ArgumentCollection.ArgumentType.WindowHeight);
+                if (args.Contains(ArgumentCollection.ArgumentType.WindowTitle))
+                    this.WindowTitle = args.Get<string>(ArgumentCollection.ArgumentType.WindowTitle);
             }
-            if (this.Width == 0 && !args.Contains(ArgumentCollection.ArgumentType.Width))
-                this.width = 800;
-            if (this.Height == 0 && !args.Contains(ArgumentCollection.ArgumentType.Height))
-                this.Height = 600;
+            if (this.WindowWidth == 0 && !args.Contains(ArgumentCollection.ArgumentType.WindowWidth))
+                this.WindowWidth = 800;
+            if (this.WindowHeight == 0 && !args.Contains(ArgumentCollection.ArgumentType.WindowHeight))
+                this.WindowHeight = 600;
+            if (String.IsNullOrWhiteSpace(this.WindowTitle) && !args.Contains(ArgumentCollection.ArgumentType.WindowTitle))
+                this.WindowTitle = "Base Window";
         }
 
         #endregion

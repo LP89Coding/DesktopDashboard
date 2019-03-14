@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:WPF.Common.Controls.Views"
         xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
         mc:Ignorable="d"
-        Title="BaseWindow" Width="{Binding Path=Width, Mode=TwoWay}" Height="{Binding Path=Height, Mode=TwoWay}"
+        Title="{Binding Path=WindowTitle, Mode=OneWay}" 
+        Width="{Binding Path=WindowWidth, Mode=TwoWay}" Height="{Binding Path=WindowHeight, Mode=TwoWay}"
         AllowsTransparency="True" WindowStyle="None" ResizeMode="CanResizeWithGrip">
 
     <Window.TaskbarItemInfo>

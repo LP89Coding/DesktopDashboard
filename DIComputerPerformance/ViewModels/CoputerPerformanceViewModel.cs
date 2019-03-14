@@ -134,23 +134,23 @@ namespace DIComputerPerformance.ViewModels
         public System.Windows.Shell.TaskbarItemProgressState TaskBarProgressState { get; set; }
 
         private double height;
-        public double Height
+        public double WindowHeight
         {
             get { return this.height; }
             set
             {
                 this.height = value;
-                RaisePropertyChangedEvent(nameof(this.Height));
+                RaisePropertyChangedEvent(nameof(this.WindowHeight));
             }
         }
         private double width;
-        public double Width
+        public double WindowWidth
         {
             get { return this.width; }
             set
             {
                 this.width = value;
-                RaisePropertyChangedEvent(nameof(this.Width));
+                RaisePropertyChangedEvent(nameof(this.WindowWidth));
             }
         }
 
