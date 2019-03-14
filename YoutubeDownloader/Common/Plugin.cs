@@ -20,6 +20,7 @@ namespace DIYoutubeDownloader.Common
     {
         private ArgumentCollection args { get; set; }
         private BaseWindow mainWindow { get; set; }
+        private IWindowControl control { get; set; }
         #region Events
 
         #region UnhandledException_Raised
@@ -65,6 +66,11 @@ namespace DIYoutubeDownloader.Common
                     UnhandledException_Raised(e.Exception, "TaskScheduler.UnobservedTaskException");
 
                 #endregion
+                args.Set(ArgumentCollection.ArgumentType.WindowIcon, ResourceImage.WindowIcon);
+                args.Set(ArgumentCollection.ArgumentType.WindowTitle, Consts.WindowTitle);
+                args.Set(ArgumentCollection.ArgumentType.WindowWidth, Consts.WindowDefaultWidth);
+                args.Set(ArgumentCollection.ArgumentType.WindowHeight, Consts.WindowDefaultHeigth);
+                args.Set(ArgumentCollection.ArgumentType.WindowCloseCommand, new Command((object parametrer) => { this.ClosePlugin(); }));
             }
             catch (Exception ex)
             {
@@ -72,20 +78,21 @@ namespace DIYoutubeDownloader.Common
             }
         }
         #endregion
-        #region InitializeWindow
-        private void InitializeWindow()
+        #region InitializeControl
+        private IWindowControl InitializeControl()
         {
-            ArgumentCollection args = new ArgumentCollection();
-            args.Set(ArgumentCollection.ArgumentType.WindowIcon, ResourceImage.WindowIcon);
-            args.Set(ArgumentCollection.ArgumentType.WindowTitle, Consts.WindowTitle);
-            args.Set(ArgumentCollection.ArgumentType.WindowWidth, Consts.WindowDefaultWidth);
-            args.Set(ArgumentCollection.ArgumentType.WindowHeight, Consts.WindowDefaultHeigth);
-            args.Set(ArgumentCollection.ArgumentType.WindowCloseCommand, new Command((object parametrer) => { this.ClosePlugin(); }));
-
+            this.control = new ucYoutubeDownloader();
+            return this.control;
+        }
+        #endregion
+        #region InitializeWindow
+        private IWindow InitializeWindow()
+        {
+            if (this.control == null)
+                this.control = this.InitializeControl();
             mainWindow = new BaseWindow(args);
-            ucYoutubeDownloader youtubeDownloader = new ucYoutubeDownloader();
-            mainWindow.SetContent(youtubeDownloader);
-            mainWindow.Show();
+            mainWindow.SetContent(this.control);
+            return mainWindow;
         }
         #endregion
         #region Close
@@ -113,7 +120,6 @@ namespace DIYoutubeDownloader.Common
         {
             this.args = args ?? new ArgumentCollection();
             this.Initialize();
-            this.InitializeWindow();
         }
 
         public ArgumentCollection GetArgs()
@@ -144,6 +150,16 @@ namespace DIYoutubeDownloader.Common
         public Version GetPluginAssemblyVersion()
         {
             return System.Reflection.Assembly.GetExecutingAssembly()?.GetName()?.Version;
+        }
+
+        public IWindowControl GetPluginControl()
+        {
+            return this.InitializeControl();
+        }
+
+        public IWindow GetPluginWindow()
+        {
+            return this.InitializeWindow();
         }
 
         #endregion

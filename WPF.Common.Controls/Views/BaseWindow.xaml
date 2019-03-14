@@ -7,6 +7,7 @@
         xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
         mc:Ignorable="d"
         Title="{Binding Path=WindowTitle, Mode=OneWay}" 
+        x:Name="wBaseWindow"
         Width="{Binding Path=WindowWidth, Mode=TwoWay}" Height="{Binding Path=WindowHeight, Mode=TwoWay}"
         AllowsTransparency="True" WindowStyle="None" ResizeMode="CanResizeWithGrip">
 

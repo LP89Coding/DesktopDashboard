@@ -92,7 +92,11 @@ namespace DesktopDashboard.ViewModels
             }
             else
             {
-                this.InitializePluginCommand = new Command((object parameter) => { this.Plugin?.InitializePlugin(this.Plugin?.GetArgs()); });
+                this.InitializePluginCommand = new Command((object parameter) => 
+                    {
+                        this.Plugin?.InitializePlugin(this.Plugin?.GetArgs());
+                        this.Plugin?.GetPluginWindow()?.Show();
+                    });
             }
         }
 

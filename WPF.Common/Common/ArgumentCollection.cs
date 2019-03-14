@@ -23,6 +23,7 @@ namespace WPF.Common.Common
             ForceRefresh = 8,
             WindowHeight = 9,
             WindowWidth = 10,
+            DockingManager = 11
         }
 
         public int Length { get { return this.arguments?.Count ?? 0; } }

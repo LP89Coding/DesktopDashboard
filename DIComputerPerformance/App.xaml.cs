@@ -27,7 +27,8 @@ namespace DIComputerPerformance
         {
             base.OnStartup(e);
             ArgumentCollection args = new ArgumentCollection();
-            plugin.InitializePlugin(null);
+            plugin.InitializePlugin(args);
+            plugin.GetPluginWindow()?.Show();
         }
 
         #endregion

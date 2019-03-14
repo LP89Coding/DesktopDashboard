@@ -19,6 +19,22 @@
     <Window.Resources>
         <SolidColorBrush x:Key="DefaultBackground" Color="#CC4F4F4F"/>
         
+
+        <Style TargetType="local:MainWindow">
+            <Setter Property="Background" Value="#B2252222"/>
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="BorderBrush" Value="#FF343330"/>
+        </Style>
+       
+        <Style TargetType="syncfusion:ButtonAdv">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="White"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True" >
+                    <Setter Property="Background" Value="Red"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
         <Style TargetType="syncfusion:DropDownButtonAdv">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Foreground" Value="#FFA7A8AA" />
@@ -29,7 +45,6 @@
             <Setter Property="BorderBrush" Value="#FF343330"/>
         </Style>
         <Style TargetType="syncfusion:DropDownMenuGroup">
-            <Setter Property="Foreground" Value="Transparent"/>
             <Setter Property="BorderBrush" Value="#FF343330"/>
         </Style>
     </Window.Resources>
@@ -80,8 +95,9 @@
                 </syncfusion:DropDownMenuGroup>
             </syncfusion:DropDownButtonAdv>
         </WrapPanel>
-        <WrapPanel x:Name="wpDashboard" Grid.Row="1" Orientation="Vertical">
 
-        </WrapPanel>
+        <syncfusion:DockingManager x:Name="dmMainWindow" Grid.Row="1" Background="{DynamicResource DefaultBackground}" >
+
+        </syncfusion:DockingManager>
     </Grid>
 </Window>

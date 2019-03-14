@@ -64,6 +64,9 @@ namespace DesktopDashboard
         {
             try
             {
+                if (args == null)
+                    args = new ArgumentCollection();
+                args.Set(ArgumentCollection.ArgumentType.DockingManager, dmMainWindow);
                 ViewModelFactory factory = new ViewModelFactory();
                 this.viewModel = factory.CreateViewModel<MainWindowViewModel>(args);
                 this.DataContext = viewModel;
@@ -76,13 +79,7 @@ namespace DesktopDashboard
         #endregion
 
         #endregion
-
-        private void SubMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            Plugin plugin = (sender as Syncfusion.Windows.Shared.MenuItemAdv)?.Tag as Plugin;
-            if (plugin != null)
-                plugin.InitializePlugin(null);
-        }
+        
 
         private static System.Windows.Media.Color ConvertColorType(System.Drawing.Color color)
         {

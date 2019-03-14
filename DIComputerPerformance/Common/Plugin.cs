@@ -21,6 +21,7 @@ namespace DIComputerPerformance.Common
     {
         private ArgumentCollection args { get; set; }
         private BaseWindow mainWindow { get; set; }
+        private IWindowControl control { get; set; }
         #region Events
 
         #region UnhandledException_Raised
@@ -66,6 +67,11 @@ namespace DIComputerPerformance.Common
                     UnhandledException_Raised(e.Exception, "TaskScheduler.UnobservedTaskException");
 
                 #endregion
+                args.Set(ArgumentCollection.ArgumentType.WindowIcon, ResourceImage.WindowIcon);
+                args.Set(ArgumentCollection.ArgumentType.WindowTitle, Consts.WindowTitle);
+                args.Set(ArgumentCollection.ArgumentType.WindowWidth, Consts.WindowDefaultWidth);
+                args.Set(ArgumentCollection.ArgumentType.WindowHeight, Consts.WindowDefaultHeigth);
+                args.Set(ArgumentCollection.ArgumentType.WindowCloseCommand, new Command((object parametrer) => { this.ClosePlugin(); }));
             }
             catch (Exception ex)
             {
@@ -73,20 +79,21 @@ namespace DIComputerPerformance.Common
             }
         }
         #endregion
-        #region InitializeWindow
-        private void InitializeWindow()
+        #region InitializeControl
+        private IWindowControl InitializeControl()
         {
-            ArgumentCollection args = new ArgumentCollection();
-            args.Set(ArgumentCollection.ArgumentType.WindowIcon, ResourceImage.WindowIcon);
-            args.Set(ArgumentCollection.ArgumentType.WindowTitle, Consts.WindowTitle);
-            args.Set(ArgumentCollection.ArgumentType.WindowWidth, Consts.WindowDefaultWidth);
-            args.Set(ArgumentCollection.ArgumentType.WindowHeight, Consts.WindowDefaultHeigth);
-            args.Set(ArgumentCollection.ArgumentType.WindowCloseCommand, new Command((object parametrer) => { this.ClosePlugin(); }));
-
+            this.control = new ucComputerPerformance();
+            return this.control;
+        }
+        #endregion
+        #region InitializeWindow
+        private IWindow InitializeWindow()
+        {
+            if (this.control == null)
+                this.control = this.InitializeControl();
             mainWindow = new BaseWindow(args);
-            ucComputerPerformance computerPerformance = new ucComputerPerformance();
-            mainWindow.SetContent(computerPerformance);
-            mainWindow.Show();
+            mainWindow.SetContent(this.control);
+            return mainWindow;
         }
         #endregion
         #region Close
@@ -114,7 +121,6 @@ namespace DIComputerPerformance.Common
         {
             this.args = args ?? new ArgumentCollection();
             this.Initialize();
-            this.InitializeWindow();
         }
 
         public ArgumentCollection GetArgs()
@@ -145,6 +151,16 @@ namespace DIComputerPerformance.Common
         public Version GetPluginAssemblyVersion()
         {
             return System.Reflection.Assembly.GetExecutingAssembly()?.GetName()?.Version;
+        }
+
+        public IWindowControl GetPluginControl()
+        {
+            return this.InitializeControl();
+        }
+
+        public IWindow GetPluginWindow()
+        {
+            return this.InitializeWindow();
         }
 
         #endregion

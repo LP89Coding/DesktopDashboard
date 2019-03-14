@@ -77,6 +77,16 @@ namespace DesktopDashboard.Internals
             return System.Reflection.Assembly.GetExecutingAssembly()?.GetName()?.Version;
         }
 
+        public IWindowControl GetPluginControl()
+        {
+            return this.instance?.GetPluginControl();
+        }
+
+        public IWindow GetPluginWindow()
+        {
+            return this.instance?.GetPluginWindow();
+        }
+
         #endregion
     }
 }

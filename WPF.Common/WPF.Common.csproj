@@ -64,6 +64,7 @@
     <Compile Include="Interfaces\IPlugin.cs" />
     <Compile Include="Interfaces\IViewModel.cs" />
     <Compile Include="Interfaces\IViewModelFactory.cs" />
+    <Compile Include="Interfaces\IWindow.cs" />
     <Compile Include="Interfaces\IWindowControl.cs" />
     <Compile Include="Interfaces\IWindowPropertyChangeNotifier.cs" />
     <Compile Include="Logger\LogData.cs" />

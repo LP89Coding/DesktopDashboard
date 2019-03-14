@@ -18,7 +18,7 @@ namespace WPF.Common.Controls.Views
     /// <summary>
     /// Interaction logic for BaseWindow.xaml
     /// </summary>
-    public partial class BaseWindow : Window
+    public partial class BaseWindow : Window, IWindow
     {
         private enum PropertyChangeNotificationOperation
         {
@@ -157,6 +157,28 @@ namespace WPF.Common.Controls.Views
         }
 
         #endregion
+
+        public IWindowControl GetContent()
+        {
+            if (wpFillContent?.Children?.Count > 0)
+                return wpFillContent.Children[0] as IWindowControl;
+            return null;
+        }
+
+        #endregion
+
+        #region IWindow implementation
+
+        public new void Close()
+        {
+            base.Close();
+        }
+
+        public new void Show()
+        {
+            if(this.Visibility != Visibility.Visible)
+                base.Show();
+        }
 
         #endregion
 
