@@ -41,6 +41,7 @@
       <HintPath>..\packages\NLog.4.5.11\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="ReachFramework" />
+    <Reference Include="Syncfusion.SfInput.WPF, Version=16.4460.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Shared.WPF, Version=16.4460.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Tools.WPF, Version=16.4460.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="System" />
@@ -219,6 +220,28 @@
     <Resource Include="Images\48x48\LockLight.png" />
     <Resource Include="Images\48x48\LockOpenLight.png" />
     <Resource Include="Images\48x48\PluginLight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\48x48\CloseLightHover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\32x32\XLight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\32x32\PluginLight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\32x32\Pin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\48x48\Pin.png" />
+    <Resource Include="Images\48x48\PinLight.png" />
+    <Resource Include="Images\48x48\PinLightHover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\48x48\DownArrow.png" />
+    <Resource Include="Images\48x48\DownArrowLight.png" />
+    <Resource Include="Images\48x48\DownArrowLightHover.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

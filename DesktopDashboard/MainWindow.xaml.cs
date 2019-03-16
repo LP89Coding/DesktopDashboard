@@ -107,7 +107,10 @@ namespace DesktopDashboard
             else
                 baToolBarTopMost.SmallIcon = WPFUtils.ToBitmapImage(ResourceImage48.Lock);
         }
-        
-        
+
+        private void Block_Click(object sender, RoutedEventArgs e)
+        {
+           // dmMainWindow.ExecuteClose()
+        }
     }
 }
