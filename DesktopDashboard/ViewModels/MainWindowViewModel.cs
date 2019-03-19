@@ -11,6 +11,7 @@ using ArgumentCollection = WPF.Common.Common.ArgumentCollection;
 
 using DesktopDashboard.Internals;
 using System.Windows;
+using System.Windows.Media;
 
 namespace DesktopDashboard.ViewModels
 {
@@ -93,19 +94,24 @@ namespace DesktopDashboard.ViewModels
             try
             {
                 Syncfusion.Windows.Tools.Controls.DockingManager dmItem = args.Get<Syncfusion.Windows.Tools.Controls.DockingManager>(ArgumentCollection.ArgumentType.DockingManager);
+                System.Collections.ObjectModel.ObservableCollection<Syncfusion.Windows.Tools.Controls.DockItem> dockItems = new System.Collections.ObjectModel.ObservableCollection<Syncfusion.Windows.Tools.Controls.DockItem>();
                 foreach (Plugin pItem in this.AvailablePlugins.Select(p => p.Plugin))
                 {
                     pItem.InitializePlugin(null);
                     IWindowControl control = pItem.GetPluginControl();
-                    //DIYoutubeDownloader.ucYoutubeDownloader ucYutubeDOnwloader = new DIYoutubeDownloader.ucYoutubeDownloader();
 
-                    //   WPF.Common.Controls.Views.BaseWindow window = this.AvailablePlugins.First().Plugin.InitializePlugin(null) as WPF.Common.Controls.Views.BaseWindow;
-                    // Syncfusion.Windows.Tools.Controls.DockItem diItem = new Syncfusion.Windows.Tools.Controls.DockItem();
-                    //  diItem.Content = window;
-                    // if (dmItem.ItemsSource == null)
-                    //     dmItem.ItemsSource = new System.Collections.ObjectModel.ObservableCollection<Syncfusion.Windows.Tools.Controls.DockItem>();
-                    dmItem.Children.Add(control as FrameworkElement);
+                    //Brush b = new System.Windows.Media.ImageBrush(Utils.ToImageSource(pItem.GetPluginIcon()));
+                    Syncfusion.Windows.Tools.Controls.DockItem diItem = new Syncfusion.Windows.Tools.Controls.DockItem()
+                    {
+                        Content = control as FrameworkElement,
+                        Header = pItem.GetPluginName(),
+                        Icon = new System.Windows.Media.ImageBrush(Utils.ToImageSource(pItem.GetPluginIcon()))//Nie działa
+                    };
+                    dockItems.Add(diItem);
+                    dmItem.Children.Add(control as FrameworkElement);//TO sprawia że menu kontekstowe się dobrze wyświetla - ostylowane
+
                 }
+                dmItem.ItemsSource = dockItems;
             }
             catch (Exception ex)
             {
