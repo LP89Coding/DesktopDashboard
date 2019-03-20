@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DIComputerPerformance.Interfaces
 {
-    public interface IDashboardControl
+    public interface IDashboardControl : IDisposable
     {
         void Refresh();
     }

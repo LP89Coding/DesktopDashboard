@@ -58,9 +58,18 @@ namespace DIComputerPerformance.Views
 
         #endregion
 
+        #region IDashboardControl
+
         public void Refresh()
         {
             this.viewModel?.NotifyPropertyChange(ArgumentCollection.ArgumentType.ForceRefresh.ToString(), null);
         }
+
+        public void Dispose()
+        {
+            this.viewModel?.Dispose();
+        }
+
+        #endregion
     }
 }

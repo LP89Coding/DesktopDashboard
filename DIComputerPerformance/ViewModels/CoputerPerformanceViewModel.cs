@@ -76,6 +76,34 @@ namespace DIComputerPerformance.ViewModels
 
         public void Dispose()
         {
+            try
+            {
+                if(this.Controls != null)
+                {
+                    foreach(IDashboardControl control in this.Controls)
+                    {
+                        try { control.Dispose(); }
+                        catch(Exception ex)
+                        {
+                            //ToDo Log
+                        }
+                    }
+                }
+                try { this.DashboardUpdateTask?.Dispose(); }
+                catch (Exception ex)
+                {
+                    //ToDo Log
+                }
+                try { this.DashboardUpdateWaitEvent?.Dispose(); }
+                catch (Exception ex)
+                {
+                    //ToDo Log
+                }
+            }
+            catch(Exception ex)
+            {
+                //ToDo Log
+            }
         }
 
         public object GetPropertyValue(string propertyName)

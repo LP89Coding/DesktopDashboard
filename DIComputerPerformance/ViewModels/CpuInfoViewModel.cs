@@ -43,6 +43,14 @@ namespace DIComputerPerformance.ViewModels
 
         public void Dispose()
         {
+            try
+            {
+                this.cpuTotalCntr?.Dispose();
+            }
+            catch(Exception ex)
+            {
+                //ToDo Log
+            }
         }
 
         public object GetPropertyValue(string propertyName)
@@ -52,10 +60,20 @@ namespace DIComputerPerformance.ViewModels
 
         public void Initialize(ArgumentCollection args)
         {
-            if (System.Diagnostics.PerformanceCounterCategory.Exists("Processor"))
-                this.cpuTotalCntr = new System.Diagnostics.PerformanceCounter("Processor", "% Processor Time", "_Total", true);
-            else
-                this.cpuTotalCntr = new System.Diagnostics.PerformanceCounter("Processor Information", "% Processor Time", "_Total", true);
+            try
+            {
+                Task.Factory.StartNew(() =>
+                {
+                    if (System.Diagnostics.PerformanceCounterCategory.CounterExists("% Processor Time", "Processor"))
+                        this.cpuTotalCntr = new System.Diagnostics.PerformanceCounter("Processor", "% Processor Time", "_Total", true);
+                    else
+                        this.cpuTotalCntr = new System.Diagnostics.PerformanceCounter("Processor Information", "% Processor Time", "_Total", true);
+                });
+            }
+            catch(Exception ex)
+            {
+                //ToDo Log
+            }
         }
 
         public bool NotifyPropertyChange(string propertyName, object propertyValue)

@@ -127,6 +127,14 @@ namespace DIComputerPerformance.ViewModels
 
         public void Dispose()
         {
+            try
+            {
+                this.DriveInfo = null;
+            }
+            catch(Exception ex)
+            {
+                //ToDa Log
+            }
         }
 
         public object GetPropertyValue(string propertyName)

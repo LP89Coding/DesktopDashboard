@@ -75,7 +75,7 @@ namespace DesktopDashboard.ViewModels
                     if (pluginState != null)
                     {
                         pluginInitArgs.Set(ArgumentCollection.ArgumentType.PluginState, pluginState);
-                        viewModelArgs.Set(ArgumentCollection.ArgumentType.RestorePlugin, true);
+                        viewModelArgs.Set(ArgumentCollection.ArgumentType.RestorePlugin, pluginState.IsActive);
                     }
                 }
 
@@ -92,7 +92,7 @@ namespace DesktopDashboard.ViewModels
 
         private void CloseWindowOverride(object parameter)
         {
-            PluginState[] currentState = this.AvailablePlugins?.Select(d => d.Plugin).Where(p => p.IsPluginInitialized()).Select(p => p.GetPluginCurrentState()).ToArray() ?? new PluginState[] { };
+            PluginState[] currentState = this.AvailablePlugins?.Select(d => d.Plugin).Select(p => p.GetPluginCurrentState()).ToArray() ?? new PluginState[] { };
             UserSettings.SaveSetting(UserSettings.SettingType.PluginState, currentState);
             if (this.AvailablePlugins.Count > 0)
             {
