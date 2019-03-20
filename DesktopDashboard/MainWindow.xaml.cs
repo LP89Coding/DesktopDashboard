@@ -26,6 +26,7 @@ using DesktopDashboard.Internals;
 using DesktopDashboard.Common;
 using DesktopDashboard.ViewModels;
 using EventID = DesktopDashboard.Internals.EventID.DesktopDashboard;
+using WPF.Common.Common;
 
 namespace DesktopDashboard
 {
@@ -40,10 +41,10 @@ namespace DesktopDashboard
 
         public MainWindow()
         {
-            InitializeComponent();
-            Initialize(null);
             try
             {
+                InitializeComponent();
+                Initialize(null);
                 Logger.Log(EventID.Application.Start);
 
                 Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-us");
@@ -52,7 +53,7 @@ namespace DesktopDashboard
             }
             catch(Exception ex)
             {
-
+                //ToDo Log
             }
         }
 
@@ -66,7 +67,9 @@ namespace DesktopDashboard
             {
                 if (args == null)
                     args = new ArgumentCollection();
-                args.Set(ArgumentCollection.ArgumentType.DockingManager, dmMainWindow);
+
+                args.Set(ArgumentCollection.ArgumentType.WindowCloseCommand, new Command((object parametrer) => { this.Close(); }));
+
                 ViewModelFactory factory = new ViewModelFactory();
                 this.viewModel = factory.CreateViewModel<MainWindowViewModel>(args);
                 this.DataContext = viewModel;
@@ -80,25 +83,7 @@ namespace DesktopDashboard
 
         #endregion
         
-
-        private static System.Windows.Media.Color ConvertColorType(System.Drawing.Color color)
-        {
-            return Color.FromArgb(color.A, color.R, color.G, color.B);
-        }
-
-        private static ImageSourceConverter ImageSourceConverter = new ImageSourceConverter();
-        private static System.Windows.Media.ImageSource ConvertImage(System.Drawing.Bitmap image)
-        {
-            if (image == null)
-                return null;
-            return (ImageSource)ImageSourceConverter.ConvertFrom(image);
-        }
-        
-               
-        private void baToolBarCloseApp_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
+       
         private void baToolBarTopMost_Click(object sender, RoutedEventArgs e)
         {
             this.Topmost = !this.Topmost;
@@ -106,11 +91,6 @@ namespace DesktopDashboard
                 baToolBarTopMost.SmallIcon = WPFUtils.ToBitmapImage(ResourceImage48.LockOpen);
             else
                 baToolBarTopMost.SmallIcon = WPFUtils.ToBitmapImage(ResourceImage48.Lock);
-        }
-
-        private void Block_Click(object sender, RoutedEventArgs e)
-        {
-           // dmMainWindow.ExecuteClose()
         }
     }
 }

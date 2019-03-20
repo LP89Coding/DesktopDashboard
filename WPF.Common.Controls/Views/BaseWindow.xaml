@@ -9,6 +9,7 @@
         Title="{Binding Path=WindowTitle, Mode=OneWay}" 
         x:Name="wBaseWindow"
         Width="{Binding Path=WindowWidth, Mode=TwoWay}" Height="{Binding Path=WindowHeight, Mode=TwoWay}"
+        Top="{Binding Path=WindowTop, Mode=TwoWay}" Left="{Binding Path=WindowLeft, Mode=TwoWay}"
         AllowsTransparency="True" WindowStyle="None" ResizeMode="CanResizeWithGrip">
 
     <Window.TaskbarItemInfo>

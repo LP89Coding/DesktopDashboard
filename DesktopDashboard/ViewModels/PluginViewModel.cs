@@ -14,6 +14,8 @@ namespace DesktopDashboard.ViewModels
 {
     public class PluginViewModel : ObservableViewModel, IViewModel
     {
+        private ArgumentCollection pluginInitArgs { get; set; }
+
         private IPlugin plugin;
         public IPlugin Plugin
         {
@@ -43,6 +45,16 @@ namespace DesktopDashboard.ViewModels
 
         private Command initializePluginCommand;
         public Command InitializePluginCommand { get { return this.initializePluginCommand; } private set { this.initializePluginCommand = value; } }
+
+
+        #region Ctor
+
+        public PluginViewModel()
+        {
+            this.pluginInitArgs = new ArgumentCollection();
+        }
+
+        #endregion
 
         #region Overrides
 
@@ -80,11 +92,16 @@ namespace DesktopDashboard.ViewModels
         }
 
         public void Initialize(ArgumentCollection args)
-        {
+        { 
+            bool restorePlugin = false;
             if (args != null)
             {
                 if (args.Contains(ArgumentCollection.ArgumentType.Plugin))
                     this.Plugin = args.Get<IPlugin>(ArgumentCollection.ArgumentType.Plugin);
+                if (args.Contains(ArgumentCollection.ArgumentType.PluginArgs))
+                    this.pluginInitArgs = args.Get<ArgumentCollection>(ArgumentCollection.ArgumentType.PluginArgs);
+                if (args.Contains(ArgumentCollection.ArgumentType.RestorePlugin))
+                    restorePlugin = args.Get<bool>(ArgumentCollection.ArgumentType.RestorePlugin);
             }
             if (this.Plugin == null)
             {
@@ -94,9 +111,13 @@ namespace DesktopDashboard.ViewModels
             {
                 this.InitializePluginCommand = new Command((object parameter) => 
                     {
-                        this.Plugin?.InitializePlugin(this.Plugin?.GetArgs());
+                        this.Plugin?.InitializePlugin(this.pluginInitArgs);
                         this.Plugin?.GetPluginWindow()?.Show();
                     });
+            }
+            if(restorePlugin)
+            {
+                this.InitializePluginCommand.Execute(null);
             }
         }
 

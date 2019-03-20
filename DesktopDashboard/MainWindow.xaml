@@ -12,7 +12,7 @@
         Title="Desktop dashboard"
         AllowsTransparency="True" WindowStyle="None" 
         Top="0" Topmost="False"
-        Width="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}, Converter={MarkUpTools:RatioConverter}, ConverterParameter='0.1' }">
+        Width="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}, Converter={MarkUpTools:RatioConverter}, ConverterParameter='0.1' }" Height="80">
     <Window.Background>
         <SolidColorBrush Color="Transparent"/>
     </Window.Background>
@@ -26,12 +26,13 @@
 
         <sys:Double x:Key="NavigationBarHeigthDouble">30</sys:Double>
         <GridLength x:Key="NavigationBarHeigthGridLength">30</GridLength>
-        
+
         <GridLength x:Key="WindowBorderThicknessGridLength">2</GridLength>
         <Thickness x:Key="WindowBorderThicknessThickness">2</Thickness>
 
         <SolidColorBrush x:Key="ButonHoverColor" Color="#FF3F3F41"/>
 
+        <sys:Double x:Key="DropDownMenuItemHeightDouble">30</sys:Double>
         <SolidColorBrush x:Key="DropDownMenuItemBackground" Color="#CC1B1717" />
 
 
@@ -74,296 +75,51 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="0" />
             <RowDefinition Height="40" />
         </Grid.RowDefinitions>
-        <WrapPanel x:Name="wpToolbar" Grid.Row="0" Orientation="Vertical" 
-                   Height="{x:Static SystemParameters.WindowCaptionHeight}" 
-                   Width="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}, Converter={MarkUpTools:RatioConverter}, ConverterParameter='0.1' }"
-                   Margin="0 0 0 10"
-                   HorizontalAlignment="Right" VerticalAlignment="Center" FlowDirection="RightToLeft"
-                   Background="{DynamicResource NavigationBarBackground}">
-            <syncfusion:ButtonAdv x:Name="baToolBarCloseApp" SizeMode="Small"
+        <Grid Background="{DynamicResource NavigationBarBackground}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="40" />
+            </Grid.ColumnDefinitions>
+            <syncfusion:ButtonAdv x:Name="baToolBarCloseApp" Grid.Row="0" Grid.Column="3"
+                                  SizeMode="Small"
                                   Background="Transparent" 
                                   BorderBrush="Transparent" BorderThickness="0"
                                   SmallIcon="Images/48x48/CloseLight.png"
-                                  Width="{x:Static SystemParameters.WindowCaptionHeight}" 
-                                  Padding="2 0 3 0" Margin="0" 
-                                  HorizontalAlignment="Center" VerticalAlignment="Center"
-                                  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                                  Click="baToolBarCloseApp_Click"
-                                  ToolTip="Close dashboard" />
-            <syncfusion:ButtonAdv x:Name="baToolBarTopMost" SizeMode="Small"
+                                  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                                  Command="{Binding CloseWindowOverrideButtonCommand}"
+                                  ToolTip="Close dashboard" Label="" 
+                                  VerticalAlignment="Center" HorizontalAlignment="Center" IconStretch="UniformToFill" 
+                                  IconWidth="32" IconHeight="32" />
+            <syncfusion:ButtonAdv x:Name="baToolBarTopMost"  Grid.Row="0" Grid.Column="2"
+                                  SizeMode="Small"
                                   Background="Transparent" BorderBrush="Transparent" BorderThickness="0"
-                                  SmallIcon="Images/48x48/LockLight.png" 
-                                  Width="{x:Static SystemParameters.WindowCaptionHeight}" 
-                                  Padding="2 0 3 0" Margin="0" 
-                                  HorizontalAlignment="Center" VerticalAlignment="Center"
-                                  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                  SmallIcon="Images/48x48/LockLight.png"  Label="" 
+                                  VerticalAlignment="Center" HorizontalAlignment="Center" IconStretch="UniformToFill"
+                                  IconWidth="32" IconHeight="32" 
                                   Click="baToolBarTopMost_Click"
                                   ToolTip="Always on top"/>
-            <syncfusion:DropDownButtonAdv Width="33"
-                                          Label="" 
-                                          SizeMode="Normal" SmallIcon="Images/48x48/PluginLight.png"
-                                          BorderBrush="Transparent" BorderThickness="0" Foreground="White" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" 
-                                          VerticalAlignment="Center" VerticalContentAlignment="Center">
+            <syncfusion:DropDownButtonAdv  Grid.Row="0" Grid.Column="1"
+                                              Label="" 
+                                              SizeMode="Large"  SmallIcon="Images/48x48/PluginLight.png" LargeIcon="Images/48x48/PluginLight.png"
+                                              BorderBrush="Transparent" BorderThickness="0" Foreground="White" Height="36" Margin="0,2" Width="40" >
                 <syncfusion:DropDownMenuGroup ItemsSource="{Binding Path=AvailablePlugins}">
                     <syncfusion:DropDownMenuGroup.ItemTemplate>
                         <DataTemplate>
-                            <syncfusion:DropDownMenuItem Header="{Binding}" Tag="{Binding}" Icon="{Binding Path=Icon, Mode=OneWay}"
-                                                     Command="{Binding InitializePluginCommand}">
+                            <syncfusion:DropDownMenuItem Header="{Binding}" Tag="{Binding}" Icon="{Binding Path=Icon, Mode=OneWay}" Height="{DynamicResource DropDownMenuItemHeightDouble}"
+                                                         Command="{Binding InitializePluginCommand}" VerticalContentAlignment="Stretch" FontSize="14" Margin="0,0,0,1">
                             </syncfusion:DropDownMenuItem>
                         </DataTemplate>
                     </syncfusion:DropDownMenuGroup.ItemTemplate>
                 </syncfusion:DropDownMenuGroup>
             </syncfusion:DropDownButtonAdv>
-        </WrapPanel>
-
-        <syncfusion:DockingManager x:Name="dmMainWindow" Grid.Row="1"
-                                   HeaderBackground="{DynamicResource NavigationBarBackground}" 
-                                   SelectedHeaderBackground="{DynamicResource NavigationBarBackground}" 
-                                   HeaderMouseOverBackground="{DynamicResource NavigationBarBackground}" 
-                                   HeaderBorderThickness="{DynamicResource WindowBorderThicknessThickness}" 
-                                   HeaderBorderBrush="{DynamicResource WindowBorderBrush}" 
-                                   SideItemsBorderBrush="{DynamicResource WindowBorderBrush}"
-                                   SidePanelBorderBrush="{DynamicResource WindowBorderBrush}"
-                                   Background="{DynamicResource WindowBackground}" 
-                                   SidePanelBackground="#00000000" 
-                                   PreviewPanelBackground="#00000000" 
-                                   TabItemBackgroundSelected="#00000000" 
-                                   TabPanelBackground="#00000000"  
-                                   >
-            
-            <syncfusion:DockingManager.DockedElementTabbedHostStyle>
-
-                <Style TargetType="{x:Type syncfusion:DockedElementTabbedHost}">
-
-                    <Setter Property="syncfusion:DockingManager.InternalDataContext"
-        Value="{Binding Path=(syncfusion:DockedElementTabbedHost.HostedElement), RelativeSource={RelativeSource Self}}"/>
-
-                    <Setter Property="FocusVisualStyle" Value="{Binding Path=(syncfusion:DockedElementTabbedHost.DockingManager).(syncfusion:DockingManager.FocusVisualStyle),RelativeSource={RelativeSource TemplatedParent}}"/>
-
-                    <Setter Property="Template">
-
-                        <Setter.Value>
-
-                            <ControlTemplate TargetType="{x:Type syncfusion:DockedElementTabbedHost}">
-
-                                <Border x:Name="BorderWrap" Width="Auto" FocusVisualStyle="{Binding Path=(syncfusion:DockedElementTabbedHost.DockingManager).(syncfusion:DockingManager.FocusVisualStyle), RelativeSource={RelativeSource TemplatedParent}}"
-        SnapsToDevicePixels="True" BorderBrush="{DynamicResource WindowBorderBrush}" BorderThickness="{DynamicResource WindowBorderThicknessThickness}">
-
-                                    <DockPanel x:Name="DockPanel" Width="Auto" LastChildFill="True" Focusable="False" Background="Transparent">
-
-                                        <syncfusion:DockHeaderPresenter x:Name="header" DockPanel.Dock="Top" RenderTransformOrigin="0.5,0.5" Background="Transparent" 
-            Style="{Binding Path=(syncfusion:DockedElementTabbedHost.DockingManager).(syncfusion:DockingManager.DockHeaderStyle),
-            RelativeSource={RelativeSource AncestorType={x:Type syncfusion:DockedElementTabbedHost}}}"
-            IsTemplateParenKeyboardFocusWithin="{TemplateBinding IsKeyboardFocusWithin}"/>
-
-                                        <Grid Background="Transparent" >
-
-                                            <ContentPresenter Name="HostedElement" ClipToBounds="True" ContentSource="HostedElement"
-                  ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}"
-                  ContentTemplateSelector="{TemplateBinding ContentControl.ContentTemplateSelector}"/>
-
-                                            <Border Name="PART_CoverletControl" Visibility="Collapsed" Background="Transparent" />
-
-                                        </Grid>
-
-                                    </DockPanel>
-
-                                </Border>
-
-                            </ControlTemplate>
-
-                        </Setter.Value>
-
-                    </Setter>
-
-                </Style>
-
-            </syncfusion:DockingManager.DockedElementTabbedHostStyle>
-            <syncfusion:DockingManager.FloatWindowTemplate>
-
-                <ControlTemplate  TargetType="{x:Type ContentControl}">
-
-                    <AdornerDecorator>
-
-                        <DockPanel Focusable="False" LastChildFill="True" Opacity="{Binding Path=Opacity,
-           RelativeSource={RelativeSource AncestorType={x:Type syncfusion:IWindow}}}">
-
-                            <Border Name="FloatWindowOutBorder" Focusable="False"
-        BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{DynamicResource WindowBackground}" >
-
-                                <Grid Focusable="False">
-
-                                    <Grid.RowDefinitions>
-
-                                        <RowDefinition Name="TopRow" Height="{DynamicResource WindowBorderThicknessGridLength}"/>
-
-                                        <RowDefinition Height="*" />
-
-                                        <RowDefinition Name="BottomRow" Height="{DynamicResource WindowBorderThicknessGridLength}" />
-
-                                    </Grid.RowDefinitions>
-
-                                    <Grid.ColumnDefinitions>
-
-                                        <ColumnDefinition Name="LeftCol" Width="{DynamicResource WindowBorderThicknessGridLength}" />
-
-                                        <ColumnDefinition Width="*"/>
-
-                                        <ColumnDefinition Name="RightCol" Width="{DynamicResource WindowBorderThicknessGridLength}" />
-
-                                    </Grid.ColumnDefinitions>
-
-                                    <Rectangle x:Name="rHeader" Height="{DynamicResource NavigationBarHeigthDouble}" Fill="{DynamicResource NavigationBarBackground}" 
-                                               Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3"
-                                               Stroke="Transparent"  StrokeThickness="2"></Rectangle>
-                                    <Rectangle x:Name="rLeftBorder" Fill="Transparent" 
-                                               Grid.Column="0" Grid.Row="0" Grid.RowSpan="3"></Rectangle>
-                                    <Rectangle x:Name="rRightBorder" Fill="Transparent" 
-                                               Grid.Column="2" Grid.Row="0" Grid.RowSpan="3"></Rectangle>
-                                    <Rectangle x:Name="rBottomBorder" Fill="Transparent" 
-                                               Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3"></Rectangle>
-
-                                    <syncfusion:FloatWindowBorder BorderMode="LeftTop" Name="BorderLeftTop" Grid.Column="0" Grid.Row="0" Opacity="0.01"  />
-
-                                    <syncfusion:FloatWindowBorder BorderMode="Header" Name="BorderHeader" Grid.Column="1" Grid.Row="0" Opacity="0.01" />
-
-                                    <syncfusion:FloatWindowBorder BorderMode="RightTop" Name="BorderRightTop" Grid.Column="2" Grid.Row="0" Opacity="0.01"  />
-
-                                    <syncfusion:FloatWindowBorder BorderMode="Left" Name="BorderLeft" Grid.Column="0" Grid.Row="1" Opacity="0.01" />
-
-                                    <ContentPresenter Name="ContentPresenter" Grid.Column="1" Grid.Row="1"
-                  ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}"
-                  Content="{TemplateBinding ContentControl.Content}" Opacity="1" />
-
-                                    <syncfusion:FloatWindowBorder BorderMode="Right" Name="BorderRight" Grid.Column="2" Grid.Row="1" Opacity="0.01" />
-
-                                    <syncfusion:FloatWindowBorder BorderMode="LeftBottom" Name="BorderLeftBottom" Grid.Column="0" Grid.Row="2" Opacity="0.01" />
-
-                                    <syncfusion:FloatWindowBorder BorderMode="Bottom" Name="BorderBottom" Grid.Column="1" Grid.Row="2" Opacity="0.01" />
-
-                                    <syncfusion:FloatWindowBorder BorderMode="RightBottom" Name="BorderRightBottom" Grid.Column="2" Grid.Row="2" Opacity="0.01" />
-
-                                </Grid>
-
-                            </Border>
-
-                        </DockPanel>
-
-                    </AdornerDecorator>
-
-                </ControlTemplate>
-
-            </syncfusion:DockingManager.FloatWindowTemplate>
-            <syncfusion:DockingManager.DockWindowContextMenuItemStyle>
-
-                <Style TargetType="{x:Type syncfusion:CustomMenuItem}">
-                    <Setter Property="Background" Value="{DynamicResource DropDownMenuItemBackground}"/>
-                    <Setter Property="Foreground" Value="{DynamicResource FontColor}"/>
-                    <Setter Property="BorderBrush" Value="{DynamicResource WindowBorderBrush}"/>
-
-                </Style>
-
-            </syncfusion:DockingManager.DockWindowContextMenuItemStyle>
-            <syncfusion:DockingManager.CustomMenuItems>
-
-                <syncfusion:CustomMenuItemCollection>
-                </syncfusion:CustomMenuItemCollection>
-
-            </syncfusion:DockingManager.CustomMenuItems>
-            <syncfusion:DockingManager.DockHeaderStyle>
-
-                <Style TargetType="{x:Type syncfusion:DockHeaderPresenter}">
-
-                    <Setter Property="MinHeight" Value="{DynamicResource NavigationBarHeigthDouble}"></Setter>
-                    <Setter Property="MaxHeight" Value="{DynamicResource NavigationBarHeigthDouble}"></Setter>
-
-                </Style>
-
-            </syncfusion:DockingManager.DockHeaderStyle>
-           
-                
-            <syncfusion:DockingManager.CloseButtonTemplate>
-                <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <StackPanel Margin="5,0,0,0" >
-                        <Rectangle x:Name="Close" Height="20" Width="20">
-                            <Rectangle.Style>
-                                <Style TargetType="{x:Type Rectangle}">
-                                    <Setter Property="Fill">
-                                        <Setter.Value>
-                                            <ImageBrush ImageSource="Images/48x48/CloseLight.png" Stretch="Fill" />
-                                        </Setter.Value>
-                                    </Setter>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Fill">
-                                                <Setter.Value>
-                                                    <ImageBrush ImageSource="Images/48x48/CloseLightHover.png" Stretch="Fill"  />
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Rectangle.Style>
-                        </Rectangle>
-                    </StackPanel>
-                </ControlTemplate>
-            </syncfusion:DockingManager.CloseButtonTemplate>
-            <syncfusion:DockingManager.AwlButtonTemplate>
-                <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <StackPanel Margin="5,0,0,0" >
-                        <Rectangle x:Name="dmHeaderPin" Height="20" Width="20">
-                            <Rectangle.Style>
-                                <Style TargetType="{x:Type Rectangle}">
-                                    <Setter Property="Fill">
-                                        <Setter.Value>
-                                            <ImageBrush ImageSource="Images/48x48/PinLight.png" Stretch="Fill"/>
-                                        </Setter.Value>
-                                    </Setter>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Fill">
-                                                <Setter.Value>
-                                                    <ImageBrush ImageSource="Images/48x48/PinLightHover.png" Stretch="Fill"  />
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Rectangle.Style>
-                        </Rectangle>
-                    </StackPanel>
-                </ControlTemplate>
-            </syncfusion:DockingManager.AwlButtonTemplate>
-            <syncfusion:DockingManager.MenuButtonTemplate>
-                <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <StackPanel Margin="5,0,0,0" >
-                        <Rectangle x:Name="Close" Height="20" Width="20">
-                            <Rectangle.Style>
-                                <Style TargetType="{x:Type Rectangle}">
-                                    <Setter Property="Fill">
-                                        <Setter.Value>
-                                            <ImageBrush ImageSource="Images/48x48/DownArrowLight.png" />
-                                        </Setter.Value>
-                                    </Setter>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Fill">
-                                                <Setter.Value>
-                                                    <ImageBrush ImageSource="Images/48x48/DownArrowLightHover.png" />
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Rectangle.Style>
-                        </Rectangle>
-                    </StackPanel>
-                </ControlTemplate>
-            </syncfusion:DockingManager.MenuButtonTemplate>
-            
-        </syncfusion:DockingManager>
+        </Grid>
     </Grid>
 </Window>

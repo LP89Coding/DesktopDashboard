@@ -12,6 +12,7 @@ using ArgumentCollection = WPF.Common.Common.ArgumentCollection;
 using DesktopDashboard.Internals;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Input;
 
 namespace DesktopDashboard.ViewModels
 {
@@ -33,6 +34,11 @@ namespace DesktopDashboard.ViewModels
             }
         }
 
+        private ICommand closeWindowButtonCommand;
+        public ICommand CloseWindowButtonCommand { get { return this.closeWindowButtonCommand; } set { this.closeWindowButtonCommand = value; } }
+        private ICommand closeWindowOverrideButtonCommand;
+        public ICommand CloseWindowOverrideButtonCommand { get { return this.closeWindowOverrideButtonCommand; } set { this.closeWindowOverrideButtonCommand = value; } }
+
         public MainWindowViewModel()
         {
             this.AvailablePlugins = new List<PluginViewModel>();
@@ -46,13 +52,63 @@ namespace DesktopDashboard.ViewModels
         private List<PluginViewModel> GetAvailablePlugins()
         {
             IViewModelFactory factory = new ViewModelFactory();
+            PluginState[] pluginStates = null;
+            try
+            {
+                pluginStates = UserSettings.LoadSetting<PluginState[]>(UserSettings.SettingType.PluginState);
+            }
+            catch(Exception ex)
+            {
+                //ToDo Log
+            }
 
             return pluginManager.GetPlugins()?.Select(p =>
             {
-                ArgumentCollection args = new ArgumentCollection();
-                args.Set(ArgumentCollection.ArgumentType.Plugin, p);
-                return factory.CreateViewModel<PluginViewModel>(args);
+                ArgumentCollection viewModelArgs = new ArgumentCollection();
+                ArgumentCollection pluginInitArgs = new ArgumentCollection();
+
+                pluginInitArgs.Set(ArgumentCollection.ArgumentType.IsPluginMode, true);
+
+                if (pluginStates != null)
+                {
+                    PluginState pluginState = pluginStates.FirstOrDefault(ps => String.Equals(ps.Name, p.GetPluginName()));
+                    if (pluginState != null)
+                    {
+                        pluginInitArgs.Set(ArgumentCollection.ArgumentType.PluginState, pluginState);
+                        viewModelArgs.Set(ArgumentCollection.ArgumentType.RestorePlugin, true);
+                    }
+                }
+
+                viewModelArgs.Set(ArgumentCollection.ArgumentType.Plugin, p);
+                viewModelArgs.Set(ArgumentCollection.ArgumentType.PluginArgs, pluginInitArgs);
+
+                PluginViewModel pluginViewModel = factory.CreateViewModel<PluginViewModel>(viewModelArgs);
+                return pluginViewModel;
             }).ToList() ?? new List<PluginViewModel>();
+        }
+
+        #endregion
+        #region CloseWindowOverride
+
+        private void CloseWindowOverride(object parameter)
+        {
+            PluginState[] currentState = this.AvailablePlugins?.Select(d => d.Plugin).Where(p => p.IsPluginInitialized()).Select(p => p.GetPluginCurrentState()).ToArray() ?? new PluginState[] { };
+            UserSettings.SaveSetting(UserSettings.SettingType.PluginState, currentState);
+            if (this.AvailablePlugins.Count > 0)
+            {
+                foreach (IPlugin plugin in this.AvailablePlugins.Select(p => p.Plugin))
+                {
+                    try
+                    {
+                        plugin?.ClosePlugin();
+                    }
+                    catch (Exception ex)
+                    {
+                        //ToDo Log
+                    }
+                }
+            }
+            this.CloseWindowButtonCommand?.Execute(parameter);
         }
 
         #endregion
@@ -89,34 +145,11 @@ namespace DesktopDashboard.ViewModels
         {
             if (args != null)
             {
+                if(args.Contains(ArgumentCollection.ArgumentType.WindowCloseCommand))
+                    this.CloseWindowButtonCommand = args.Get<Command>(ArgumentCollection.ArgumentType.WindowCloseCommand);
             }
+            this.CloseWindowOverrideButtonCommand = new Command((object parameter) => { this.CloseWindowOverride(parameter); });
             this.AvailablePlugins = this.GetAvailablePlugins();
-            try
-            {
-                Syncfusion.Windows.Tools.Controls.DockingManager dmItem = args.Get<Syncfusion.Windows.Tools.Controls.DockingManager>(ArgumentCollection.ArgumentType.DockingManager);
-                System.Collections.ObjectModel.ObservableCollection<Syncfusion.Windows.Tools.Controls.DockItem> dockItems = new System.Collections.ObjectModel.ObservableCollection<Syncfusion.Windows.Tools.Controls.DockItem>();
-                foreach (Plugin pItem in this.AvailablePlugins.Select(p => p.Plugin))
-                {
-                    pItem.InitializePlugin(null);
-                    IWindowControl control = pItem.GetPluginControl();
-
-                    //Brush b = new System.Windows.Media.ImageBrush(Utils.ToImageSource(pItem.GetPluginIcon()));
-                    Syncfusion.Windows.Tools.Controls.DockItem diItem = new Syncfusion.Windows.Tools.Controls.DockItem()
-                    {
-                        Content = control as FrameworkElement,
-                        Header = pItem.GetPluginName(),
-                        Icon = new System.Windows.Media.ImageBrush(Utils.ToImageSource(pItem.GetPluginIcon()))//Nie działa
-                    };
-                    dockItems.Add(diItem);
-                    dmItem.Children.Add(control as FrameworkElement);//TO sprawia że menu kontekstowe się dobrze wyświetla - ostylowane
-
-                }
-                dmItem.ItemsSource = dockItems;
-            }
-            catch (Exception ex)
-            {
-
-            }
         }
 
         #endregion

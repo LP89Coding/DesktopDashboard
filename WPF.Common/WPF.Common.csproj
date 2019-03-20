@@ -56,6 +56,7 @@
     <Compile Include="Common\ArgumentCollection.cs" />
     <Compile Include="Common\Command.cs" />
     <Compile Include="Common\ObservableViewModel.cs" />
+    <Compile Include="Common\PluginState.cs" />
     <Compile Include="Common\Utils.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Factories\ViewModelFactory.cs" />

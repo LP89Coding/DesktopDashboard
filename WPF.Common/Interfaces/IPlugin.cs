@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 using ArgumentCollection = WPF.Common.Common.ArgumentCollection;
+using PluginState = WPF.Common.Common.PluginState;
+
 
 namespace WPF.Common.Interfaces
 {
@@ -17,6 +19,9 @@ namespace WPF.Common.Interfaces
 
         string GetPluginName();
         System.Drawing.Icon GetPluginIcon();
+        PluginState GetPluginCurrentState();
+
+        bool IsPluginInitialized();
 
         string GetPluginAssemblyName();
         Version GetPluginAssemblyVersion();

@@ -8,6 +8,7 @@ using System.IO;
 
 using WPF.Common.Interfaces;
 using ArgumentCollection = WPF.Common.Common.ArgumentCollection;
+using WPF.Common.Common;
 
 namespace DesktopDashboard.Internals
 {
@@ -25,6 +26,7 @@ namespace DesktopDashboard.Internals
             this.Type = type;
             this.instance = instance;
             this.Path = path;
+            this.args = new ArgumentCollection();
         }
 
         #region IPlugin implementation
@@ -60,6 +62,16 @@ namespace DesktopDashboard.Internals
         public Icon GetPluginIcon()
         {
             return this.instance?.GetPluginIcon();
+        }
+
+        public PluginState GetPluginCurrentState()
+        {
+            return this.instance?.GetPluginCurrentState();
+        }
+
+        public bool IsPluginInitialized()
+        {
+            return this.instance?.IsPluginInitialized() ?? false;
         }
 
         public void ClosePlugin()

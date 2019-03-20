@@ -85,6 +85,28 @@ namespace WPF.Common.Controls.ViewModels
         }
 
 
+        private double windowTop;
+        public double WindowTop
+        {
+            get { return this.windowTop; }
+            set
+            {
+                this.windowTop = value;
+                RaisePropertyChangedEvent(nameof(this.WindowTop));
+            }
+        }
+        private double windowLeft;
+        public double WindowLeft
+        {
+            get { return this.windowLeft; }
+            set
+            {
+                this.windowLeft = value;
+                RaisePropertyChangedEvent(nameof(this.WindowLeft));
+            }
+        }
+
+
         private ICommand closeButtonCommand;
         public ICommand CloseButtonCommand { get { return this.closeButtonCommand; } private set { this.closeButtonCommand = value; } }
 
@@ -143,7 +165,9 @@ namespace WPF.Common.Controls.ViewModels
 
         public void Initialize(ArgumentCollection args)
         {
-            if(args != null)
+            double? windowWidth = null;
+            double? windowHeight = null;
+            if (args != null)
             {
                 if (args.Contains(ArgumentCollection.ArgumentType.WindowTitle))
                     this.WindowTitle = args.Get(ArgumentCollection.ArgumentType.WindowTitle)?.ToString();
@@ -151,17 +175,36 @@ namespace WPF.Common.Controls.ViewModels
                     this.WindowIcon = WPFUtils.ToBitmapImage(args.Get(ArgumentCollection.ArgumentType.WindowIcon));
                 if (args.Contains(ArgumentCollection.ArgumentType.WindowCloseCommand))
                     this.CloseButtonCommand = args.Get<Command>(ArgumentCollection.ArgumentType.WindowCloseCommand);
-                if (args.Contains(ArgumentCollection.ArgumentType.WindowWidth))
-                    this.WindowWidth = args.Get<double>(ArgumentCollection.ArgumentType.WindowWidth);
-                if (args.Contains(ArgumentCollection.ArgumentType.WindowHeight))
-                    this.WindowHeight = args.Get<double>(ArgumentCollection.ArgumentType.WindowHeight);
                 if (args.Contains(ArgumentCollection.ArgumentType.WindowTitle))
                     this.WindowTitle = args.Get<string>(ArgumentCollection.ArgumentType.WindowTitle);
+
+                PluginState lastPluginState = null;
+                if (args.Contains(ArgumentCollection.ArgumentType.PluginState))
+                    lastPluginState = args.Get<PluginState>(ArgumentCollection.ArgumentType.PluginState);
+
+                windowWidth = lastPluginState?.Width;
+                windowHeight = lastPluginState?.Height;
+                
+                if (args.Contains(ArgumentCollection.ArgumentType.WindowWidth) && !windowWidth.HasValue)
+                    windowWidth = args.Get<double>(ArgumentCollection.ArgumentType.WindowWidth);
+                if (args.Contains(ArgumentCollection.ArgumentType.WindowHeight) && !windowHeight.HasValue)
+                    windowHeight = args.Get<double>(ArgumentCollection.ArgumentType.WindowHeight);
+
+                double? windowTop = lastPluginState?.PositionTop;
+                double? windowLeft = lastPluginState?.PositionLeft;
+                if (windowTop.HasValue)
+                    this.WindowTop = windowTop.Value;
+                if (windowLeft.HasValue)
+                    this.WindowLeft = windowLeft.Value;
             }
-            if (this.WindowWidth == 0 && !args.Contains(ArgumentCollection.ArgumentType.WindowWidth))
-                this.WindowWidth = 800;
-            if (this.WindowHeight == 0 && !args.Contains(ArgumentCollection.ArgumentType.WindowHeight))
-                this.WindowHeight = 600;
+            if (!windowWidth.HasValue)
+                windowWidth = 800;
+            if (!windowHeight.HasValue)
+                windowHeight = 600;
+
+            this.WindowWidth = windowWidth.Value;
+            this.WindowHeight = windowHeight.Value;
+
             if (String.IsNullOrWhiteSpace(this.WindowTitle) && !args.Contains(ArgumentCollection.ArgumentType.WindowTitle))
                 this.WindowTitle = "Base Window";
         }

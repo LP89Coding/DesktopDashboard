@@ -21,6 +21,7 @@ namespace DIYoutubeDownloader.Common
         private ArgumentCollection args { get; set; }
         private BaseWindow mainWindow { get; set; }
         private IWindowControl control { get; set; }
+        private bool isInitialized { get; set; }
         #region Events
 
         #region UnhandledException_Raised
@@ -101,6 +102,7 @@ namespace DIYoutubeDownloader.Common
         {
             try
             {
+                this.isInitialized = false;
                 Logger.Log(EventID.Application.End);
                 try { Logger.Close(); } catch (Exception ex) { Console.WriteLine(ex.ToString()); Logger.Log(EventID.Application.Exception, ex); }
                 mainWindow?.Close();
@@ -120,6 +122,7 @@ namespace DIYoutubeDownloader.Common
         {
             this.args = args ?? new ArgumentCollection();
             this.Initialize();
+            this.isInitialized = true;
         }
 
         public ArgumentCollection GetArgs()
@@ -135,6 +138,28 @@ namespace DIYoutubeDownloader.Common
         public System.Drawing.Icon GetPluginIcon()
         {
             return ResourceImage.WindowIcon;
+        }
+
+        public PluginState GetPluginCurrentState()
+        {
+            PluginState currentState = new PluginState(this.GetPluginName());
+            if(this.mainWindow != null)
+            {
+                currentState.PositionLeft = this.mainWindow.Left;
+                currentState.PositionTop = this.mainWindow.Top;
+
+                currentState.Height = this.mainWindow.Height;
+                currentState.Width = this.mainWindow.Width;
+
+                currentState.WindowState = this.mainWindow.WindowState;
+            }
+
+            return currentState;
+        }
+
+        public bool IsPluginInitialized()
+        {
+            return this.isInitialized;
         }
 
         public void ClosePlugin()
