@@ -10,7 +10,7 @@
 
         <Syncfusion:SfCircularGauge VerticalAlignment="Top" HorizontalContentAlignment="Stretch" HeaderAlignment="Center">
             <Syncfusion:SfCircularGauge.GaugeHeader>
-                <TextBlock Text="RAM (%)" Foreground="White" FontSize="15"/>
+                <TextBlock Text="{Binding Path=GaugeHeader, Mode=OneWay}" Foreground="White" FontSize="15"/>
             </Syncfusion:SfCircularGauge.GaugeHeader>
             <Syncfusion:SfCircularGauge.Scales>
                 <Syncfusion:CircularScale StartValue="0" EndValue="100"

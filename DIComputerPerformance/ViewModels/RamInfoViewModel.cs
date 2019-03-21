@@ -27,6 +27,16 @@ namespace DIComputerPerformance.ViewModels
                 RaisePropertyChangedEvent(nameof(this.GaugeValue));
             }
         }
+        private string gaugeHeader;
+        public string GaugeHeader
+        {
+            get { return this.gaugeHeader; }
+            private set
+            {
+                this.gaugeHeader = value;
+                RaisePropertyChangedEvent(nameof(this.GaugeHeader));
+            }
+        }
 
         #region Methods
 
@@ -40,7 +50,11 @@ namespace DIComputerPerformance.ViewModels
                 int valRamTakenPrc = Convert.ToInt32(((double)valRamTotal / (double)valRamTotalMemory) * 100.0);
 
                 this.GaugeValue = valRamTakenPrc;
-            }catch(Exception ex)
+                this.GaugeHeader = String.Format("RAM %{0}({1:0.00}{2})", Environment.NewLine,
+                                        valRamTotal > 1024 ? Math.Round(valRamTotal / 1024.0, 2) : valRamTotal,
+                                        valRamTotal > 1024 ? "GB" : "MB");
+            }
+            catch (Exception ex)
             {
                 //ToDo Log
             }
