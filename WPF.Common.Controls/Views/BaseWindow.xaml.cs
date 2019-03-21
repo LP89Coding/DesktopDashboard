@@ -8,6 +8,7 @@ using WPF.Common.Factories;
 using WPF.Common.Interfaces;
 using Logger = WPF.Common.Logger.Logger;
 using ArgumentCollection = WPF.Common.Common.ArgumentCollection;
+using WindowState = WPF.Common.Common.WindowState;
 
 using WPF.Common.Controls.ViewModels;
 
@@ -157,6 +158,25 @@ namespace WPF.Common.Controls.Views
         }
 
         #endregion
+        #region GetWindowState
+
+        public WindowState GetWindowSate()
+        {
+            WindowState currentState = new WindowState();
+            
+            currentState.PositionLeft = this.Left;
+            currentState.PositionTop = this.Top;
+
+            currentState.Height = this.Height;
+            currentState.Width = this.Width;
+
+            currentState.State = this.WindowState;
+
+            return currentState;
+        }
+
+        #endregion
+        #region GetContent
 
         public IWindowControl GetContent()
         {
@@ -164,6 +184,8 @@ namespace WPF.Common.Controls.Views
                 return wpFillContent.Children[0] as IWindowControl;
             return null;
         }
+
+        #endregion
 
         #endregion
 

@@ -144,16 +144,7 @@ namespace DIComputerPerformance.Common
         public PluginState GetPluginCurrentState()
         {
             PluginState currentState = new PluginState(this.GetPluginName(), this.IsPluginInitialized());
-            if (this.mainWindow != null)
-            {
-                currentState.PositionLeft = this.mainWindow.Left;
-                currentState.PositionTop = this.mainWindow.Top;
-
-                currentState.Height = this.mainWindow.Height;
-                currentState.Width = this.mainWindow.Width;
-
-                currentState.WindowState = this.mainWindow.WindowState;
-            }
+            currentState.WindowState = this.mainWindow?.GetWindowSate();
 
             return currentState;
         }

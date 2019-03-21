@@ -11,12 +11,7 @@ namespace WPF.Common.Common
         public string Name { get; private set; }
         public bool IsActive { get; private set; }
 
-        public double Height { get; set; }
-        public double Width { get; set; }
-        public double PositionLeft { get; set; }
-        public double PositionTop { get; set; }
-        public System.Windows.WindowState WindowState { get; set; }
-        public object SerilizedCustomControlContent { get; set; }
+        public WindowState WindowState { get; set; }
 
         public PluginState(string name, bool isActive)
         {

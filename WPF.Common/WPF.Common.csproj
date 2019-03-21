@@ -58,6 +58,7 @@
     <Compile Include="Common\ObservableViewModel.cs" />
     <Compile Include="Common\PluginState.cs" />
     <Compile Include="Common\Utils.cs" />
+    <Compile Include="Common\WindowState.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Factories\ViewModelFactory.cs" />
     <Compile Include="Interfaces\ILogger.cs" />

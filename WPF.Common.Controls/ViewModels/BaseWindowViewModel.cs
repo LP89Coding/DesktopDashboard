@@ -182,16 +182,16 @@ namespace WPF.Common.Controls.ViewModels
                 if (args.Contains(ArgumentCollection.ArgumentType.PluginState))
                     lastPluginState = args.Get<PluginState>(ArgumentCollection.ArgumentType.PluginState);
 
-                windowWidth = lastPluginState?.Width;
-                windowHeight = lastPluginState?.Height;
+                windowWidth = lastPluginState?.WindowState?.Width;
+                windowHeight = lastPluginState?.WindowState?.Height;
                 
                 if (args.Contains(ArgumentCollection.ArgumentType.WindowWidth) && !windowWidth.HasValue)
                     windowWidth = args.Get<double>(ArgumentCollection.ArgumentType.WindowWidth);
                 if (args.Contains(ArgumentCollection.ArgumentType.WindowHeight) && !windowHeight.HasValue)
                     windowHeight = args.Get<double>(ArgumentCollection.ArgumentType.WindowHeight);
 
-                double? windowTop = lastPluginState?.PositionTop;
-                double? windowLeft = lastPluginState?.PositionLeft;
+                double? windowTop = lastPluginState?.WindowState?.PositionTop;
+                double? windowLeft = lastPluginState?.WindowState?.PositionLeft;
                 if (windowTop.HasValue)
                     this.WindowTop = windowTop.Value;
                 if (windowLeft.HasValue)
