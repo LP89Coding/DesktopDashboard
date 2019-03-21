@@ -18,7 +18,7 @@ using System.Windows.Media.Imaging;
 
 namespace DesktopDashboard.ViewModels
 {
-    public class MainWindowViewModel : ObservableViewModel, IViewModel
+    public class DesktopDashboardViewModel : ObservableViewModel, IViewModel
     {
         private readonly PluginManager pluginManager;
 
@@ -105,7 +105,7 @@ namespace DesktopDashboard.ViewModels
         private ICommand closeWindowOverrideButtonCommand;
         public ICommand CloseWindowOverrideButtonCommand { get { return this.closeWindowOverrideButtonCommand; } set { this.closeWindowOverrideButtonCommand = value; } }
 
-        public MainWindowViewModel()
+        public DesktopDashboardViewModel()
         {
             this.AvailablePlugins = new List<PluginViewModel>();
             this.pluginManager = new PluginManager();

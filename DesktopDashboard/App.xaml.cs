@@ -13,5 +13,18 @@ namespace DesktopDashboard
     /// </summary>
     public partial class App : Application
     {
+        #region Overrides
+
+        #region OnStartup
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            new wDesktopDashboard().Show();
+        }
+
+        #endregion
+
+        #endregion
     }
 }

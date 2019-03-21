@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:DesktopDashboard"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
-        x:Class="DesktopDashboard.MainWindow"
+        x:Class="DesktopDashboard.wDesktopDashboard"
         xmlns:viewModel = "clr-namespace:DesktopDashboard.ViewModels"
         mc:Ignorable="d"
         Title="{Binding Path=Title, Mode=OneWay}"
@@ -38,7 +38,7 @@
         <SolidColorBrush x:Key="DropDownMenuItemBackground" Color="#CC1B1717" />
 
 
-        <Style TargetType="local:MainWindow">
+        <Style TargetType="local:wDesktopDashboard">
             <Setter Property="Background" Value="#B2252222"/>
             <Setter Property="BorderThickness" Value="2" />
             <Setter Property="BorderBrush" Value="{DynamicResource WindowBorderBrush}"/>
@@ -94,7 +94,7 @@
                                   SizeMode="Small"
                                   Background="Transparent" 
                                   BorderBrush="Transparent" BorderThickness="0"
-                                  SmallIcon="Images/48x48/CloseLight.png"
+                                  SmallIcon="/DesktopDashboard;component/Images/48x48/CloseLight.png"
                                   HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
                                   Command="{Binding CloseWindowOverrideButtonCommand}"
                                   ToolTip="Close dashboard" Label="" 
@@ -103,7 +103,7 @@
             <syncfusion:ButtonAdv x:Name="baToolBarTopMost"  Grid.Row="0" Grid.Column="2"
                                   SizeMode="Small"
                                   Background="Transparent" BorderBrush="Transparent" BorderThickness="0"
-                                  SmallIcon="Images/48x48/LockLight.png"
+                                  SmallIcon="/DesktopDashboard;component/Images/48x48/LockLight.png"
                                   Label="" 
                                   Command="{Binding TopMostButtonCommand}"
                                   IsCheckable="True" IsChecked="{Binding Path=TopMost, Mode=OneWay}"
@@ -112,7 +112,8 @@
                                   ToolTip="Always on top" />
             <syncfusion:DropDownButtonAdv  Grid.Row="0" Grid.Column="1"
                                               Label="" 
-                                              SizeMode="Large"  SmallIcon="Images/48x48/PluginLight.png" LargeIcon="Images/48x48/PluginLight.png"
+                                              SizeMode="Large"  SmallIcon="/DesktopDashboard;component/Images/48x48/PluginLight.png" 
+                                              LargeIcon="/DesktopDashboard;component/Images/48x48/PluginLight.png"
                                               BorderBrush="Transparent" BorderThickness="0" Foreground="White" Height="36" Margin="0,2" Width="40" >
                 <syncfusion:DropDownMenuGroup ItemsSource="{Binding Path=AvailablePlugins}">
                     <syncfusion:DropDownMenuGroup.ItemTemplate>

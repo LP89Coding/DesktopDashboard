@@ -30,16 +30,13 @@ using WPF.Common.Common;
 
 namespace DesktopDashboard
 {
-    /// <summary>
-    /// Logika interakcji dla klasy MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
+    public partial class wDesktopDashboard : Window
     {
         private IViewModel viewModel;
 
-        #region Ctop
+        #region Ctor
 
-        public MainWindow()
+        public wDesktopDashboard()
         {
             try
             {
@@ -72,7 +69,7 @@ namespace DesktopDashboard
                 args.Set(ArgumentCollection.ArgumentType.WindowCloseCommand, new Command((object parametrer) => { this.Close(); }));
 
                 ViewModelFactory factory = new ViewModelFactory();
-                this.viewModel = factory.CreateViewModel<MainWindowViewModel>(args);
+                this.viewModel = factory.CreateViewModel<DesktopDashboardViewModel>(args);
                 this.DataContext = viewModel;
             }
             catch (Exception ex)

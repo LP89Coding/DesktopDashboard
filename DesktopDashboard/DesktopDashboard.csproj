@@ -89,9 +89,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ResourceImage48.resx</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\DesktopDashboardViewModel.cs" />
     <Compile Include="ViewModels\PluginViewModel.cs" />
-    <Page Include="MainWindow.xaml">
+    <Page Include="Views\wDesktopDashboard.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -100,8 +100,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Common\Enums.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="Views\wDesktopDashboard.xaml.cs">
+      <DependentUpon>wDesktopDashboard.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -216,9 +216,7 @@
       <Name>WPF.Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Images\48x48\CloseLight.png" />
     <Resource Include="Images\48x48\LockLight.png" />
