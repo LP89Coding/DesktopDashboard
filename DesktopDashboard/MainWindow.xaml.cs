@@ -36,8 +36,8 @@ namespace DesktopDashboard
     public partial class MainWindow : Window
     {
         private IViewModel viewModel;
-        
-     
+
+        #region Ctop
 
         public MainWindow()
         {
@@ -57,6 +57,7 @@ namespace DesktopDashboard
             }
         }
 
+        #endregion
 
         #region Methods
 
@@ -83,14 +84,5 @@ namespace DesktopDashboard
 
         #endregion
         
-       
-        private void baToolBarTopMost_Click(object sender, RoutedEventArgs e)
-        {
-            this.Topmost = !this.Topmost;
-            if (this.Topmost)
-                baToolBarTopMost.SmallIcon = WPFUtils.ToBitmapImage(ResourceImage48.LockOpen);
-            else
-                baToolBarTopMost.SmallIcon = WPFUtils.ToBitmapImage(ResourceImage48.Lock);
-        }
     }
 }

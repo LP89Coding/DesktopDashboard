@@ -7,12 +7,14 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
         x:Class="DesktopDashboard.MainWindow"
-        xmlns:MarkUpTools="clr-namespace:DesktopDashboard"
+        xmlns:viewModel = "clr-namespace:DesktopDashboard.ViewModels"
         mc:Ignorable="d"
-        Title="Desktop dashboard"
+        Title="{Binding Path=Title, Mode=OneWay}"
         AllowsTransparency="True" WindowStyle="None" 
-        Top="0" Topmost="False"
-        Width="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}, Converter={MarkUpTools:RatioConverter}, ConverterParameter='0.1' }" Height="80">
+        Topmost="{Binding Path=TopMost, Mode=TwoWay}"
+        Width="{Binding Path=Width, Mode=TwoWay}" Height="{Binding Path=Height, Mode=TwoWay}"
+        Top="{Binding Path=Top, Mode=TwoWay}" Left="{Binding Path=Left, Mode=TwoWay}"
+    >
     <Window.Background>
         <SolidColorBrush Color="Transparent"/>
     </Window.Background>
@@ -97,15 +99,17 @@
                                   Command="{Binding CloseWindowOverrideButtonCommand}"
                                   ToolTip="Close dashboard" Label="" 
                                   VerticalAlignment="Center" HorizontalAlignment="Center" IconStretch="UniformToFill" 
-                                  IconWidth="32" IconHeight="32" />
+                                  IconWidth="32" IconHeight="32"  />
             <syncfusion:ButtonAdv x:Name="baToolBarTopMost"  Grid.Row="0" Grid.Column="2"
                                   SizeMode="Small"
                                   Background="Transparent" BorderBrush="Transparent" BorderThickness="0"
-                                  SmallIcon="Images/48x48/LockLight.png"  Label="" 
-                                  VerticalAlignment="Center" HorizontalAlignment="Center" IconStretch="UniformToFill"
+                                  SmallIcon="Images/48x48/LockLight.png"
+                                  Label="" 
+                                  Command="{Binding TopMostButtonCommand}"
+                                  IsCheckable="True" IsChecked="{Binding Path=TopMost, Mode=OneWay}"
+                                  VerticalAlignment="Center" HorizontalAlignment="Center" IconStretch="Fill"
                                   IconWidth="32" IconHeight="32" 
-                                  Click="baToolBarTopMost_Click"
-                                  ToolTip="Always on top"/>
+                                  ToolTip="Always on top" />
             <syncfusion:DropDownButtonAdv  Grid.Row="0" Grid.Column="1"
                                               Label="" 
                                               SizeMode="Large"  SmallIcon="Images/48x48/PluginLight.png" LargeIcon="Images/48x48/PluginLight.png"

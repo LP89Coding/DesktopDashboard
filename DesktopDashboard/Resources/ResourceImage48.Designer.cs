@@ -83,9 +83,29 @@ namespace DesktopDashboard.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap LockLight {
+            get {
+                object obj = ResourceManager.GetObject("LockLight", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap LockOpen {
             get {
                 object obj = ResourceManager.GetObject("LockOpen", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap LockOpenLight {
+            get {
+                object obj = ResourceManager.GetObject("LockOpenLight", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

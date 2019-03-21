@@ -8,17 +8,81 @@ using WPF.Common.Common;
 using WPF.Common.Factories;
 using WPF.Common.Interfaces;
 using ArgumentCollection = WPF.Common.Common.ArgumentCollection;
+using WPFUtils = WPF.Common.Common.Utils;
 
 using DesktopDashboard.Internals;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace DesktopDashboard.ViewModels
 {
     public class MainWindowViewModel : ObservableViewModel, IViewModel
     {
         private readonly PluginManager pluginManager;
+
+        private double width;
+        public double Width
+        {
+            get { return this.width; }
+            set
+            {
+                this.width = value;
+                RaisePropertyChangedEvent(nameof(this.Width));
+            }
+        }
+        private double height;
+        public double Height
+        {
+            get { return this.height; }
+            set
+            {
+                this.height = value;
+                RaisePropertyChangedEvent(nameof(this.Height));
+            }
+        }
+        private double top;
+        public double Top
+        {
+            get { return this.top; }
+            set
+            {
+                this.top = value;
+                RaisePropertyChangedEvent(nameof(this.Top));
+            }
+        }
+        private double left;
+        public double Left
+        {
+            get { return this.left; }
+            set
+            {
+                this.left = value;
+                RaisePropertyChangedEvent(nameof(this.Left));
+            }
+        }
+        private bool topMost;
+        public bool TopMost
+        {
+            get { return this.topMost; }
+            set
+            {
+                bool valueChanged = this.topMost != value;
+                this.topMost = value;
+                RaisePropertyChangedEvent(nameof(this.TopMost));
+            }
+        }
+        private string title;
+        public string Title
+        {
+            get { return this.title; }
+            set
+            {
+                this.title = value;
+                RaisePropertyChangedEvent(nameof(this.Title));
+            }
+        }
 
         private List<PluginViewModel> availablePlugins;
         public List<PluginViewModel> AvailablePlugins
@@ -36,6 +100,8 @@ namespace DesktopDashboard.ViewModels
 
         private ICommand closeWindowButtonCommand;
         public ICommand CloseWindowButtonCommand { get { return this.closeWindowButtonCommand; } set { this.closeWindowButtonCommand = value; } }
+        private ICommand topMostButtonCommand;
+        public ICommand TopMostButtonCommand { get { return this.topMostButtonCommand; } set { this.topMostButtonCommand = value; } }
         private ICommand closeWindowOverrideButtonCommand;
         public ICommand CloseWindowOverrideButtonCommand { get { return this.closeWindowOverrideButtonCommand; } set { this.closeWindowOverrideButtonCommand = value; } }
 
@@ -92,27 +158,51 @@ namespace DesktopDashboard.ViewModels
 
         private void CloseWindowOverride(object parameter)
         {
-            PluginState[] currentState = this.AvailablePlugins?.Select(d => d.Plugin).Select(p => p.GetPluginCurrentState()).ToArray() ?? new PluginState[] { };
-            UserSettings.SaveSetting(UserSettings.SettingType.PluginState, currentState);
-            if (this.AvailablePlugins.Count > 0)
+            try
             {
-                foreach (IPlugin plugin in this.AvailablePlugins.Select(p => p.Plugin))
+                PluginState[] currentState = this.AvailablePlugins?.Select(d => d.Plugin).Select(p => p.GetPluginCurrentState()).ToArray() ?? new PluginState[] { };
+                UserSettings.SaveSetting(UserSettings.SettingType.PluginState, currentState);
+                if (this.AvailablePlugins.Count > 0)
                 {
-                    try
+                    foreach (IPlugin plugin in this.AvailablePlugins.Select(p => p.Plugin))
                     {
-                        plugin?.ClosePlugin();
-                    }
-                    catch (Exception ex)
-                    {
-                        //ToDo Log
+                        try
+                        {
+                            plugin?.ClosePlugin();
+                        }
+                        catch (Exception ex)
+                        {
+                            //ToDo Log
+                        }
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                //ToDo Log
+            }
+            Internals.WindowState windowState = new Internals.WindowState()
+            {
+                Width = this.Width,
+                Height = this.Height,
+                Top = this.Top,
+                Left = this.Left,
+                TopMost = this.TopMost
+            };
+            UserSettings.SaveSetting(UserSettings.SettingType.WindowState, windowState);
             this.CloseWindowButtonCommand?.Execute(parameter);
         }
 
         #endregion
+        #region CloseWindowOverride
 
+        private void TopMostToogle(object parameter)
+        {
+            this.TopMost = !this.TopMost;
+        }
+
+        #endregion
+        
         #endregion
 
         #region IDisposable implementation
@@ -148,7 +238,17 @@ namespace DesktopDashboard.ViewModels
                 if(args.Contains(ArgumentCollection.ArgumentType.WindowCloseCommand))
                     this.CloseWindowButtonCommand = args.Get<Command>(ArgumentCollection.ArgumentType.WindowCloseCommand);
             }
+            Internals.WindowState windowState = UserSettings.LoadSetting<Internals.WindowState>(UserSettings.SettingType.WindowState);
+
+            this.Height = windowState?.Height ?? 80;
+            this.Width = windowState?.Width ?? SystemParameters.PrimaryScreenWidth * 0.1;
+            this.Top = windowState?.Top ?? 0;
+            this.Left = windowState?.Left ?? SystemParameters.PrimaryScreenWidth - this.Width;
+            this.TopMost = windowState?.TopMost ?? false;
+
+            this.Title = Consts.WindowTitle;
             this.CloseWindowOverrideButtonCommand = new Command((object parameter) => { this.CloseWindowOverride(parameter); });
+            this.TopMostButtonCommand = new Command((object parameter) => { this.TopMostToogle(parameter); });
             this.AvailablePlugins = this.GetAvailablePlugins();
         }
 

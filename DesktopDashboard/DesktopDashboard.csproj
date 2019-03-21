@@ -78,10 +78,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Internals\Consts.cs" />
     <Compile Include="Internals\EventID.cs" />
     <Compile Include="Internals\Plugin.cs" />
     <Compile Include="Internals\PluginManager.cs" />
     <Compile Include="Internals\UserSettings.cs" />
+    <Compile Include="Internals\WindowState.cs" />
     <Compile Include="Resources\ResourceImage48.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -104,7 +106,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MarkUpTools.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

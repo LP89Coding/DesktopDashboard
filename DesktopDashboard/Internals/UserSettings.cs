@@ -14,7 +14,8 @@ namespace DesktopDashboard.Internals
 
         public enum SettingType
         {
-            PluginState
+            PluginState,
+            WindowState
         }
 
         private static void CreateSettingsDirectoryIfNotExists()
