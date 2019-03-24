@@ -48,6 +48,8 @@ namespace WPF.Common.Common
         {
             object result = null;
             arguments?.TryGetValue(type, out result);
+            if (result == null && typeof(T).IsPrimitive)
+                return default(T);
             return (T)result;
         }
 

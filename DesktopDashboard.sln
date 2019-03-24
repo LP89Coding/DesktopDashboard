@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesktopDashboard", "DesktopDashboard\DesktopDashboard.csproj", "{D2C756C9-8614-4E6C-B44F-AA32ECA025F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIYoutubeDownloader", "YoutubeDownloader\DIYoutubeDownloader.csproj", "{E0331AE4-EC8A-49FF-AAAC-416AF21BC836}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIYoutubeDownloader", "DIYoutubeDownloader\DIYoutubeDownloader.csproj", "{E0331AE4-EC8A-49FF-AAAC-416AF21BC836}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesktopDashboard_UT", "DesktopDashboard_UT\DesktopDashboard_UT.csproj", "{21A31B1D-83CE-4849-BB41-2D0E8BC9F8ED}"
 EndProject
