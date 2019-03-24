@@ -27,6 +27,7 @@ namespace WPF.Common.Common
             PluginState = 12,
             PluginArgs = 13,
             RestorePlugin = 14,
+            ParentWidth = 15,
         }
 
         public int Length { get { return this.arguments?.Count ?? 0; } }

@@ -67,6 +67,7 @@ namespace DesktopDashboard
                     args = new ArgumentCollection();
 
                 args.Set(ArgumentCollection.ArgumentType.WindowCloseCommand, new Command((object parametrer) => { this.Close(); }));
+                //args.Set(ArgumentCollection.ArgumentType.DockingManager, htPluginTile);
 
                 ViewModelFactory factory = new ViewModelFactory();
                 this.viewModel = factory.CreateViewModel<DesktopDashboardViewModel>(args);

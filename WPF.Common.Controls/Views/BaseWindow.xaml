@@ -10,6 +10,7 @@
         x:Name="wBaseWindow"
         Width="{Binding Path=WindowWidth, Mode=TwoWay}" Height="{Binding Path=WindowHeight, Mode=TwoWay}"
         Top="{Binding Path=WindowTop, Mode=TwoWay}" Left="{Binding Path=WindowLeft, Mode=TwoWay}"
+        Topmost="{Binding Path=WindowTopMost, Mode=OneWay}"
         AllowsTransparency="True" WindowStyle="None" ResizeMode="CanResizeWithGrip">
 
     <Window.TaskbarItemInfo>
@@ -67,6 +68,7 @@
                 <ColumnDefinition Width="38" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="42" />
+                <ColumnDefinition Width="42" />
             </Grid.ColumnDefinitions>
 
             <Image x:Name="iWindowIcon" HorizontalAlignment="Left" Height="26" VerticalAlignment="Top" 
@@ -82,12 +84,23 @@
                                      HorizontalContentAlignment="Stretch" Focusable="False" IsReadOnly="True" IsUndoEnabled="False" BorderThickness="0" Cursor="Arrow" FontSize="16" 
                                      MouseDown="TbeTitle_MouseDown"
                Grid.Row="0" Grid.Column="1"/>
+
+            <syncfusion:ButtonAdv x:Name="baToolBarTopMost"  Grid.Row="0" Grid.Column="2"
+                                  SizeMode="Small"
+                                  Background="Transparent" BorderBrush="Transparent" BorderThickness="0"
+                                  SmallIcon="/WPF.Common.Controls;component/Images/48x48/LockLight.png"
+                                  Label="" 
+                                  Command="{Binding TopMostButtonCommand}"
+                                  IsCheckable="True" IsChecked="{Binding WindowTopMost, Mode=OneWay}"
+                                  VerticalAlignment="Center" HorizontalAlignment="Center" IconStretch="Fill"
+                                  IconWidth="32" IconHeight="32" 
+                                  ToolTip="Always on top" />
             <syncfusion:ButtonAdv Content="X" Height="30" Margin="0,6,6,0" 
                               Label="X" HorizontalAlignment="Right" VerticalAlignment="Top" Width="30" 
                               SizeMode="Small" IconStretch="Fill" IconHeight="20" IconWidth="20" 
                               Background="#FFF14E4E" SmallIcon="/WPF.Common.Controls;component/Images/32x32/X.png"
                               Command="{Binding CloseButtonCommand}"
-               Grid.Row="0" Grid.Column="2"/>
+                              Grid.Row="0" Grid.Column="3"/>
 
         </Grid>
         <WrapPanel x:Name="wpFillContent" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" >

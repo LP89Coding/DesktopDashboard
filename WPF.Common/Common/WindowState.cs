@@ -12,6 +12,7 @@ namespace WPF.Common.Common
         public double Width { get; set; }
         public double PositionLeft { get; set; }
         public double PositionTop { get; set; }
+        public bool TopMost { get; set; }
         public System.Windows.WindowState State { get; set; }
        
     }

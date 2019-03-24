@@ -48,11 +48,11 @@ namespace DIComputerPerformance.ViewModels
 
         private void DashboardUpdater()
         {
-            while (!DashboardUpdateWaitEvent.WaitOne(1000, false))
+            while (!this.IsDashboardUpdateWaitEventDisposed() && !DashboardUpdateWaitEvent.WaitOne(1000, false))
             {
                 try
                 {
-                    if (DashboardUpdateWaitEvent.WaitOne(0, false))
+                    if (this.IsDashboardUpdateWaitEventDisposed() || DashboardUpdateWaitEvent.WaitOne(0, false))
                         break;
                     if (this.Controls != null)
                     {
@@ -66,6 +66,14 @@ namespace DIComputerPerformance.ViewModels
                 }
             }
 
+        }
+
+        #endregion
+        #region IsDashboardUpdateWaitEventDisposed
+        
+        private bool IsDashboardUpdateWaitEventDisposed()
+        {
+            return this.DashboardUpdateWaitEvent == null || (bool)(this.DashboardUpdateWaitEvent?.SafeWaitHandle?.IsClosed ?? true);
         }
 
         #endregion

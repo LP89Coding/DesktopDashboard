@@ -72,6 +72,20 @@ namespace DIYoutubeDownloader
         #endregion
 
         #endregion
+        #region IDisposable implementation
 
+        public void Dispose()
+        {
+            try
+            {
+                this.viewModel?.Dispose();
+            }
+            catch (Exception ex)
+            {
+                //ToDo Log
+            }
+        }
+
+        #endregion
     }
 }

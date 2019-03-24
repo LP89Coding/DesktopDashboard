@@ -56,7 +56,7 @@ namespace DIYoutubeDownloader.ViewModels
             {
                 this.thumbnail = null;
                 GC.Collect();
-                this.thumbnail = WPFUtils.ToBitmapImage(this.Media?.Thumbnail ?? ResourceImage.YouTube);
+                this.thumbnail = WPFUtils.ToBitmapImage(this.Media?.Thumbnail ?? ResourceImage.LargeYouTube);
                 return this.thumbnail;
             }
         }
@@ -189,7 +189,7 @@ namespace DIYoutubeDownloader.ViewModels
                                 AverageRatings = 0.0,
                                 LikesCount = 0,
                                 DislikesCount = 0,
-                                Thumbnail = ResourceImage.YouTube
+                                Thumbnail = ResourceImage.LargeYouTube
                             };
                         }
                         if (ytMedia != null)

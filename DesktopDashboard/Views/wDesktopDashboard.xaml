@@ -5,19 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DesktopDashboard"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
-        x:Class="DesktopDashboard.wDesktopDashboard"
+        xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
         xmlns:viewModel = "clr-namespace:DesktopDashboard.ViewModels"
+        xmlns:Controls="clr-namespace:Syncfusion.Windows.Controls;assembly=Syncfusion.SfShared.Wpf" 
+        x:Class="DesktopDashboard.wDesktopDashboard"
         mc:Ignorable="d"
-        Title="{Binding Path=Title, Mode=OneWay}"
+        Title="{Binding Title, Mode=OneWay}"
         AllowsTransparency="True" WindowStyle="None" 
-        Topmost="{Binding Path=TopMost, Mode=TwoWay}"
-        Width="{Binding Path=Width, Mode=TwoWay}" Height="{Binding Path=Height, Mode=TwoWay}"
-        Top="{Binding Path=Top, Mode=TwoWay}" Left="{Binding Path=Left, Mode=TwoWay}"
+        Topmost="{Binding TopMost, Mode=TwoWay}"
+        Width="{Binding Width, Mode=TwoWay}" Height="{Binding Height, Mode=TwoWay}"
+        Top="{Binding Top, Mode=TwoWay}" Left="{Binding Left, Mode=TwoWay}"
+    Background="Transparent"
     >
-    <Window.Background>
-        <SolidColorBrush Color="Transparent"/>
-    </Window.Background>
 
     <Window.Resources>
         <SolidColorBrush x:Key="NavigationBarBackground" Color="#CC4F4F4F"/>
@@ -38,13 +37,13 @@
         <SolidColorBrush x:Key="DropDownMenuItemBackground" Color="#CC1B1717" />
 
 
-        <Style TargetType="local:wDesktopDashboard">
+        <Style TargetType="{x:Type local:wDesktopDashboard}">
             <Setter Property="Background" Value="#B2252222"/>
             <Setter Property="BorderThickness" Value="2" />
             <Setter Property="BorderBrush" Value="{DynamicResource WindowBorderBrush}"/>
         </Style>
 
-        <Style TargetType="syncfusion:ButtonAdv">
+        <Style TargetType="{x:Type syncfusion:ButtonAdv}">
             <Setter Property="Foreground" Value="{DynamicResource FontColor}"/>
             <Setter Property="BorderBrush" Value="White"/>
             <Style.Triggers>
@@ -53,22 +52,26 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <Style TargetType="syncfusion:DropDownButtonAdv">
+        <Style TargetType="{x:Type syncfusion:DropDownButtonAdv}">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Foreground" Value="#FFA7A8AA" />
         </Style>
-        <Style TargetType="syncfusion:DropDownMenuItem">
+        <Style TargetType="{x:Type syncfusion:DropDownMenuItem}">
             <Setter Property="Background" Value="{DynamicResource DropDownMenuItemBackground}"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="BorderBrush" Value="#FF343330"/>
         </Style>
-        <Style TargetType="syncfusion:DropDownMenuGroup">
+        <Style TargetType="{x:Type syncfusion:DropDownMenuGroup}">
             <Setter Property="BorderBrush" Value="{DynamicResource WindowBorderBrush}"/>
         </Style>
-        <Style TargetType="syncfusion:DockingManager">
+        <Style TargetType="{x:Type syncfusion:DockingManager}">
             <Setter Property="Background" Value="#CC4F4F4F"/>
         </Style>
-        <Style TargetType="syncfusion:SfTextBoxExt">
+        <Style TargetType="{x:Type syncfusion:SfTextBoxExt}">
+            <Setter Property="Background" Value="{DynamicResource DropDownMenuItemBackground}"/>
+            <Setter Property="Foreground" Value="{DynamicResource FontColor}"/>
+        </Style>
+        <Style TargetType="{x:Type syncfusion:SfHubTile}">
             <Setter Property="Background" Value="{DynamicResource DropDownMenuItemBackground}"/>
             <Setter Property="Foreground" Value="{DynamicResource FontColor}"/>
         </Style>
@@ -77,8 +80,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
-            <RowDefinition Height="0" />
-            <RowDefinition Height="40" />
+            <RowDefinition Height="160" />
         </Grid.RowDefinitions>
         <Grid Background="{DynamicResource NavigationBarBackground}">
             <Grid.RowDefinitions>
@@ -106,7 +108,7 @@
                                   SmallIcon="/DesktopDashboard;component/Images/48x48/LockLight.png"
                                   Label="" 
                                   Command="{Binding TopMostButtonCommand}"
-                                  IsCheckable="True" IsChecked="{Binding Path=TopMost, Mode=OneWay}"
+                                  IsCheckable="True" IsChecked="{Binding TopMost, Mode=OneWay}"
                                   VerticalAlignment="Center" HorizontalAlignment="Center" IconStretch="Fill"
                                   IconWidth="32" IconHeight="32" 
                                   ToolTip="Always on top" />
@@ -115,16 +117,41 @@
                                               SizeMode="Large"  SmallIcon="/DesktopDashboard;component/Images/48x48/PluginLight.png" 
                                               LargeIcon="/DesktopDashboard;component/Images/48x48/PluginLight.png"
                                               BorderBrush="Transparent" BorderThickness="0" Foreground="White" Height="36" Margin="0,2" Width="40" >
-                <syncfusion:DropDownMenuGroup ItemsSource="{Binding Path=AvailablePlugins}">
+                <syncfusion:DropDownMenuGroup ItemsSource="{Binding AvailablePlugins}">
                     <syncfusion:DropDownMenuGroup.ItemTemplate>
                         <DataTemplate>
-                            <syncfusion:DropDownMenuItem Header="{Binding}" Tag="{Binding}" Icon="{Binding Path=Icon, Mode=OneWay}" Height="{DynamicResource DropDownMenuItemHeightDouble}"
-                                                         Command="{Binding InitializePluginCommand}" VerticalContentAlignment="Stretch" FontSize="14" Margin="0,0,0,1">
-                            </syncfusion:DropDownMenuItem>
+                            <syncfusion:DropDownMenuItem Header="{Binding}" Tag="{Binding}" Icon="{Binding Icon, Mode=OneWay}" Height="{DynamicResource DropDownMenuItemHeightDouble}"
+                                                         Command="{Binding InitializePluginCommand}" VerticalContentAlignment="Stretch" FontSize="14" Margin="0,0,0,1"/>
                         </DataTemplate>
                     </syncfusion:DropDownMenuGroup.ItemTemplate>
                 </syncfusion:DropDownMenuGroup>
             </syncfusion:DropDownButtonAdv>
         </Grid>
+
+        <ItemsControl Grid.Row="1"  ItemsSource="{Binding AvailablePlugins}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <syncfusion:SfHubTile Title="{Binding Path=Name, Mode=OneWay}" 
+                                          ImageSource="{Binding Path=IconSource, Mode=OneWay}" 
+                                          Width="{Binding Path=Size, Mode=OneWay}"
+                                          Height="{Binding Path=Size, Mode=OneWay}"
+                                          Command="{Binding InitializePluginCommand}"
+                                          HorizontalAlignment="Left"  Grid.Row="1"  VerticalAlignment="Top"  Interval="0:0:3">
+
+                        <syncfusion:SfHubTile.HubTileTransitions>
+                            <Controls:FadeTransition/>
+                        </syncfusion:SfHubTile.HubTileTransitions>
+                        <syncfusion:SfHubTile.SecondaryContent>
+                            <Image Source="{Binding Path=LargeImage, Mode=OneWay}"  Stretch="UniformToFill" Margin="-1"/>
+                        </syncfusion:SfHubTile.SecondaryContent>
+                    </syncfusion:SfHubTile>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </Window>

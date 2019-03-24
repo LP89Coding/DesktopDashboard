@@ -61,22 +61,22 @@ namespace DIYoutubeDownloader {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap LargeYouTube {
+            get {
+                object obj = ResourceManager.GetObject("LargeYouTube", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon WindowIcon {
             get {
                 object obj = ResourceManager.GetObject("WindowIcon", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap YouTube {
-            get {
-                object obj = ResourceManager.GetObject("YouTube", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DIComputerPerformance {
+namespace DesktopDashboard.Resources {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace DIComputerPerformance {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ResourceImage {
+    internal class ResourceImage256 {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ResourceImage() {
+        internal ResourceImage256() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace DIComputerPerformance {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DIComputerPerformance.ResourceImage", typeof(ResourceImage).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DesktopDashboard.Resources.ResourceImage256", typeof(ResourceImage256).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -63,30 +63,10 @@ namespace DIComputerPerformance {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap LargePerformance {
+        internal static System.Drawing.Bitmap YouTube {
             get {
-                object obj = ResourceManager.GetObject("LargePerformance", resourceCulture);
+                object obj = ResourceManager.GetObject("YouTube", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap SmallPerformance {
-            get {
-                object obj = ResourceManager.GetObject("SmallPerformance", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
-        /// </summary>
-        internal static System.Drawing.Icon WindowIcon {
-            get {
-                object obj = ResourceManager.GetObject("WindowIcon", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
             }
         }
     }

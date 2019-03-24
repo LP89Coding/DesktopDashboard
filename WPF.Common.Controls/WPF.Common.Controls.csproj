@@ -69,5 +69,9 @@
   <ItemGroup>
     <Resource Include="Images\32x32\X.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\48x48\Lock.png" />
+    <Resource Include="Images\48x48\LockLight.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -84,7 +84,17 @@ namespace WPF.Common.Controls.ViewModels
             }
         }
 
-
+        private bool windowTopMost;
+        public bool WindowTopMost
+        {
+            get { return this.windowTopMost; }
+            set
+            {
+                bool valueChanged = this.windowTopMost != value;
+                this.windowTopMost = value;
+                RaisePropertyChangedEvent(nameof(this.WindowTopMost));
+            }
+        }
         private double windowTop;
         public double WindowTop
         {
@@ -109,10 +119,14 @@ namespace WPF.Common.Controls.ViewModels
 
         private ICommand closeButtonCommand;
         public ICommand CloseButtonCommand { get { return this.closeButtonCommand; } private set { this.closeButtonCommand = value; } }
+        private ICommand topMostButtonCommand;
+        public ICommand TopMostButtonCommand { get { return this.topMostButtonCommand; } set { this.topMostButtonCommand = value; } }
 
         public BaseWindowViewModel()
         {
         }
+
+        #region Methods
 
         #region CombineWindowTitle
 
@@ -124,11 +138,22 @@ namespace WPF.Common.Controls.ViewModels
         }
 
         #endregion
+        #region CloseWindowOverride
+
+        private void TopMostToogle(object parameter)
+        {
+            this.WindowTopMost = !this.WindowTopMost;
+        }
+
+        #endregion
+
+        #endregion
 
         #region IDisposable implementation
 
         public void Dispose()
         {
+            this.WindowIcon = null;
         }
 
         #endregion
@@ -192,10 +217,14 @@ namespace WPF.Common.Controls.ViewModels
 
                 double? windowTop = lastPluginState?.WindowState?.PositionTop;
                 double? windowLeft = lastPluginState?.WindowState?.PositionLeft;
+                bool? windowTopMost = lastPluginState?.WindowState?.TopMost;
+
                 if (windowTop.HasValue)
                     this.WindowTop = windowTop.Value;
                 if (windowLeft.HasValue)
                     this.WindowLeft = windowLeft.Value;
+                if (windowTopMost.HasValue)
+                    this.WindowTopMost = windowTopMost.Value;
             }
             if (!windowWidth.HasValue)
                 windowWidth = 800;
@@ -207,6 +236,8 @@ namespace WPF.Common.Controls.ViewModels
 
             if (String.IsNullOrWhiteSpace(this.WindowTitle) && !args.Contains(ArgumentCollection.ArgumentType.WindowTitle))
                 this.WindowTitle = "Base Window";
+
+            this.TopMostButtonCommand = new Command((object parameter) => { this.TopMostToogle(parameter); });
         }
 
         #endregion

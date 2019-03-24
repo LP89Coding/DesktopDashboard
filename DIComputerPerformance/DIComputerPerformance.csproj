@@ -35,7 +35,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>WindowIcon.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Syncfusion.SfGauge.WPF, Version=16.4460.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
@@ -163,7 +164,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="WindowIcon.ico" />
+    <Resource Include="Images\128x128\Performance.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\256x256\Performance.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\16x16\Performance.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\32x32\Performance.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

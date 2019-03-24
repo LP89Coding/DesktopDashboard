@@ -145,34 +145,15 @@ namespace WPF.Common.Controls.Views
             }
         }
         #endregion
-        #region SetContent
+        #region ClearContent
 
-        public void SetContent(IWindowControl windowControl)
+        private void ClearContent()
         {
-            if (!(windowControl is UIElement))
-                throw new ArgumentException("WindowControl has to be UIElement");
-            this.ManagePropertyChangeNotificationSubscription(wpFillContent, PropertyChangeNotificationOperation.Unsubscribe);
-            wpFillContent.Children.Clear();
-            wpFillContent.Children.Add(windowControl as UIElement);
-            this.ManagePropertyChangeNotificationSubscription(wpFillContent, PropertyChangeNotificationOperation.Subscribe);
-        }
-
-        #endregion
-        #region GetWindowState
-
-        public WindowState GetWindowSate()
-        {
-            WindowState currentState = new WindowState();
-            
-            currentState.PositionLeft = this.Left;
-            currentState.PositionTop = this.Top;
-
-            currentState.Height = this.Height;
-            currentState.Width = this.Width;
-
-            currentState.State = this.WindowState;
-
-            return currentState;
+            if(wpFillContent.Children?.Count > 0)
+            {
+                this.ManagePropertyChangeNotificationSubscription(wpFillContent, PropertyChangeNotificationOperation.Unsubscribe);
+                wpFillContent.Children.Clear();
+            }
         }
 
         #endregion
@@ -191,16 +172,88 @@ namespace WPF.Common.Controls.Views
 
         #region IWindow implementation
 
+        #region Close
+
         public new void Close()
         {
-            base.Close();
+            try
+            {
+                this.viewModel?.Dispose();
+            }
+            catch (Exception ex)
+            {
+                //ToDo Log
+            }
+            try
+            {
+                base.Close();
+            }
+            catch(Exception ex)
+            {
+                //ToDo Log
+            }
+            try
+            {
+                this.ClearContent();
+            }
+            catch(Exception ex)
+            {
+                //ToDo Log
+            }
         }
+
+        #endregion
+        #region Show
 
         public new void Show()
         {
             if(this.Visibility != Visibility.Visible)
                 base.Show();
+            if (base.WindowState == System.Windows.WindowState.Minimized)
+            {
+                base.WindowState = System.Windows.WindowState.Normal;
+            }
+
+            base.Activate();
+            //Window.Topmost = true;  // important
+            //Window.Topmost = false; // important
+            base.Focus();         // important
         }
+
+        #endregion
+
+        #region GetWindowState
+
+        public WindowState GetWindowState()
+        {
+            WindowState currentState = new WindowState();
+
+            currentState.PositionLeft = this.Left;
+            currentState.PositionTop = this.Top;
+
+            currentState.Height = this.Height;
+            currentState.Width = this.Width;
+
+            currentState.State = this.WindowState;
+
+            currentState.TopMost = this.Topmost;
+
+            return currentState;
+        }
+
+        #endregion
+        #region SetContent
+
+        public void SetContent(IWindowControl windowControl)
+        {
+            if (!(windowControl is UIElement))
+                throw new ArgumentException("WindowControl has to be UIElement");
+            ClearContent();
+            wpFillContent.Children.Add(windowControl as UIElement);
+            this.ManagePropertyChangeNotificationSubscription(wpFillContent, PropertyChangeNotificationOperation.Subscribe);
+        }
+
+        #endregion
 
         #endregion
 

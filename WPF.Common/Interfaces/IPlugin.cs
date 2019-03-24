@@ -19,9 +19,12 @@ namespace WPF.Common.Interfaces
 
         string GetPluginName();
         System.Drawing.Icon GetPluginIcon();
+        System.Drawing.Bitmap GetSmallImage();
+        System.Drawing.Bitmap GetLargeImage();
         PluginState GetPluginCurrentState();
 
         bool IsPluginInitialized();
+        bool IsPluginWindowInitialized();
 
         string GetPluginAssemblyName();
         Version GetPluginAssemblyVersion();

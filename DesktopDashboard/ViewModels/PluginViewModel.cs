@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Media;
 using WPF.Common.Common;
 using WPF.Common.Interfaces;
 using ArgumentCollection = WPF.Common.Common.ArgumentCollection;
@@ -31,6 +31,7 @@ namespace DesktopDashboard.ViewModels
         }
 
         public string Name { get { return this.Plugin?.GetPluginName() ?? null; } }
+        public double Size { get; private set; }
 
         private System.Windows.Controls.Image icon;
         public System.Windows.Controls.Image Icon
@@ -40,6 +41,25 @@ namespace DesktopDashboard.ViewModels
                 if (this.icon == null)
                     this.icon = new System.Windows.Controls.Image() { Source = WPFUtils.ToBitmapImage(this.Plugin?.GetPluginIcon()) };
                 return icon;
+            }
+        }
+        public ImageSource IconSource
+        {
+            get
+            {
+                return Icon.Source;
+            }
+        }
+
+
+        private ImageSource largeImage;
+        public ImageSource LargeImage
+        {
+            get
+            {
+                if (this.largeImage == null)
+                    this.largeImage = WPFUtils.ToBitmapImage(this.Plugin?.GetLargeImage());
+                return largeImage;
             }
         }
 
@@ -94,6 +114,7 @@ namespace DesktopDashboard.ViewModels
         public void Initialize(ArgumentCollection args)
         { 
             bool restorePlugin = false;
+            double parentWidth = 0;
             if (args != null)
             {
                 if (args.Contains(ArgumentCollection.ArgumentType.Plugin))
@@ -102,16 +123,20 @@ namespace DesktopDashboard.ViewModels
                     this.pluginInitArgs = args.Get<ArgumentCollection>(ArgumentCollection.ArgumentType.PluginArgs);
                 if (args.Contains(ArgumentCollection.ArgumentType.RestorePlugin))
                     restorePlugin = args.Get<bool>(ArgumentCollection.ArgumentType.RestorePlugin);
+                if (args.Contains(ArgumentCollection.ArgumentType.ParentWidth))
+                    parentWidth = args.Get<double>(ArgumentCollection.ArgumentType.ParentWidth);
             }
+            if (parentWidth == 0)
+                parentWidth = 150;
+            this.Size = parentWidth / 2;
             if (this.Plugin == null)
-            {
                 this.InitializePluginCommand = new Command((object parameter) => { });
-            }
             else
             {
                 this.InitializePluginCommand = new Command((object parameter) => 
                     {
-                        this.Plugin?.InitializePlugin(this.pluginInitArgs);
+                        if(!(this.Plugin?.IsPluginInitialized() ?? false))
+                            this.Plugin?.InitializePlugin(this.pluginInitArgs);
                         this.Plugin?.GetPluginWindow()?.Show();
                     });
             }

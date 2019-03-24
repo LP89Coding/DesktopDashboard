@@ -147,6 +147,7 @@ namespace DesktopDashboard.ViewModels
 
                 viewModelArgs.Set(ArgumentCollection.ArgumentType.Plugin, p);
                 viewModelArgs.Set(ArgumentCollection.ArgumentType.PluginArgs, pluginInitArgs);
+                viewModelArgs.Set(ArgumentCollection.ArgumentType.ParentWidth, this.Width);
 
                 PluginViewModel pluginViewModel = factory.CreateViewModel<PluginViewModel>(viewModelArgs);
                 return pluginViewModel;
@@ -240,7 +241,7 @@ namespace DesktopDashboard.ViewModels
             }
             Internals.WindowState windowState = UserSettings.LoadSetting<Internals.WindowState>(UserSettings.SettingType.WindowState);
 
-            this.Height = windowState?.Height ?? 80;
+            this.Height = windowState?.Height ?? 200;
             this.Width = windowState?.Width ?? SystemParameters.PrimaryScreenWidth * 0.1;
             this.Top = windowState?.Top ?? 0;
             this.Left = windowState?.Left ?? SystemParameters.PrimaryScreenWidth - this.Width;
@@ -250,6 +251,22 @@ namespace DesktopDashboard.ViewModels
             this.CloseWindowOverrideButtonCommand = new Command((object parameter) => { this.CloseWindowOverride(parameter); });
             this.TopMostButtonCommand = new Command((object parameter) => { this.TopMostToogle(parameter); });
             this.AvailablePlugins = this.GetAvailablePlugins();
+
+            //Syncfusion.Windows.Controls.Notification.SfHubTile htItem = args.Get<Syncfusion.Windows.Controls.Notification.SfHubTile>(ArgumentCollection.ArgumentType.DockingManager);
+            
+            //htItem.Title = this.AvailablePlugins[1].Plugin.GetPluginName();
+            //htItem.ImageSource = WPFUtils.ToBitmapImage(this.AvailablePlugins[1].Plugin.GetPluginIcon());
+            //htItem.SecondaryContent = new System.Windows.Controls.Image() { Source = WPFUtils.ToBitmapImage(Resources.ResourceImage256.YouTube), Stretch = Stretch.Fill };
+            //htItem.Width = this.Width / 2;
+            //htItem.Height = this.Width / 2;
+
+            //<syncfusion:SfHubTile x:Name="htPluginTile" HorizontalAlignment="Left"  Grid.Row="1"  VerticalAlignment="Top"  Interval="0:0:3">
+
+            //    <syncfusion:SfHubTile.HubTileTransitions>
+            //        <Controls:FadeTransition/>
+            //    </syncfusion:SfHubTile.HubTileTransitions>
+
+            //</syncfusion:SfHubTile>
         }
 
         #endregion

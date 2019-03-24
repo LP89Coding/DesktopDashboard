@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WPF.Common.Interfaces
 {
-    public interface IWindowControl 
+    public interface IWindowControl : IDisposable
     {
         void SubscribePropertyChangeNotification(System.ComponentModel.PropertyChangedEventHandler propertyChangedHandler);
         void UnsubscribePropertyChangeNotification(System.ComponentModel.PropertyChangedEventHandler propertyChangedHandler);

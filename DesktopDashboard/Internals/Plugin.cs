@@ -59,6 +59,16 @@ namespace DesktopDashboard.Internals
             return this.instance?.GetPluginName();
         }
 
+        public System.Drawing.Bitmap GetSmallImage()
+        {
+            return this.instance?.GetSmallImage();
+        }
+
+        public System.Drawing.Bitmap GetLargeImage()
+        {
+            return this.instance?.GetLargeImage();
+        }
+
         public Icon GetPluginIcon()
         {
             return this.instance?.GetPluginIcon();
@@ -72,6 +82,11 @@ namespace DesktopDashboard.Internals
         public bool IsPluginInitialized()
         {
             return this.instance?.IsPluginInitialized() ?? false;
+        }
+
+        public bool IsPluginWindowInitialized()
+        {
+            return this.instance?.IsPluginWindowInitialized() ?? false;
         }
 
         public void ClosePlugin()
