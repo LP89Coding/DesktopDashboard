@@ -115,7 +115,7 @@ namespace DesktopDashboard.ViewModels
 
         #region GetAvailablePlugins
 
-        private List<PluginViewModel> GetAvailablePlugins()
+        private List<PluginViewModel> GetAvailablePlugins(double parentWidth)
         {
             IViewModelFactory factory = new ViewModelFactory();
             PluginState[] pluginStates = null;
@@ -147,7 +147,7 @@ namespace DesktopDashboard.ViewModels
 
                 viewModelArgs.Set(ArgumentCollection.ArgumentType.Plugin, p);
                 viewModelArgs.Set(ArgumentCollection.ArgumentType.PluginArgs, pluginInitArgs);
-                viewModelArgs.Set(ArgumentCollection.ArgumentType.ParentWidth, this.Width);
+                viewModelArgs.Set(ArgumentCollection.ArgumentType.ParentWidth, parentWidth);
 
                 PluginViewModel pluginViewModel = factory.CreateViewModel<PluginViewModel>(viewModelArgs);
                 return pluginViewModel;
@@ -240,9 +240,10 @@ namespace DesktopDashboard.ViewModels
                     this.CloseWindowButtonCommand = args.Get<Command>(ArgumentCollection.ArgumentType.WindowCloseCommand);
             }
             Internals.WindowState windowState = UserSettings.LoadSetting<Internals.WindowState>(UserSettings.SettingType.WindowState);
-
-            this.Height = windowState?.Height ?? 200;
             this.Width = windowState?.Width ?? SystemParameters.PrimaryScreenWidth * 0.1;
+            this.AvailablePlugins = this.GetAvailablePlugins(this.Width);
+
+            this.Height = windowState != null && windowState.Height > 0 ? windowState.Height : (40 + (Math.Ceiling(((double)this.AvailablePlugins.Count / 2.0)) + (this.AvailablePlugins.Count == 0 ? 1 : 0)) * (this.Width / 2));
             this.Top = windowState?.Top ?? 0;
             this.Left = windowState?.Left ?? SystemParameters.PrimaryScreenWidth - this.Width;
             this.TopMost = windowState?.TopMost ?? false;
@@ -250,7 +251,6 @@ namespace DesktopDashboard.ViewModels
             this.Title = Consts.WindowTitle;
             this.CloseWindowOverrideButtonCommand = new Command((object parameter) => { this.CloseWindowOverride(parameter); });
             this.TopMostButtonCommand = new Command((object parameter) => { this.TopMostToogle(parameter); });
-            this.AvailablePlugins = this.GetAvailablePlugins();
 
             //Syncfusion.Windows.Controls.Notification.SfHubTile htItem = args.Get<Syncfusion.Windows.Controls.Notification.SfHubTile>(ArgumentCollection.ArgumentType.DockingManager);
             

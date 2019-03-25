@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF.Common.Controls.Views"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
         mc:Ignorable="d"
         Title="{Binding Path=WindowTitle, Mode=OneWay}" 
@@ -20,19 +21,37 @@
     </Window.TaskbarItemInfo>
 
     <Window.Resources>
-        <SolidColorBrush x:Key="DefaultBackground" Color="#CC4F4F4F"/>
+        <SolidColorBrush x:Key="NavigationBarBackground" Color="#CC4F4F4F"/>
+        <SolidColorBrush x:Key="WindowBorderBrush" Color="#FF343330"/>
+        <SolidColorBrush x:Key="WindowBackground" Color="#B2252222"/>
+
+        <SolidColorBrush x:Key="FontColor" Color="White"/>
+
+        <sys:Double x:Key="NavigationBarHeigthDouble">30</sys:Double>
+        <GridLength x:Key="NavigationBarHeigthGridLength">30</GridLength>
+
+        <GridLength x:Key="WindowBorderThicknessGridLength">2</GridLength>
+        <Thickness x:Key="WindowBorderThicknessThickness">2</Thickness>
+
+        <SolidColorBrush x:Key="ButonHoverColor" Color="#FF3F3F41"/>
+
+        <sys:Double x:Key="DropDownMenuItemHeightDouble">30</sys:Double>
+
+        <SolidColorBrush x:Key="TextBoxBackground" Color="#CC1B1717" />
+
+        <SolidColorBrush x:Key="DropDownMenuItemBackground" Color="#CC1B1717" />
 
         <Style TargetType="local:BaseWindow">
-            <Setter Property="Background" Value="#B2252222"/>
+            <Setter Property="Background" Value="{DynamicResource WindowBackground}"/>
             <Setter Property="BorderThickness" Value="2" />
-            <Setter Property="BorderBrush" Value="#FF343330"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource WindowBorderBrush}"/>
         </Style>
         <Style TargetType="syncfusion:SfTextBoxExt">
-            <Setter Property="Background" Value="#CC1B1717"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="{DynamicResource TextBoxBackground}"/>
+            <Setter Property="Foreground" Value="{DynamicResource FontColor}"/>
         </Style>
         <Style TargetType="syncfusion:ButtonAdv">
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="{DynamicResource FontColor}"/>
             <Setter Property="BorderBrush" Value="White"/>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True" >
@@ -45,12 +64,16 @@
             <Setter Property="Foreground" Value="#FFA7A8AA" />
         </Style>
         <Style TargetType="syncfusion:DropDownMenuItem">
-            <Setter Property="Background" Value="#CC1B1717"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="{DynamicResource DropDownMenuItemBackground}"/>
+            <Setter Property="Foreground" Value="{DynamicResource FontColor}"/>
             <Setter Property="BorderBrush" Value="#FF343330"/>
         </Style>
         <Style TargetType="syncfusion:DropDownMenuGroup">
-            <Setter Property="BorderBrush" Value="#FF343330"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource WindowBorderBrush}"/>
+        </Style>
+        <Style TargetType="{x:Type syncfusion:SfHubTile}">
+            <Setter Property="Background" Value="{DynamicResource DropDownMenuItemBackground}"/>
+            <Setter Property="Foreground" Value="{DynamicResource FontColor}"/>
         </Style>
     </Window.Resources>
 

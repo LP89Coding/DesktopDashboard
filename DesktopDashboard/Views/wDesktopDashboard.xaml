@@ -64,9 +64,6 @@
         <Style TargetType="{x:Type syncfusion:DropDownMenuGroup}">
             <Setter Property="BorderBrush" Value="{DynamicResource WindowBorderBrush}"/>
         </Style>
-        <Style TargetType="{x:Type syncfusion:DockingManager}">
-            <Setter Property="Background" Value="#CC4F4F4F"/>
-        </Style>
         <Style TargetType="{x:Type syncfusion:SfTextBoxExt}">
             <Setter Property="Background" Value="{DynamicResource DropDownMenuItemBackground}"/>
             <Setter Property="Foreground" Value="{DynamicResource FontColor}"/>
@@ -80,7 +77,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
-            <RowDefinition Height="160" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid Background="{DynamicResource NavigationBarBackground}">
             <Grid.RowDefinitions>
