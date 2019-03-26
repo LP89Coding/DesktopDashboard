@@ -10,16 +10,9 @@ using System.Windows;
 [assembly: AssemblyTitle("DesktopDashboard")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("DesktopDashboard")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2017")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyProduct("Desktop dashboard")]
 [assembly: AssemblyCulture("")]
 
-// Ustawienie elementu ComVisible na wartość false sprawia, że typy w tym zestawie są niewidoczne
-// dla składników COM. Jeśli potrzebny jest dostęp do typu w tym zestawie z
-// COM, ustaw wartość true dla atrybutu ComVisible tego typu.
-[assembly: ComVisible(false)]
 
 //Aby rozpocząć kompilację aplikacji możliwych do zlokalizowania, ustaw
 //<UICulture>Kultura_używana_podczas_kodowania</UICulture> w pliku csproj
@@ -51,5 +44,5 @@ using System.Windows;
 // Możesz określić wszystkie wartości lub użyć domyślnych numerów kompilacji i poprawki
 // przy użyciu symbolu „*”, tak jak pokazano poniżej:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.0.0.*")]
 [assembly: AssemblyFileVersion("1.0.0.0")]

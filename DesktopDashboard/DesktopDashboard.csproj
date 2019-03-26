@@ -80,6 +80,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="..\WPF.Common\Properties\AssemblySharedInfo.cs">
+      <Link>Properties\AssemblySharedInfo.cs</Link>
+    </Compile>
     <Compile Include="Internals\Consts.cs" />
     <Compile Include="Internals\EventID.cs" />
     <Compile Include="Internals\Plugin.cs" />
