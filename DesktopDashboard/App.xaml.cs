@@ -22,7 +22,6 @@ namespace DesktopDashboard
     public partial class App : Application
     {
         private IWindow mainWindow { get; set; }
-        private wDesktopDashboard control { get; set; }
         #region Overrides
 
         #region OnStartup
@@ -31,7 +30,7 @@ namespace DesktopDashboard
         {
             base.OnStartup(e);
             WindowState windowState = null;
-            this.control = new wDesktopDashboard();
+            wDesktopDashboard control = new wDesktopDashboard();
             try
             {
                 windowState = UserSettings.LoadSetting<WindowState>(UserSettings.SettingType.WindowState);
@@ -43,7 +42,6 @@ namespace DesktopDashboard
             if(windowState == null)
             {
                 windowState = new WindowState();
-                int availablePluginsCount = control.GetAvailablePluginsCount();
                 windowState.Width = Consts.DefaultWindowWidth;
                 windowState.Height = Consts.DefaultWindowHeight;
 
@@ -61,9 +59,11 @@ namespace DesktopDashboard
             }
             ArgumentCollection args = new ArgumentCollection();
             args.Set(ArgumentCollection.ArgumentType.WindowState, windowState);
+            args.Set(ArgumentCollection.ArgumentType.WindowTitle, Consts.WindowTitle);
+            args.Set(ArgumentCollection.ArgumentType.WindowIcon, DesktopDashboard.Resources.ResourceImage.WindowIcon);
             args.Set(ArgumentCollection.ArgumentType.WindowCloseCommand, new Command((object parameter) => 
             {
-                this.control?.Close();
+                control?.Close();
                 this.mainWindow?.Close();
             }));
 

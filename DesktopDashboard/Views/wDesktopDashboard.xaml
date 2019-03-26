@@ -10,7 +10,6 @@
         xmlns:Controls="clr-namespace:Syncfusion.Windows.Controls;assembly=Syncfusion.SfShared.Wpf" 
         x:Class="DesktopDashboard.wDesktopDashboard"
         mc:Ignorable="d"
-        Width="{Binding Width, Mode=TwoWay}" Height="{Binding Height, Mode=TwoWay}"
         Background="Transparent"
     >
 

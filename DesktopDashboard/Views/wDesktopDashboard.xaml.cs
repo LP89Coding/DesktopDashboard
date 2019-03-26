@@ -42,9 +42,9 @@ namespace DesktopDashboard
         {
             try
             {
+                Logger.Log(EventID.Application.Start);
                 InitializeComponent();
                 Initialize(null);
-                Logger.Log(EventID.Application.Start);
 
                 Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-us");
                 
@@ -76,14 +76,6 @@ namespace DesktopDashboard
                 Logger.Log(EventID.Application.Exception, ex);
             }
         }
-        #endregion
-        #region GetAvailablePluginsCount
-
-        public int GetAvailablePluginsCount()
-        {
-            return this.viewModel?.AvailablePlugins?.Count ?? 0;
-        }
-
         #endregion
         #region Close
 

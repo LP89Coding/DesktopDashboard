@@ -85,6 +85,11 @@
     <Compile Include="Internals\Plugin.cs" />
     <Compile Include="Internals\PluginManager.cs" />
     <Compile Include="Internals\UserSettings.cs" />
+    <Compile Include="Resources\ResourceImage.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResourceImage.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\ResourceImage256.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -129,6 +134,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ResourceImage.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResourceImage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\ResourceImage256.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ResourceImage256.Designer.cs</LastGenOutput>
@@ -152,12 +161,6 @@
   <ItemGroup>
     <Resource Include="Images\48x48\Lock.png" />
     <Resource Include="Images\48x48\LockOpen.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\DesktopDashboard.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="DesktopDashboard.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\128x128\Cancel.png" />
@@ -226,7 +229,9 @@
       <Name>WPF.Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\Icon\DesktopDashboard.ico" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\48x48\CloseLight.png" />
     <Resource Include="Images\48x48\LockLight.png" />
@@ -254,6 +259,9 @@
     <Resource Include="Images\48x48\DownArrow.png" />
     <Resource Include="Images\48x48\DownArrowLight.png" />
     <Resource Include="Images\48x48\DownArrowLightHover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="DesktopDashboard.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
