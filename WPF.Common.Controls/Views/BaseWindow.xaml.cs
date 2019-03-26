@@ -152,6 +152,7 @@ namespace WPF.Common.Controls.Views
             if(wpFillContent.Children?.Count > 0)
             {
                 this.ManagePropertyChangeNotificationSubscription(wpFillContent, PropertyChangeNotificationOperation.Unsubscribe);
+                this.GetContent()?.Dispose();
                 wpFillContent.Children.Clear();
             }
         }

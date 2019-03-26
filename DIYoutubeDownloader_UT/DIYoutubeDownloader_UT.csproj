@@ -73,7 +73,7 @@
       <Project>{865884c9-774d-4fca-8c0c-59c52260fefd}</Project>
       <Name>WPF.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\YoutubeDownloader\DIYoutubeDownloader.csproj">
+    <ProjectReference Include="..\DIYoutubeDownloader\DIYoutubeDownloader.csproj">
       <Project>{e0331ae4-ec8a-49ff-aaac-416af21bc836}</Project>
       <Name>DIYoutubeDownloader</Name>
     </ProjectReference>

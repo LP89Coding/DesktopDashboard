@@ -21,58 +21,7 @@ namespace DesktopDashboard.ViewModels
     public class DesktopDashboardViewModel : ObservableViewModel, IViewModel
     {
         private readonly PluginManager pluginManager;
-
-        private double width;
-        public double Width
-        {
-            get { return this.width; }
-            set
-            {
-                this.width = value;
-                RaisePropertyChangedEvent(nameof(this.Width));
-            }
-        }
-        private double height;
-        public double Height
-        {
-            get { return this.height; }
-            set
-            {
-                this.height = value;
-                RaisePropertyChangedEvent(nameof(this.Height));
-            }
-        }
-        private double top;
-        public double Top
-        {
-            get { return this.top; }
-            set
-            {
-                this.top = value;
-                RaisePropertyChangedEvent(nameof(this.Top));
-            }
-        }
-        private double left;
-        public double Left
-        {
-            get { return this.left; }
-            set
-            {
-                this.left = value;
-                RaisePropertyChangedEvent(nameof(this.Left));
-            }
-        }
-        private bool topMost;
-        public bool TopMost
-        {
-            get { return this.topMost; }
-            set
-            {
-                bool valueChanged = this.topMost != value;
-                this.topMost = value;
-                RaisePropertyChangedEvent(nameof(this.TopMost));
-            }
-        }
+        
         private string title;
         public string Title
         {
@@ -97,14 +46,7 @@ namespace DesktopDashboard.ViewModels
                 RaisePropertyChangedEvent(nameof(this.AvailablePlugins));
             }
         }
-
-        private ICommand closeWindowButtonCommand;
-        public ICommand CloseWindowButtonCommand { get { return this.closeWindowButtonCommand; } set { this.closeWindowButtonCommand = value; } }
-        private ICommand topMostButtonCommand;
-        public ICommand TopMostButtonCommand { get { return this.topMostButtonCommand; } set { this.topMostButtonCommand = value; } }
-        private ICommand closeWindowOverrideButtonCommand;
-        public ICommand CloseWindowOverrideButtonCommand { get { return this.closeWindowOverrideButtonCommand; } set { this.closeWindowOverrideButtonCommand = value; } }
-
+        
         public DesktopDashboardViewModel()
         {
             this.AvailablePlugins = new List<PluginViewModel>();
@@ -115,7 +57,7 @@ namespace DesktopDashboard.ViewModels
 
         #region GetAvailablePlugins
 
-        private List<PluginViewModel> GetAvailablePlugins(double parentWidth)
+        private List<PluginViewModel> GetAvailablePlugins()
         {
             IViewModelFactory factory = new ViewModelFactory();
             PluginState[] pluginStates = null;
@@ -147,7 +89,6 @@ namespace DesktopDashboard.ViewModels
 
                 viewModelArgs.Set(ArgumentCollection.ArgumentType.Plugin, p);
                 viewModelArgs.Set(ArgumentCollection.ArgumentType.PluginArgs, pluginInitArgs);
-                viewModelArgs.Set(ArgumentCollection.ArgumentType.ParentWidth, parentWidth);
 
                 PluginViewModel pluginViewModel = factory.CreateViewModel<PluginViewModel>(viewModelArgs);
                 return pluginViewModel;
@@ -155,9 +96,9 @@ namespace DesktopDashboard.ViewModels
         }
 
         #endregion
-        #region CloseWindowOverride
+        #region CloseAvailablePlugins
 
-        private void CloseWindowOverride(object parameter)
+        public void CloseAvailablePlugins()
         {
             try
             {
@@ -182,24 +123,6 @@ namespace DesktopDashboard.ViewModels
             {
                 //ToDo Log
             }
-            Internals.WindowState windowState = new Internals.WindowState()
-            {
-                Width = this.Width,
-                Height = this.Height,
-                Top = this.Top,
-                Left = this.Left,
-                TopMost = this.TopMost
-            };
-            UserSettings.SaveSetting(UserSettings.SettingType.WindowState, windowState);
-            this.CloseWindowButtonCommand?.Execute(parameter);
-        }
-
-        #endregion
-        #region CloseWindowOverride
-
-        private void TopMostToogle(object parameter)
-        {
-            this.TopMost = !this.TopMost;
         }
 
         #endregion
@@ -236,37 +159,9 @@ namespace DesktopDashboard.ViewModels
         {
             if (args != null)
             {
-                if(args.Contains(ArgumentCollection.ArgumentType.WindowCloseCommand))
-                    this.CloseWindowButtonCommand = args.Get<Command>(ArgumentCollection.ArgumentType.WindowCloseCommand);
             }
-            Internals.WindowState windowState = UserSettings.LoadSetting<Internals.WindowState>(UserSettings.SettingType.WindowState);
-            this.Width = windowState?.Width ?? SystemParameters.PrimaryScreenWidth * 0.1;
-            this.AvailablePlugins = this.GetAvailablePlugins(this.Width);
-
-            this.Height = windowState != null && windowState.Height > 0 ? windowState.Height : (40 + (Math.Ceiling(((double)this.AvailablePlugins.Count / 2.0)) + (this.AvailablePlugins.Count == 0 ? 1 : 0)) * (this.Width / 2));
-            this.Top = windowState?.Top ?? 0;
-            this.Left = windowState?.Left ?? SystemParameters.PrimaryScreenWidth - this.Width;
-            this.TopMost = windowState?.TopMost ?? false;
-
+            this.AvailablePlugins = this.GetAvailablePlugins();
             this.Title = Consts.WindowTitle;
-            this.CloseWindowOverrideButtonCommand = new Command((object parameter) => { this.CloseWindowOverride(parameter); });
-            this.TopMostButtonCommand = new Command((object parameter) => { this.TopMostToogle(parameter); });
-
-            //Syncfusion.Windows.Controls.Notification.SfHubTile htItem = args.Get<Syncfusion.Windows.Controls.Notification.SfHubTile>(ArgumentCollection.ArgumentType.DockingManager);
-            
-            //htItem.Title = this.AvailablePlugins[1].Plugin.GetPluginName();
-            //htItem.ImageSource = WPFUtils.ToBitmapImage(this.AvailablePlugins[1].Plugin.GetPluginIcon());
-            //htItem.SecondaryContent = new System.Windows.Controls.Image() { Source = WPFUtils.ToBitmapImage(Resources.ResourceImage256.YouTube), Stretch = Stretch.Fill };
-            //htItem.Width = this.Width / 2;
-            //htItem.Height = this.Width / 2;
-
-            //<syncfusion:SfHubTile x:Name="htPluginTile" HorizontalAlignment="Left"  Grid.Row="1"  VerticalAlignment="Top"  Interval="0:0:3">
-
-            //    <syncfusion:SfHubTile.HubTileTransitions>
-            //        <Controls:FadeTransition/>
-            //    </syncfusion:SfHubTile.HubTileTransitions>
-
-            //</syncfusion:SfHubTile>
         }
 
         #endregion

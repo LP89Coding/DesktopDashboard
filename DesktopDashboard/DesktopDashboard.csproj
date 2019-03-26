@@ -85,7 +85,6 @@
     <Compile Include="Internals\Plugin.cs" />
     <Compile Include="Internals\PluginManager.cs" />
     <Compile Include="Internals\UserSettings.cs" />
-    <Compile Include="Internals\WindowState.cs" />
     <Compile Include="Resources\ResourceImage256.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

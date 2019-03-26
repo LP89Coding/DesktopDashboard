@@ -12,7 +12,8 @@
         Width="{Binding Path=WindowWidth, Mode=TwoWay}" Height="{Binding Path=WindowHeight, Mode=TwoWay}"
         Top="{Binding Path=WindowTop, Mode=TwoWay}" Left="{Binding Path=WindowLeft, Mode=TwoWay}"
         Topmost="{Binding Path=WindowTopMost, Mode=OneWay}"
-        AllowsTransparency="True" WindowStyle="None" ResizeMode="CanResizeWithGrip">
+        AllowsTransparency="True" WindowStyle="None" ResizeMode="CanResizeWithGrip"
+        SizeToContent="Height">
 
     <Window.TaskbarItemInfo>
         <TaskbarItemInfo ProgressValue="{Binding Path=TaskBarProgressValue, Mode=OneWay}" 
@@ -36,14 +37,17 @@
         <SolidColorBrush x:Key="ButonHoverColor" Color="#FF3F3F41"/>
 
         <sys:Double x:Key="DropDownMenuItemHeightDouble">30</sys:Double>
+        <SolidColorBrush x:Key="DropDownMenuItemBackground" Color="#CC1B1717" />
+        <SolidColorBrush x:Key="DropDownMenuItemBorderBrush" Color="#FF343330" />
 
         <SolidColorBrush x:Key="TextBoxBackground" Color="#CC1B1717" />
+        
+        <SolidColorBrush x:Key="ButtonBorderBrush" Color="White" />
 
-        <SolidColorBrush x:Key="DropDownMenuItemBackground" Color="#CC1B1717" />
 
         <Style TargetType="local:BaseWindow">
             <Setter Property="Background" Value="{DynamicResource WindowBackground}"/>
-            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="BorderThickness" Value="{DynamicResource WindowBorderThicknessThickness}" />
             <Setter Property="BorderBrush" Value="{DynamicResource WindowBorderBrush}"/>
         </Style>
         <Style TargetType="syncfusion:SfTextBoxExt">
@@ -52,7 +56,7 @@
         </Style>
         <Style TargetType="syncfusion:ButtonAdv">
             <Setter Property="Foreground" Value="{DynamicResource FontColor}"/>
-            <Setter Property="BorderBrush" Value="White"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderBrush}"/>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True" >
                     <Setter Property="Background" Value="Red"/>
@@ -66,7 +70,7 @@
         <Style TargetType="syncfusion:DropDownMenuItem">
             <Setter Property="Background" Value="{DynamicResource DropDownMenuItemBackground}"/>
             <Setter Property="Foreground" Value="{DynamicResource FontColor}"/>
-            <Setter Property="BorderBrush" Value="#FF343330"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource DropDownMenuItemBorderBrush}"/>
         </Style>
         <Style TargetType="syncfusion:DropDownMenuGroup">
             <Setter Property="BorderBrush" Value="{DynamicResource WindowBorderBrush}"/>
@@ -81,9 +85,9 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="40" />
+            <RowDefinition Height="20" />
         </Grid.RowDefinitions>
-        <Grid x:Name="gNavBar" Grid.Row="0" Background="{DynamicResource DefaultBackground}">
+        <Grid x:Name="gNavBar" Grid.Row="0" Background="{DynamicResource NavigationBarBackground}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
             </Grid.RowDefinitions>

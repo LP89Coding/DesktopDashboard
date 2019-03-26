@@ -19,6 +19,7 @@ using WPF.Common.Factories;
 using WPF.Common.Interfaces;
 using Logger = WPF.Common.Logger.Logger;
 using ArgumentCollection = WPF.Common.Common.ArgumentCollection;
+using WindowState = WPF.Common.Common.WindowState;
 using WPFUtils = WPF.Common.Common.Utils;
 
 using DesktopDashboard.Resources;
@@ -27,12 +28,13 @@ using DesktopDashboard.Common;
 using DesktopDashboard.ViewModels;
 using EventID = DesktopDashboard.Internals.EventID.DesktopDashboard;
 using WPF.Common.Common;
+using System.ComponentModel;
 
 namespace DesktopDashboard
 {
-    public partial class wDesktopDashboard : Window
+    public partial class wDesktopDashboard : UserControl, IWindowControl
     {
-        private IViewModel viewModel;
+        private DesktopDashboardViewModel viewModel;
 
         #region Ctor
 
@@ -45,7 +47,6 @@ namespace DesktopDashboard
                 Logger.Log(EventID.Application.Start);
 
                 Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-us");
-                Left = SystemParameters.PrimaryScreenWidth - Width;
                 
             }
             catch(Exception ex)
@@ -66,9 +67,6 @@ namespace DesktopDashboard
                 if (args == null)
                     args = new ArgumentCollection();
 
-                args.Set(ArgumentCollection.ArgumentType.WindowCloseCommand, new Command((object parametrer) => { this.Close(); }));
-                //args.Set(ArgumentCollection.ArgumentType.DockingManager, htPluginTile);
-
                 ViewModelFactory factory = new ViewModelFactory();
                 this.viewModel = factory.CreateViewModel<DesktopDashboardViewModel>(args);
                 this.DataContext = viewModel;
@@ -79,8 +77,60 @@ namespace DesktopDashboard
             }
         }
         #endregion
+        #region GetAvailablePluginsCount
+
+        public int GetAvailablePluginsCount()
+        {
+            return this.viewModel?.AvailablePlugins?.Count ?? 0;
+        }
 
         #endregion
-        
+        #region Close
+
+        public void Close()
+        {
+            try
+            {
+                this.viewModel?.CloseAvailablePlugins();
+            }
+            catch (Exception ex)
+            {
+                //ToDo Log
+            }
+        }
+
+        #endregion
+
+        #endregion
+
+
+        #region IWindowControl implementation
+
+        public void SubscribePropertyChangeNotification(PropertyChangedEventHandler propertyChangedHandler)
+        {
+            if (this.viewModel != null)
+                this.viewModel.PropertyChanged += propertyChangedHandler;
+        }
+
+        public void UnsubscribePropertyChangeNotification(PropertyChangedEventHandler propertyChangedHandler)
+        {
+            if (this.viewModel != null)
+                this.viewModel.PropertyChanged -= propertyChangedHandler;
+        }
+
+        public void Dispose()
+        {
+            try
+            {
+                this.viewModel?.Dispose();
+            }
+            catch(Exception ex)
+            {
+                //ToDo Log
+            }
+        }
+
+        #endregion
+
     }
 }

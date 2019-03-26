@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+
 using WPF.Common.Common;
 using WPF.Common.Interfaces;
 using ArgumentCollection = WPF.Common.Common.ArgumentCollection;
 
 using WPFUtils = WPF.Common.Common.Utils;
+
+using DesktopDashboard.Internals;
 
 namespace DesktopDashboard.ViewModels
 {
@@ -114,7 +117,6 @@ namespace DesktopDashboard.ViewModels
         public void Initialize(ArgumentCollection args)
         { 
             bool restorePlugin = false;
-            double parentWidth = 0;
             if (args != null)
             {
                 if (args.Contains(ArgumentCollection.ArgumentType.Plugin))
@@ -123,12 +125,8 @@ namespace DesktopDashboard.ViewModels
                     this.pluginInitArgs = args.Get<ArgumentCollection>(ArgumentCollection.ArgumentType.PluginArgs);
                 if (args.Contains(ArgumentCollection.ArgumentType.RestorePlugin))
                     restorePlugin = args.Get<bool>(ArgumentCollection.ArgumentType.RestorePlugin);
-                if (args.Contains(ArgumentCollection.ArgumentType.ParentWidth))
-                    parentWidth = args.Get<double>(ArgumentCollection.ArgumentType.ParentWidth);
             }
-            if (parentWidth == 0)
-                parentWidth = 150;
-            this.Size = parentWidth / 2;
+            this.Size = Consts.NormalTileSize;
             if (this.Plugin == null)
                 this.InitializePluginCommand = new Command((object parameter) => { });
             else

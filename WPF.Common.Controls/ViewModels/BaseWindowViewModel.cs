@@ -138,7 +138,7 @@ namespace WPF.Common.Controls.ViewModels
         }
 
         #endregion
-        #region CloseWindowOverride
+        #region TopMostToogle
 
         private void TopMostToogle(object parameter)
         {
@@ -203,21 +203,24 @@ namespace WPF.Common.Controls.ViewModels
                 if (args.Contains(ArgumentCollection.ArgumentType.WindowTitle))
                     this.WindowTitle = args.Get<string>(ArgumentCollection.ArgumentType.WindowTitle);
 
-                PluginState lastPluginState = null;
+                Common.WindowState windowState = null;
+                
                 if (args.Contains(ArgumentCollection.ArgumentType.PluginState))
-                    lastPluginState = args.Get<PluginState>(ArgumentCollection.ArgumentType.PluginState);
+                    windowState = args.Get<PluginState>(ArgumentCollection.ArgumentType.PluginState)?.WindowState;
+                if (args.Contains(ArgumentCollection.ArgumentType.WindowState))
+                    windowState = args.Get<Common.WindowState>(ArgumentCollection.ArgumentType.WindowState);
 
-                windowWidth = lastPluginState?.WindowState?.Width;
-                windowHeight = lastPluginState?.WindowState?.Height;
+                windowWidth = windowState?.Width;
+                windowHeight = windowState?.Height;
                 
                 if (args.Contains(ArgumentCollection.ArgumentType.WindowWidth) && !windowWidth.HasValue)
                     windowWidth = args.Get<double>(ArgumentCollection.ArgumentType.WindowWidth);
                 if (args.Contains(ArgumentCollection.ArgumentType.WindowHeight) && !windowHeight.HasValue)
                     windowHeight = args.Get<double>(ArgumentCollection.ArgumentType.WindowHeight);
 
-                double? windowTop = lastPluginState?.WindowState?.PositionTop;
-                double? windowLeft = lastPluginState?.WindowState?.PositionLeft;
-                bool? windowTopMost = lastPluginState?.WindowState?.TopMost;
+                double? windowTop = windowState?.PositionTop;
+                double? windowLeft = windowState?.PositionLeft;
+                bool? windowTopMost = windowState?.TopMost;
 
                 if (windowTop.HasValue)
                     this.WindowTop = windowTop.Value;
