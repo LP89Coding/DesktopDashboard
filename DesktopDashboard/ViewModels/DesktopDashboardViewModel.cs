@@ -79,9 +79,9 @@ namespace DesktopDashboard.ViewModels
                     {
                         PluginState pluginState = pluginStates.FirstOrDefault(ps => String.Equals(ps.Name, p.GetPluginName()));
                         if (pluginState == null)
-                            pluginState = new PluginState(p.GetPluginName(), false) { WindowState = new WPF.Common.Common.WindowState() };
+                            pluginState = new PluginState(p.GetPluginName(), false) { WindowState = p.GetDefaultWindowState() };
                         if (pluginState.WindowState == null)
-                            pluginState.WindowState = new WPF.Common.Common.WindowState();
+                            pluginState.WindowState = p.GetDefaultWindowState();
                         if (pluginState != null)
                         {
                             pluginInitArgs.Set(ArgumentCollection.ArgumentType.PluginState, pluginState);

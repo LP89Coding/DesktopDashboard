@@ -29,8 +29,8 @@ namespace DIYoutubeDownloader.Internal
                 public static LogData EndExit = new LogData(10006, LogLevel.Info, "DIYoutubeDowbloader End Exit ({0}ms)");
                 public static LogData InitializeComputerPerformanceEnter = new LogData(10007, LogLevel.Info, "Start Initialize YoutubeDownloader");
                 public static LogData InitializeComputerPerformanceExit = new LogData(10008, LogLevel.Info, "End Initialize YoutubeDownloader ({0}ms)");
-                public static LogData PluginCloseEnter = new LogData(10009, LogLevel.Info, "Plugin Close Enter");
-                public static LogData PluginCloseExit = new LogData(10010, LogLevel.Info, "Plugin Close Exit ({0}ms)");
+                public static LogData PluginCloseEnter = new LogData(10009, LogLevel.Info, "YoutubeDownloader Plugin Close Enter");
+                public static LogData PluginCloseExit = new LogData(10010, LogLevel.Info, "YoutubeDownloader Plugin Close Exit ({0}ms)");
             }
             /// <summary>
             /// Reserved EventID Range <10 100; 10 129>

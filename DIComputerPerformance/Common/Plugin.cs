@@ -244,6 +244,15 @@ namespace DIComputerPerformance.Common
             return this.InitializeWindow();
         }
 
+        public WindowState GetDefaultWindowState()
+        {
+            return new WindowState()
+            {
+                Height = Consts.WindowDefaultHeigth,
+                Width = Consts.WindowDefaultWidth
+            };
+        }
+
         #endregion
     }
 }

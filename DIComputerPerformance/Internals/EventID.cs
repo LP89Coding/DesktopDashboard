@@ -29,8 +29,8 @@ namespace DIComputerPerformance.Internals
                 public static LogData EndExit = new LogData(11006, LogLevel.Info, "DIComputerPerformance End Exit ({0}ms)");
                 public static LogData InitializeComputerPerformanceEnter = new LogData(11007, LogLevel.Info, "Start Initialize ComputerPerformance");
                 public static LogData InitializeComputerPerformanceExit = new LogData(11008, LogLevel.Info, "End Initialize ComputerPerformance ({0}ms)");
-                public static LogData PluginCloseEnter = new LogData(11009, LogLevel.Info, "Plugin Close Enter");
-                public static LogData PluginCloseExit = new LogData(11010, LogLevel.Info, "Plugin Close Exit ({0}ms)");
+                public static LogData PluginCloseEnter = new LogData(11009, LogLevel.Info, "ComputerPerformance Plugin Close Enter");
+                public static LogData PluginCloseExit = new LogData(11010, LogLevel.Info, "ComputerPerformance Plugin Close Exit ({0}ms)");
             }
         }
     }

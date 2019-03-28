@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using WPF.Common.Common;
 using ArgumentCollection = WPF.Common.Common.ArgumentCollection;
 using PluginState = WPF.Common.Common.PluginState;
 
@@ -31,6 +31,7 @@ namespace WPF.Common.Interfaces
 
         IWindowControl GetPluginControl();
         IWindow GetPluginWindow();
+        WindowState GetDefaultWindowState();
 
         void ClosePlugin();
     }

@@ -103,8 +103,11 @@ namespace DIComputerPerformance.ViewModels
                 try
                 {
                     this.dashboardUpdateTaskCancellationTokenSource?.Cancel();
-                    this.dashboardUpdateTask?.Dispose();
                     this.dashboardUpdateTaskCancellationTokenSource?.Dispose();
+                }
+                catch (ObjectDisposedException ex)
+                {
+
                 }
                 catch (Exception ex)
                 {

@@ -114,6 +114,11 @@ namespace DesktopDashboard.Internals
             return this.instance?.GetPluginWindow();
         }
 
+        public WindowState GetDefaultWindowState()
+        {
+            return this.instance?.GetDefaultWindowState();
+        }
+
         #endregion
     }
 }
