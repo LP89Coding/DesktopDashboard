@@ -6,13 +6,11 @@ using System.ComponentModel;
 
 using WPF.Common.Factories;
 using WPF.Common.Interfaces;
-using Logger = WPF.Common.Logger.Logger;
 using ArgumentCollection = WPF.Common.Common.ArgumentCollection;
 using WindowState = WPF.Common.Common.WindowState;
 
 using WPF.Common.Controls.ViewModels;
-
-//using EventID = DesktopDashboard.Internals.EventID.DesktopDashboard;
+using WPF.Common.Controls.Internals;
 
 namespace WPF.Common.Controls.Views
 {
@@ -56,7 +54,7 @@ namespace WPF.Common.Controls.Views
             }
             catch(Exception ex)
             {
-                //TODO Logs
+                Logger.Logger.Log(EventID.WPFCommonControls.Application.Exception, "ClosingBaseWindow", ex);
             }
             base.OnClosing(e);
         }
@@ -99,8 +97,7 @@ namespace WPF.Common.Controls.Views
             }
             catch (Exception ex)
             {
-                //TODO Log
-                //Logger.Log(EventID.Application.Exception, ex);
+                Logger.Logger.Log(EventID.WPFCommonControls.Application.Exception, "InitializeBaseWindow", ex);
             }
         }
         #endregion
@@ -183,7 +180,7 @@ namespace WPF.Common.Controls.Views
             }
             catch (Exception ex)
             {
-                //ToDo Log
+                Logger.Logger.Log(EventID.WPFCommonControls.Application.Exception, "ClosingViewModelBaseWindow", ex);
             }
             try
             {
@@ -191,7 +188,7 @@ namespace WPF.Common.Controls.Views
             }
             catch(Exception ex)
             {
-                //ToDo Log
+                Logger.Logger.Log(EventID.WPFCommonControls.Application.Exception, "ClosingBaseBaseWindow", ex);
             }
             try
             {
@@ -199,7 +196,7 @@ namespace WPF.Common.Controls.Views
             }
             catch(Exception ex)
             {
-                //ToDo Log
+                Logger.Logger.Log(EventID.WPFCommonControls.Application.Exception, "ClosingClearContextBaseWindow", ex);
             }
         }
 

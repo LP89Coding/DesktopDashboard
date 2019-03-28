@@ -15,6 +15,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using WPF.Common.Logger;
 
 namespace DesktopDashboard.ViewModels
 {
@@ -59,40 +60,51 @@ namespace DesktopDashboard.ViewModels
 
         private List<PluginViewModel> GetAvailablePlugins()
         {
-            IViewModelFactory factory = new ViewModelFactory();
-            PluginState[] pluginStates = null;
+            List<PluginViewModel> result = new List<PluginViewModel>();
             try
             {
+                IViewModelFactory factory = new ViewModelFactory();
+                PluginState[] pluginStates = null;
+
                 pluginStates = UserSettings.LoadSetting<PluginState[]>(UserSettings.SettingType.PluginState);
+
+                result = pluginManager.GetPlugins()?.Select(p =>
+                {
+                    ArgumentCollection viewModelArgs = new ArgumentCollection();
+                    ArgumentCollection pluginInitArgs = new ArgumentCollection();
+
+                    pluginInitArgs.Set(ArgumentCollection.ArgumentType.IsPluginMode, true);
+
+                    if (pluginStates != null)
+                    {
+                        PluginState pluginState = pluginStates.FirstOrDefault(ps => String.Equals(ps.Name, p.GetPluginName()));
+                        if (pluginState == null)
+                            pluginState = new PluginState(p.GetPluginName(), false) { WindowState = new WPF.Common.Common.WindowState() };
+                        if (pluginState.WindowState == null)
+                            pluginState.WindowState = new WPF.Common.Common.WindowState();
+                        if (pluginState != null)
+                        {
+                            pluginInitArgs.Set(ArgumentCollection.ArgumentType.PluginState, pluginState);
+                            viewModelArgs.Set(ArgumentCollection.ArgumentType.RestorePlugin, pluginState.IsActive);
+                        }
+                    }
+
+                    viewModelArgs.Set(ArgumentCollection.ArgumentType.Plugin, p);
+                    viewModelArgs.Set(ArgumentCollection.ArgumentType.PluginArgs, pluginInitArgs);
+
+                    PluginViewModel pluginViewModel = factory.CreateViewModel<PluginViewModel>(viewModelArgs);
+                    return pluginViewModel;
+                }).ToList() ?? new List<PluginViewModel>();
             }
             catch(Exception ex)
             {
-                //ToDo Log
+                Logger.Log(EventID.DesktopDashboard.Application.Exception, nameof(GetAvailablePlugins), ex);
             }
-
-            return pluginManager.GetPlugins()?.Select(p =>
+            finally
             {
-                ArgumentCollection viewModelArgs = new ArgumentCollection();
-                ArgumentCollection pluginInitArgs = new ArgumentCollection();
-
-                pluginInitArgs.Set(ArgumentCollection.ArgumentType.IsPluginMode, true);
-
-                if (pluginStates != null)
-                {
-                    PluginState pluginState = pluginStates.FirstOrDefault(ps => String.Equals(ps.Name, p.GetPluginName()));
-                    if (pluginState != null)
-                    {
-                        pluginInitArgs.Set(ArgumentCollection.ArgumentType.PluginState, pluginState);
-                        viewModelArgs.Set(ArgumentCollection.ArgumentType.RestorePlugin, pluginState.IsActive);
-                    }
-                }
-
-                viewModelArgs.Set(ArgumentCollection.ArgumentType.Plugin, p);
-                viewModelArgs.Set(ArgumentCollection.ArgumentType.PluginArgs, pluginInitArgs);
-
-                PluginViewModel pluginViewModel = factory.CreateViewModel<PluginViewModel>(viewModelArgs);
-                return pluginViewModel;
-            }).ToList() ?? new List<PluginViewModel>();
+                Logger.Log(EventID.DesktopDashboard.Application.FoundedAvailablePlugins, result.Count, String.Join(",", result.Select(p => p.Name)));
+            }
+            return result;
         }
 
         #endregion
@@ -114,14 +126,14 @@ namespace DesktopDashboard.ViewModels
                         }
                         catch (Exception ex)
                         {
-                            //ToDo Log
+                            Logger.Log(EventID.DesktopDashboard.Application.Exception, $"Plugin {plugin.GetPluginName()} closing", ex);
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                //ToDo Log
+                Logger.Log(EventID.DesktopDashboard.Application.Exception, nameof(CloseAvailablePlugins), ex);
             }
         }
 

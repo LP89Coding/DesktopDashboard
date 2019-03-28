@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 using WPF.Common.Common;
 using WPF.Common.Interfaces;
@@ -55,9 +56,11 @@ namespace DIComputerPerformance.Common
         #region Initialize
         private void Initialize()
         {
+            Stopwatch sw = new Stopwatch();
             try
             {
-                Logger.Log(EventID.Application.Start);
+                sw.Start();
+                Logger.Log(EventID.Application.InitializeComputerPerformanceEnter);
                 #region GlobalUnhandledExceptionEvents
                 if (!this.isPluginMode)
                 {
@@ -79,7 +82,12 @@ namespace DIComputerPerformance.Common
             }
             catch (Exception ex)
             {
-                Logger.Log(EventID.Application.Exception, ex);
+                Logger.Log(EventID.Application.Exception, "DIComputerPerformancePluginInitialize", ex);
+            }
+            finally
+            {
+                sw.Stop();
+                Logger.Log(EventID.Application.InitializeComputerPerformanceExit, sw.ElapsedMilliseconds);
             }
         }
         #endregion
@@ -110,11 +118,13 @@ namespace DIComputerPerformance.Common
 
         private void Close()
         {
+            Stopwatch sw = new Stopwatch();
             try
             {
+                sw.Start();
                 this.isInitialized = false;
                 this.isPluginWindowInitialized = false;
-                Logger.Log(EventID.Application.End);
+                Logger.Log(EventID.Application.PluginCloseEnter);
                 try
                 {
                     mainWindow?.Close();
@@ -122,7 +132,7 @@ namespace DIComputerPerformance.Common
                 }
                 catch(Exception ex)
                 {
-                    //ToDo Log
+                    Logger.Log(EventID.Application.Exception, "DIComputerPerformancePluginCloseMainWindow", ex);
                 }
                 try
                 {
@@ -131,7 +141,7 @@ namespace DIComputerPerformance.Common
                 }
                 catch (Exception ex)
                 {
-                    //ToDo Log
+                    Logger.Log(EventID.Application.Exception, "DIComputerPerformancePluginCloseControl", ex);
                 }
                 if (!this.isPluginMode)
                 {
@@ -140,7 +150,16 @@ namespace DIComputerPerformance.Common
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                if(this.isPluginMode)
+                    Logger.Log(EventID.Application.Exception, "DIComputerPerformancePluginClose", ex);
+                else
+                    Console.WriteLine(ex.ToString());
+            }
+            finally
+            {
+                sw.Stop();
+                if (this.isPluginMode)
+                    Logger.Log(EventID.Application.PluginCloseExit, sw.ElapsedMilliseconds);
             }
         }
 

@@ -20,11 +20,17 @@ namespace DIYoutubeDownloader.Internal
             /// </summary>
             internal class Application
             {
-                public static LogData Start = new LogData(10000, LogLevel.Info, "DIYoutubeDowbloader start");
-                public static LogData End = new LogData(10001, LogLevel.Info, "DIYoutubeDowbloader end");
-                public static LogData Exception = new LogData(10002, LogLevel.Error, "DIYoutubeDowbloader Error: {0}");
+                public static LogData StartupEnter = new LogData(10000, LogLevel.Info, "DIYoutubeDowbloader Start Enter");
+                public static LogData EndEnter = new LogData(10001, LogLevel.Info, "DIYoutubeDowbloader End Enter");
+                public static LogData Exception = new LogData(10002, LogLevel.Error, "DIYoutubeDowbloader. Code: {0}, Error: {1}");
                 public static LogData UnhandledException = new LogData(10003, LogLevel.Fatal, "Unhandled error: {0}");
                 public static LogData UnhandledExceptionException = new LogData(10004, LogLevel.Fatal, "Unhandled error error: {0}");
+                public static LogData StartupExit = new LogData(10005, LogLevel.Info, "DIYoutubeDowbloader Start Exit ({0}ms)");
+                public static LogData EndExit = new LogData(10006, LogLevel.Info, "DIYoutubeDowbloader End Exit ({0}ms)");
+                public static LogData InitializeComputerPerformanceEnter = new LogData(10007, LogLevel.Info, "Start Initialize YoutubeDownloader");
+                public static LogData InitializeComputerPerformanceExit = new LogData(10008, LogLevel.Info, "End Initialize YoutubeDownloader ({0}ms)");
+                public static LogData PluginCloseEnter = new LogData(10009, LogLevel.Info, "Plugin Close Enter");
+                public static LogData PluginCloseExit = new LogData(10010, LogLevel.Info, "Plugin Close Exit ({0}ms)");
             }
             /// <summary>
             /// Reserved EventID Range <10 100; 10 129>

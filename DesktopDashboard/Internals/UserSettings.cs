@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WPF.Common.Logger;
 
 namespace DesktopDashboard.Internals
 {
@@ -37,9 +38,9 @@ namespace DesktopDashboard.Internals
                 string serializedSetting = JsonConvert.SerializeObject(setting);
                 File.WriteAllText(GetSettingFilePath(settingType), serializedSetting);
             }
-            catch(Exception)
+            catch(Exception ex)
             {
-                //ToDo Log
+                Logger.Log(EventID.DesktopDashboard.Application.Exception, $"SaveSetting {settingType}", ex);
             }
         }
 
@@ -55,7 +56,7 @@ namespace DesktopDashboard.Internals
             }
             catch (Exception ex)
             {
-                //ToDo Log
+                Logger.Log(EventID.DesktopDashboard.Application.Exception, $"LoadSetting {settingType}", ex);
                 return default(T);
             }
         }

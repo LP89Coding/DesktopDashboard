@@ -40,18 +40,24 @@ namespace DesktopDashboard
 
         public wDesktopDashboard()
         {
+            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
             try
             {
-                Logger.Log(EventID.Application.Start);
+                sw.Start();
+                Logger.Log(EventID.Application.InitializeDesktopDashboardEnter);
                 InitializeComponent();
                 Initialize(null);
 
                 Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-us");
-                
             }
             catch(Exception ex)
             {
-                //ToDo Log
+                Logger.Log(EventID.Application.Exception, nameof(wDesktopDashboard), ex);
+            }
+            finally
+            {
+                sw.Stop();
+                Logger.Log(EventID.Application.InitializeDesktopDashboardExit, sw.ElapsedMilliseconds);
             }
         }
 
@@ -87,7 +93,7 @@ namespace DesktopDashboard
             }
             catch (Exception ex)
             {
-                //ToDo Log
+                Logger.Log(EventID.Application.Exception, "CloseDesktopDashboard", ex);
             }
         }
 
@@ -118,7 +124,7 @@ namespace DesktopDashboard
             }
             catch(Exception ex)
             {
-                //ToDo Log
+                Logger.Log(EventID.Application.Exception, "DisposeDesktopDashboard", ex);
             }
         }
 

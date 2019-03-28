@@ -139,7 +139,7 @@
                                   IconHeight="{DynamicResource NavigationButtonIconSize}" IconWidth="{DynamicResource NavigationButtonIconSize}" 
                                   SizeMode="Small" IconStretch="Fill" 
                                   Background="#FFF14E4E" SmallIcon="/WPF.Common.Controls;component/Images/32x32/X.png"
-                                  Command="{Binding CloseButtonCommand}" />
+                                  Command="{Binding CloseButtonCommandOverride}" />
 
         </Grid>
         <WrapPanel x:Name="wpFillContent" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" >

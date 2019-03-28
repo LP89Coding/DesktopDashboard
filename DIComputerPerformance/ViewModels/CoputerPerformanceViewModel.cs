@@ -25,11 +25,13 @@ namespace DIComputerPerformance.ViewModels
 {
     public class ComputerPerformanceViewModel : ObservableViewModel, IViewModel, IWindowPropertyChangeNotifier
     {
+        private readonly ManualResetEvent dashboardUpdateWaitEvent = new ManualResetEvent(false);
+        private Task dashboardUpdateTask = null;
+        private CancellationTokenSource dashboardUpdateTaskCancellationTokenSource = null;
+
         public List<IDashboardControl> Controls { get; private set; }
         
 
-        private readonly ManualResetEvent DashboardUpdateWaitEvent = new ManualResetEvent(false);
-        private Task DashboardUpdateTask = null;
 
         private delegate void ProceedDashboardUpdateDelegate();
 
@@ -46,13 +48,15 @@ namespace DIComputerPerformance.ViewModels
 
         #region DashboardUpdater
 
-        private void DashboardUpdater()
+        private void DashboardUpdater(CancellationToken cancellationToken)
         {
-            while (!this.IsDashboardUpdateWaitEventDisposed() && !DashboardUpdateWaitEvent.WaitOne(1000, false))
+            while (!this.IsDashboardUpdateWaitEventDisposed() && !dashboardUpdateWaitEvent.WaitOne(1000, false))
             {
                 try
                 {
-                    if (this.IsDashboardUpdateWaitEventDisposed() || DashboardUpdateWaitEvent.WaitOne(0, false))
+                    if (cancellationToken != null && cancellationToken.IsCancellationRequested)
+                        break;
+                    if (this.IsDashboardUpdateWaitEventDisposed() || dashboardUpdateWaitEvent.WaitOne(0, false))
                         break;
                     if (this.Controls != null)
                     {
@@ -61,8 +65,7 @@ namespace DIComputerPerformance.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    //TODO Log
-                    //Log(EventID.ESBDriver.SendMessageFromQueueException, ex.Message, ex.StackTrace);
+                    Logger.Log(EventID.DIComputerPerformance.Application.Exception, "ComputerPerformanceViewModelDashboardUpdater", ex);
                 }
             }
 
@@ -73,7 +76,7 @@ namespace DIComputerPerformance.ViewModels
         
         private bool IsDashboardUpdateWaitEventDisposed()
         {
-            return this.DashboardUpdateWaitEvent == null || (bool)(this.DashboardUpdateWaitEvent?.SafeWaitHandle?.IsClosed ?? true);
+            return this.dashboardUpdateWaitEvent == null || (bool)(this.dashboardUpdateWaitEvent?.SafeWaitHandle?.IsClosed ?? true);
         }
 
         #endregion
@@ -93,24 +96,29 @@ namespace DIComputerPerformance.ViewModels
                         try { control.Dispose(); }
                         catch(Exception ex)
                         {
-                            //ToDo Log
+                            Logger.Log(EventID.DIComputerPerformance.Application.Exception, "DisposingComputerPerformanceViewModelControl", ex);
                         }
                     }
                 }
-                try { this.DashboardUpdateTask?.Dispose(); }
-                catch (Exception ex)
+                try
                 {
-                    //ToDo Log
+                    this.dashboardUpdateTaskCancellationTokenSource?.Cancel();
+                    this.dashboardUpdateTask?.Dispose();
+                    this.dashboardUpdateTaskCancellationTokenSource?.Dispose();
                 }
-                try { this.DashboardUpdateWaitEvent?.Dispose(); }
                 catch (Exception ex)
                 {
-                    //ToDo Log
+                    Logger.Log(EventID.DIComputerPerformance.Application.Exception, "DisposingComputerPerformanceViewModelUpdateTask", ex);
+                }
+                try { this.dashboardUpdateWaitEvent?.Dispose(); }
+                catch (Exception ex)
+                {
+                    Logger.Log(EventID.DIComputerPerformance.Application.Exception, "DisposingComputerPerformanceViewModelWaitEvent", ex);
                 }
             }
             catch(Exception ex)
             {
-                //ToDo Log
+                Logger.Log(EventID.DIComputerPerformance.Application.Exception, "DisposingComputerPerformanceViewModel", ex);
             }
         }
 
@@ -138,7 +146,7 @@ namespace DIComputerPerformance.ViewModels
             }
             catch (Exception ex)
             {
-                //ToDo Log
+                Logger.Log(EventID.DIComputerPerformance.Application.Exception, "LoadingPartitionInfo", ex);
             }
 
             if (partitionInfo.Count > 0)
@@ -152,9 +160,9 @@ namespace DIComputerPerformance.ViewModels
             }
 
             #endregion
-            
-            DashboardUpdateTask = new Task(() => DashboardUpdater(), TaskCreationOptions.LongRunning);
-            DashboardUpdateTask.Start();
+            this.dashboardUpdateTaskCancellationTokenSource = new CancellationTokenSource();
+            dashboardUpdateTask = new Task(() => DashboardUpdater(this.dashboardUpdateTaskCancellationTokenSource.Token), this.dashboardUpdateTaskCancellationTokenSource.Token, TaskCreationOptions.LongRunning);
+            dashboardUpdateTask.Start();
         }
 
         public bool NotifyPropertyChange(string propertyName, object propertyValue)

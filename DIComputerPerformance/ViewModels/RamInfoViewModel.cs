@@ -56,11 +56,8 @@ namespace DIComputerPerformance.ViewModels
             }
             catch (Exception ex)
             {
-                //ToDo Log
+                Logger.Log(EventID.DIComputerPerformance.Application.Exception, "RefreshRamInfo", ex);
             }
-            //(dcgRamUsage.GaugeHeader as TextBlock).Text = String.Format("RAM %{0}({1:0.00} {2})", Environment.NewLine,
-            //    valRamTotal > 1024 ? Math.Round(valRamTotal / 1024.0, 2) : valRamTotal,
-            //    valRamTotal > 1024 ? "GB" : "MB");
         }
         #endregion
 

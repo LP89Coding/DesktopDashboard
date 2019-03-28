@@ -8,6 +8,7 @@ using System.Windows;
 
 using WPF.Common.Common;
 using WPF.Common.Interfaces;
+using WPF.Common.Logger;
 using WindowState = WPF.Common.Common.WindowState;
 
 using WPF.Common.Controls.Views;
@@ -28,48 +29,63 @@ namespace DesktopDashboard
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            base.OnStartup(e);
-            WindowState windowState = null;
-            wDesktopDashboard control = new wDesktopDashboard();
+            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
             try
             {
-                windowState = UserSettings.LoadSetting<WindowState>(UserSettings.SettingType.WindowState);
+                sw.Start();
+                Logger.Log(EventID.DesktopDashboard.Application.StartupEnter);
+                base.OnStartup(e);
+                WindowState windowState = null;
+                wDesktopDashboard control = new wDesktopDashboard();
+                try
+                {
+                    windowState = UserSettings.LoadSetting<WindowState>(UserSettings.SettingType.WindowState);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Log(EventID.DesktopDashboard.Application.Exception, nameof(UserSettings.LoadSetting), ex);
+                }
+                if (windowState == null)
+                {
+                    windowState = new WindowState();
+                    windowState.Width = Consts.DefaultWindowWidth;
+                    windowState.Height = Consts.DefaultWindowHeight;
+
+                    windowState.PositionTop = 0;
+                    windowState.PositionLeft = SystemParameters.PrimaryScreenWidth - windowState.Width;
+                    windowState.TopMost = false;
+                    try
+                    {
+                        UserSettings.SaveSetting(UserSettings.SettingType.WindowState, windowState);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Log(EventID.DesktopDashboard.Application.Exception, nameof(UserSettings.SaveSetting), ex);
+                    }
+                }
+                ArgumentCollection args = new ArgumentCollection();
+                args.Set(ArgumentCollection.ArgumentType.WindowState, windowState);
+                args.Set(ArgumentCollection.ArgumentType.WindowTitle, Consts.WindowTitle);
+                args.Set(ArgumentCollection.ArgumentType.WindowIcon, DesktopDashboard.Resources.ResourceImage.WindowIcon);
+                args.Set(ArgumentCollection.ArgumentType.WindowCloseCommand, new Command((object parameter) =>
+                {
+                    control?.Close();
+                    this.mainWindow?.Close();
+                }));
+
+                this.mainWindow = new BaseWindow(args);
+                this.mainWindow.SetContent(control);
+                this.mainWindow.Show();
             }
             catch(Exception ex)
             {
-                //ToDo Log
+                Logger.Log(EventID.DesktopDashboard.Application.Exception, nameof(this.OnStartup), ex);
             }
-            if(windowState == null)
+            finally
             {
-                windowState = new WindowState();
-                windowState.Width = Consts.DefaultWindowWidth;
-                windowState.Height = Consts.DefaultWindowHeight;
-
-                windowState.PositionTop = 0;
-                windowState.PositionLeft = SystemParameters.PrimaryScreenWidth - windowState.Width;
-                windowState.TopMost = false;
-                try
-                {
-                    UserSettings.SaveSetting(UserSettings.SettingType.WindowState, windowState);
-                }
-                catch(Exception ex)
-                {
-                    //ToDo Log
-                }
+                sw.Stop();
+                Logger.Log(EventID.DesktopDashboard.Application.StartupExit, sw.ElapsedMilliseconds);
             }
-            ArgumentCollection args = new ArgumentCollection();
-            args.Set(ArgumentCollection.ArgumentType.WindowState, windowState);
-            args.Set(ArgumentCollection.ArgumentType.WindowTitle, Consts.WindowTitle);
-            args.Set(ArgumentCollection.ArgumentType.WindowIcon, DesktopDashboard.Resources.ResourceImage.WindowIcon);
-            args.Set(ArgumentCollection.ArgumentType.WindowCloseCommand, new Command((object parameter) => 
-            {
-                control?.Close();
-                this.mainWindow?.Close();
-            }));
-
-            this.mainWindow = new BaseWindow(args);
-            this.mainWindow.SetContent(control);
-            this.mainWindow.Show();
         }
 
         #endregion
@@ -77,19 +93,27 @@ namespace DesktopDashboard
 
         protected override void OnExit(ExitEventArgs e)
         {
+            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
             try
             {
+                sw.Start();
+                Logger.Log(EventID.DesktopDashboard.Application.EndEnter);
 
                 WindowState windowState = mainWindow?.GetWindowState();
                 if(windowState != null)
                     UserSettings.SaveSetting(UserSettings.SettingType.WindowState, windowState);
                 this.mainWindow = null;
+                base.OnExit(e);
             }
             catch (Exception ex)
             {
-                //ToDo Log
+                Logger.Log(EventID.DesktopDashboard.Application.Exception, nameof(this.OnExit), ex);
             }
-            base.OnExit(e);
+            finally
+            {
+                sw.Stop();
+                Logger.Log(EventID.DesktopDashboard.Application.EndExit, sw.ElapsedMilliseconds);
+            }
         }
 
         #endregion

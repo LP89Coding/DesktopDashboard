@@ -18,7 +18,7 @@ namespace WPF.Common.Controls.ViewModels
 {
     public class BaseWindowViewModel : ObservableViewModel, IViewModel
     {
-
+        private Common.WindowState windowState;
         private string windowTitle;
         public string WindowTitle
         {
@@ -119,6 +119,8 @@ namespace WPF.Common.Controls.ViewModels
 
         private ICommand closeButtonCommand;
         public ICommand CloseButtonCommand { get { return this.closeButtonCommand; } private set { this.closeButtonCommand = value; } }
+        private ICommand closeButtonCommandOverride;
+        public ICommand CloseButtonCommandOverride { get { return this.closeButtonCommandOverride; } private set { this.closeButtonCommandOverride = value; } }
         private ICommand topMostButtonCommand;
         public ICommand TopMostButtonCommand { get { return this.topMostButtonCommand; } set { this.topMostButtonCommand = value; } }
 
@@ -143,6 +145,23 @@ namespace WPF.Common.Controls.ViewModels
         private void TopMostToogle(object parameter)
         {
             this.WindowTopMost = !this.WindowTopMost;
+        }
+
+        #endregion
+        #region Close
+
+        private void Close()
+        {
+            if (this.windowState != null)
+            {
+                this.windowState.Height = this.WindowHeight;
+                this.windowState.Width = this.WindowWidth;
+                this.windowState.PositionLeft = this.WindowLeft;
+                this.windowState.PositionTop = this.WindowTop;
+                this.windowState.TopMost = this.WindowTopMost;
+            }
+            if (this.CloseButtonCommand != null)
+                this.CloseButtonCommand.Execute(null);
         }
 
         #endregion
@@ -203,7 +222,7 @@ namespace WPF.Common.Controls.ViewModels
                 if (args.Contains(ArgumentCollection.ArgumentType.WindowTitle))
                     this.WindowTitle = args.Get<string>(ArgumentCollection.ArgumentType.WindowTitle);
 
-                Common.WindowState windowState = null;
+                this.windowState = null;
                 
                 if (args.Contains(ArgumentCollection.ArgumentType.PluginState))
                     windowState = args.Get<PluginState>(ArgumentCollection.ArgumentType.PluginState)?.WindowState;
@@ -241,6 +260,7 @@ namespace WPF.Common.Controls.ViewModels
                 this.WindowTitle = "Base Window";
 
             this.TopMostButtonCommand = new Command((object parameter) => { this.TopMostToogle(parameter); });
+            this.CloseButtonCommandOverride = new Command((object parameter) => { this.Close(); });
         }
 
         #endregion

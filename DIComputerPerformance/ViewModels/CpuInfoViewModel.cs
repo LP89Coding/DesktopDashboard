@@ -10,6 +10,8 @@ using Logger = WPF.Common.Logger.Logger;
 using ArgumentCollection = WPF.Common.Common.ArgumentCollection;
 using WPFUtils = WPF.Common.Common.Utils;
 
+using DIComputerPerformance.Internals;
+
 namespace DIComputerPerformance.ViewModels
 {
     public class CpuInfoViewModel : ObservableViewModel, IViewModel
@@ -49,7 +51,7 @@ namespace DIComputerPerformance.ViewModels
             }
             catch(Exception ex)
             {
-                //ToDo Log
+                Logger.Log(EventID.DIComputerPerformance.Application.Exception, "DisposingCpuInfoViewModel", ex);
             }
         }
 
@@ -72,7 +74,7 @@ namespace DIComputerPerformance.ViewModels
             }
             catch(Exception ex)
             {
-                //ToDo Log
+                Logger.Log(EventID.DIComputerPerformance.Application.Exception, "InitializingCpuInfoViewModel", ex);
             }
         }
 

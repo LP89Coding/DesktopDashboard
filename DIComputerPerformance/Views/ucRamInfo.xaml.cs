@@ -16,9 +16,11 @@ using System.Windows.Shapes;
 using WPF.Common.Common;
 using WPF.Common.Factories;
 using WPF.Common.Interfaces;
+using WPF.Common.Logger;
 
-using DIComputerPerformance.ViewModels;
 using DIComputerPerformance.Interfaces;
+using DIComputerPerformance.Internals;
+using DIComputerPerformance.ViewModels;
 
 namespace DIComputerPerformance.Views
 {
@@ -50,7 +52,7 @@ namespace DIComputerPerformance.Views
             }
             catch (Exception ex)
             {
-                //ToDo Log
+                Logger.Log(EventID.DIComputerPerformance.Application.Exception, "InitializingRamInfo", ex);
             }
         }
 

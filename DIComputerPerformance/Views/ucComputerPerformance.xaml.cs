@@ -80,7 +80,7 @@ namespace DIComputerPerformance.Views
             }
             catch (Exception ex)
             {
-                //ToDo Log
+                Logger.Log(EventID.Application.Exception, "DisposingComputerPerformance", ex);
             }
         }
 

@@ -82,7 +82,7 @@ namespace DIYoutubeDownloader
             }
             catch (Exception ex)
             {
-                //ToDo Log
+                Logger.Log(EventID.Application.Exception, "DisposingYoutubeDownloader", ex);
             }
         }
 

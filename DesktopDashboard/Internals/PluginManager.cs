@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using WPF.Common.Interfaces;
+using WPF.Common.Logger;
 
 namespace DesktopDashboard.Internals
 {
@@ -37,55 +38,57 @@ namespace DesktopDashboard.Internals
         public List<Plugin> GetPlugins()
         {
             List<Plugin> plugins = new List<Plugin>();
-
-            string[] pluginPaths = Directory.GetFiles(GetPluginsPath(), "DI*.exe", SearchOption.AllDirectories);
-
-            if (pluginPaths != null)
+            try
             {
-                Type pluginType = typeof(IPlugin);
-                foreach (string plugin in pluginPaths)
+                string[] pluginPaths = Directory.GetFiles(GetPluginsPath(), "DI*.exe", SearchOption.AllDirectories);
+
+                if (pluginPaths != null)
                 {
-                    try
+                    Type pluginType = typeof(IPlugin);
+                    foreach (string plugin in pluginPaths)
                     {
-                        AssemblyName assemblyName = AssemblyName.GetAssemblyName(plugin);
-                        if (assemblyName == null)
-                            continue;
-                        Assembly assembly = Assembly.Load(assemblyName);
-                        if (assembly == null)
-                            return null;
-                        foreach (Type assemblyType in assembly.GetTypes())
+                        try
                         {
-                            try
+                            AssemblyName assemblyName = AssemblyName.GetAssemblyName(plugin);
+                            if (assemblyName == null)
+                                continue;
+                            Assembly assembly = Assembly.Load(assemblyName);
+                            if (assembly == null)
+                                return null;
+                            foreach (Type assemblyType in assembly.GetTypes())
                             {
-                                if (assemblyType.GetInterface(pluginType.FullName) != null)
+                                try
                                 {
-                                    IPlugin pluginInstance = (IPlugin)Activator.CreateInstance(assemblyType);
-                                    plugins.Add(new Plugin(assemblyType, pluginInstance, plugin));
+                                    if (assemblyType.GetInterface(pluginType.FullName) != null)
+                                    {
+                                        IPlugin pluginInstance = (IPlugin)Activator.CreateInstance(assemblyType);
+                                        plugins.Add(new Plugin(assemblyType, pluginInstance, plugin));
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    Logger.Log(EventID.DesktopDashboard.Application.Exception, $"Plugin {plugin} activation", ex);
                                 }
                             }
-                            catch(Exception ex)
-                            {
-                                //TODO Log
-                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.Log(EventID.DesktopDashboard.Application.Exception, $"Plugin {plugin} proceeding", ex);
                         }
                     }
-                    catch(Exception ex)
-                    {
-                        //TODO Log
-                    }
                 }
+            }
+            catch(Exception ex)
+            {
+                Logger.Log(EventID.DesktopDashboard.Application.Exception, nameof(GetPlugins), ex);
+            }
+            finally
+            {
+                Logger.Log(EventID.DesktopDashboard.Application.FoundedPlugins, plugins.Count, String.Join(",", plugins.Select(p => p.GetPluginName())));
             }
 
             return plugins;
         }
-        
-        
 
-        private PermissionSet GetPermissionSet()
-        {
-            Evidence ev = new Evidence();
-            ev.AddHostEvidence(new Zone(SecurityZone.MyComputer));
-            return SecurityManager.GetStandardSandbox(ev);
-        }
     }
 }

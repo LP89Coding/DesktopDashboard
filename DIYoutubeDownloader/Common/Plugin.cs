@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 using WPF.Common.Common;
 using WPF.Common.Interfaces;
@@ -54,9 +55,10 @@ namespace DIYoutubeDownloader.Common
         #region Initialize
         private void Initialize()
         {
+            Stopwatch sw = new Stopwatch();
             try
             {
-                Logger.Log(EventID.Application.Start);
+                Logger.Log(EventID.Application.InitializeComputerPerformanceEnter);
                 #region GlobalUnhandledExceptionEvents
                 if (!this.isPluginMode)
                 {
@@ -78,7 +80,12 @@ namespace DIYoutubeDownloader.Common
             }
             catch (Exception ex)
             {
-                Logger.Log(EventID.Application.Exception, ex);
+                Logger.Log(EventID.Application.Exception, "DIYoutubeDownloaderPluginInitialize", ex);
+            }
+            finally
+            {
+                sw.Stop();
+                Logger.Log(EventID.Application.InitializeComputerPerformanceExit, sw.ElapsedMilliseconds);
             }
         }
         #endregion
@@ -109,8 +116,11 @@ namespace DIYoutubeDownloader.Common
 
         private void Close()
         {
+            Stopwatch sw = new Stopwatch();
             try
             {
+                sw.Start();
+                Logger.Log(EventID.Application.PluginCloseEnter);
                 this.isInitialized = false;
                 this.isPluginWindowInitialized = false;
                 try
@@ -120,7 +130,7 @@ namespace DIYoutubeDownloader.Common
                 }
                 catch (Exception ex)
                 {
-                    //ToDo Log
+                    Logger.Log(EventID.Application.Exception, "ClosingMainWindowPlugin", ex);
                 }
                 try
                 {
@@ -129,17 +139,25 @@ namespace DIYoutubeDownloader.Common
                 }
                 catch (Exception ex)
                 {
-                    //ToDo Log
+                    Logger.Log(EventID.Application.Exception, "ClosingControlPlugin", ex);
                 }
-                Logger.Log(EventID.Application.End);
                 if (!this.isPluginMode)
                 {
-                    try { Logger.Close(); } catch (Exception ex) { Console.WriteLine(ex.ToString()); Logger.Log(EventID.Application.Exception, ex); }
+                    try { Logger.Close(); } catch (Exception ex) { Console.WriteLine(ex.ToString()); Logger.Log(EventID.Application.Exception, "ClosingLoggerPlugin", ex); }
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                if(this.isPluginMode)
+                    Logger.Log(EventID.Application.Exception, "ClosingPlugin", ex);
+                else
+                    Console.WriteLine(ex.ToString());
+            }
+            finally
+            {
+                sw.Stop();
+                if(this.isPluginMode)
+                    Logger.Log(EventID.Application.PluginCloseExit, sw.ElapsedMilliseconds);
             }
         }
 
