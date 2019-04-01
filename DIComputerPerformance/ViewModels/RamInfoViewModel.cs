@@ -16,6 +16,8 @@ namespace DIComputerPerformance.ViewModels
 {
     public class RamInfoViewModel : ObservableViewModel, IViewModel
     {
+        private long? totalMemoryInMiB;
+        private long takenMemorInMiB;
 
         private int gaugeValue;
         public int GaugeValue
@@ -45,14 +47,19 @@ namespace DIComputerPerformance.ViewModels
         {
             try
             {
-                long valRamTotalMemory = PerformanceInfo.GetTotalMemoryInMiB();
-                long valRamTotal = PerformanceInfo.GetTotalMemoryInMiB() - PerformanceInfo.GetPhysicalAvailableMemoryInMiB();
-                int valRamTakenPrc = Convert.ToInt32(((double)valRamTotal / (double)valRamTotalMemory) * 100.0);
+                if(!this.totalMemoryInMiB.HasValue)
+                    this.totalMemoryInMiB = PerformanceInfo.GetTotalMemoryInMiB();
+                long valRamTaken = this.totalMemoryInMiB.Value - PerformanceInfo.GetPhysicalAvailableMemoryInMiB();
+                if (valRamTaken != this.takenMemorInMiB)
+                {
+                    this.takenMemorInMiB = valRamTaken;
+                    int valRamTakenPrc = (int)(((double)this.takenMemorInMiB / (double)this.totalMemoryInMiB.Value) * 100.0);
 
-                this.GaugeValue = valRamTakenPrc;
-                this.GaugeHeader = String.Format("RAM %{0}({1:0.00}{2})", Environment.NewLine,
-                                        valRamTotal > 1024 ? Math.Round(valRamTotal / 1024.0, 2) : valRamTotal,
-                                        valRamTotal > 1024 ? "GB" : "MB");
+                    this.GaugeValue = valRamTakenPrc;
+                    this.GaugeHeader = String.Format("RAM %{0}({1:0.00}{2})", Environment.NewLine,
+                                            valRamTaken > 1024 ? Math.Round(valRamTaken / 1024.0, 2) : valRamTaken,
+                                            valRamTaken > 1024 ? "GB" : "MB");
+                }
             }
             catch (Exception ex)
             {

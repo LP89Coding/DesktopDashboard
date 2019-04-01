@@ -203,6 +203,11 @@ namespace DIYoutubeDownloader.Common
         {
             PluginState currentState = new PluginState(this.GetPluginName(), this.IsPluginInitialized());
             currentState.WindowState = this.mainWindow?.GetWindowState();
+            if (currentState.WindowState == null && (bool)(this.args?.Contains(ArgumentCollection.ArgumentType.PluginState) ?? false))
+            {
+                PluginState pluginState = this.args.Get<PluginState>(ArgumentCollection.ArgumentType.PluginState);
+                currentState.WindowState = pluginState?.WindowState;
+            }
 
             return currentState;
         }

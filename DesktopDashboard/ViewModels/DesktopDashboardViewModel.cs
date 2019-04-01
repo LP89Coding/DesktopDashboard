@@ -82,11 +82,9 @@ namespace DesktopDashboard.ViewModels
                             pluginState = new PluginState(p.GetPluginName(), false) { WindowState = p.GetDefaultWindowState() };
                         if (pluginState.WindowState == null)
                             pluginState.WindowState = p.GetDefaultWindowState();
-                        if (pluginState != null)
-                        {
-                            pluginInitArgs.Set(ArgumentCollection.ArgumentType.PluginState, pluginState);
-                            viewModelArgs.Set(ArgumentCollection.ArgumentType.RestorePlugin, pluginState.IsActive);
-                        }
+                        
+                        pluginInitArgs.Set(ArgumentCollection.ArgumentType.PluginState, pluginState);
+                        viewModelArgs.Set(ArgumentCollection.ArgumentType.RestorePlugin, pluginState.IsActive);
                     }
 
                     viewModelArgs.Set(ArgumentCollection.ArgumentType.Plugin, p);

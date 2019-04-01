@@ -24,8 +24,11 @@ namespace DIComputerPerformance.ViewModels
             get { return this.gaugeValue; }
             private set
             {
-                this.gaugeValue = value;
-                RaisePropertyChangedEvent(nameof(this.GaugeValue));
+                if (this.gaugeValue != value)
+                {
+                    this.gaugeValue = value;
+                    RaisePropertyChangedEvent(nameof(this.GaugeValue));
+                }
             }
         }
 
@@ -35,7 +38,7 @@ namespace DIComputerPerformance.ViewModels
         public void RefreshCpuInfo()
         {
             if(cpuTotalCntr != null)
-                this.GaugeValue = Convert.ToInt32(Math.Round(cpuTotalCntr.NextValue(), 0));
+                this.GaugeValue = (int)cpuTotalCntr.NextValue();
         }
         #endregion
 

@@ -19,6 +19,9 @@ namespace DIComputerPerformance.ViewModels
 {
     public class PartitionInfoViewModel : ObservableViewModel, IViewModel
     {
+        private long lastTotalFreeSpace;
+        private double lastTotalFreeSpaceInGiB;
+
         private string partitionName;
         public string PartitionName
         {
@@ -110,14 +113,23 @@ namespace DIComputerPerformance.ViewModels
         #region GetTotalFreeSpace
         private double GetTotalFreeSpace()
         {
-            return this.DriveInfo == null ? 0.0 : Math.Round(this.DriveInfo.TotalFreeSpace * Consts.BToGbRefactor, 1);
+            long totalFreeSpace = this.DriveInfo?.TotalFreeSpace ?? 0;
+            if (totalFreeSpace != this.lastTotalFreeSpace)
+            {
+                this.lastTotalFreeSpace = totalFreeSpace;
+                this.lastTotalFreeSpaceInGiB = Math.Round(this.lastTotalFreeSpace * Consts.BToGbRefactor, 1);
+            }
+            return this.lastTotalFreeSpaceInGiB;
         }
         #endregion
         #region RefreshDriveInfo
         public void RefreshDriveInfo()
         {
-            this.UsedSpace = this.DriveInfo == null ? 0.0 : this.TotalSize - GetTotalFreeSpace();
-            this.PartitionInfo = String.Format("{0} GB free of {1} GB", GetTotalFreeSpace(), this.TotalSize);
+            if (this.lastTotalFreeSpaceInGiB != GetTotalFreeSpace())
+            {
+                this.UsedSpace = this.DriveInfo == null ? 0.0 : this.TotalSize - GetTotalFreeSpace();
+                this.PartitionInfo = String.Format("{0} GB free of {1} GB", GetTotalFreeSpace(), this.TotalSize);
+            }
         }
         #endregion
 
@@ -133,7 +145,7 @@ namespace DIComputerPerformance.ViewModels
             }
             catch(Exception ex)
             {
-                //ToDa Log
+                //ToDo Log
             }
         }
 

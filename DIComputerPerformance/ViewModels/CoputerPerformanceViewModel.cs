@@ -25,6 +25,8 @@ namespace DIComputerPerformance.ViewModels
 {
     public class ComputerPerformanceViewModel : ObservableViewModel, IViewModel, IWindowPropertyChangeNotifier
     {
+        private const int RefreshIntervalMs = 5000;
+
         private readonly ManualResetEvent dashboardUpdateWaitEvent = new ManualResetEvent(false);
         private Task dashboardUpdateTask = null;
         private CancellationTokenSource dashboardUpdateTaskCancellationTokenSource = null;
@@ -50,7 +52,7 @@ namespace DIComputerPerformance.ViewModels
 
         private void DashboardUpdater(CancellationToken cancellationToken)
         {
-            while (!this.IsDashboardUpdateWaitEventDisposed() && !dashboardUpdateWaitEvent.WaitOne(1000, false))
+            while (!this.IsDashboardUpdateWaitEventDisposed() && !dashboardUpdateWaitEvent.WaitOne(RefreshIntervalMs, false))
             {
                 try
                 {
