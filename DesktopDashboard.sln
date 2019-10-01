@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF.Common.Controls", "WPF.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIComputerPerformance", "DIComputerPerformance\DIComputerPerformance.csproj", "{62406A02-906C-44A6-B8B0-CA59125B95E3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIStickyNotes", "DIStickyNotes\DIStickyNotes.csproj", "{913D3B15-D5C8-441A-9FFA-C0CBD4933885}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{62406A02-906C-44A6-B8B0-CA59125B95E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62406A02-906C-44A6-B8B0-CA59125B95E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62406A02-906C-44A6-B8B0-CA59125B95E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{913D3B15-D5C8-441A-9FFA-C0CBD4933885}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{913D3B15-D5C8-441A-9FFA-C0CBD4933885}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{913D3B15-D5C8-441A-9FFA-C0CBD4933885}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{913D3B15-D5C8-441A-9FFA-C0CBD4933885}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
